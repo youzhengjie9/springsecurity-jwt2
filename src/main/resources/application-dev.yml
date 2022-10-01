@@ -1,0 +1,40 @@
+server:
+  port: 8188
+spring:
+  application:
+    name: security-jwt2
+    #这里我们使用的是mysql8.0的配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.184.123:3308/security-jwt-db?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+  # redis
+  redis:
+    database: 2
+    host: 192.168.184.123
+    port: 6379
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+# 自定义jwt配置
+jwt:
+  config:
+    # accessToken的名称（和前端存储在localstorage的token名称一致）
+    access-token-name: accessToken
+    # accessToken密钥
+    access-token-key: accessToken-key
+    # 10800000毫秒（=3小时）过期
+    access-token-expired: 10800000
+    # refreshToken的名称（和前端存储在localstorage的token名称一致）
+    refresh-token-name: refreshToken
+    # refreshToken密钥
+    refresh-token-key: refreshToken-key
+    # 21600000毫秒（=6小时）过期
+    refresh-token-expired: 21600000
+    # token最多刷新次数
+    max-refresh-count: 5
