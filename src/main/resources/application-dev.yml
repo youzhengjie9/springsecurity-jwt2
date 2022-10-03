@@ -38,3 +38,7 @@ jwt:
     refresh-token-expired: 21600000
     # token最多刷新次数
     max-refresh-count: 5
+    # accessToken黑名单key前缀
+    access-token-blacklist-prefix: accessBlack_
+    # refreshToken黑名单key前缀
+    refresh-token-blacklist-prefix: refreshBlack_

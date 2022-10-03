@@ -54,6 +54,15 @@ public class JwtProperties {
      */
     private int maxRefreshCount;
 
+    /**
+     * accessToken黑名单key前缀
+     */
+    private String accessTokenBlacklistPrefix;
+
+    /**
+     * refreshToken黑名单key前缀
+     */
+    private String refreshTokenBlacklistPrefix;
 
 
 

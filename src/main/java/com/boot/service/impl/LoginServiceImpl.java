@@ -94,7 +94,7 @@ public class LoginServiceImpl implements LoginService {
                 .setAccessToken(accessToken)
                 .setRefreshToken(refreshToken);
 
-        return new ResponseResult(ResponseType.SUCCESS.getCode(),"登录成功--success",tokenVO);
+        return new ResponseResult(ResponseType.LOGIN_SUCCESS.getCode(),ResponseType.LOGIN_SUCCESS.getMessage(),tokenVO);
     }
 
 }
