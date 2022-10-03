@@ -30,6 +30,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
+    /**
+     * 下面这些请求不会被spring security拦截，即不管是否登录都可以访问
+     */
+    private final String[] PERMITALL_PATH={
+            "/user/login",
+            "/refreshToken"
+    };
 
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
@@ -62,8 +69,8 @@ public class SecurityConfig {
                 .and()
                 //配置认证请求
                 .authorizeRequests()
-                //指定'/user/login'接口必须是匿名访问（也就是说只有未登录的用户才能访问该接口）
-                .antMatchers("/user/login").anonymous()
+                //下面这些请求不会被spring security拦截，即不管是否登录都可以访问
+                .antMatchers(PERMITALL_PATH).permitAll()
                 //除了上面的请求之外，其他所有请求都要spring security认证通过才能访问。
                 .anyRequest().authenticated()
                 .and()

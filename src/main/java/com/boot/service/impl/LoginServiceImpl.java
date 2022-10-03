@@ -8,6 +8,7 @@ import com.boot.exception.UserNameOrPassWordException;
 import com.boot.security.LoginUser;
 import com.boot.service.LoginService;
 import com.boot.utils.JwtUtil;
+import com.boot.vo.TokenVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -59,7 +60,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public ResponseResult login(UserDto userDto) throws Throwable {
+    public ResponseResult<TokenVO> login(UserDto userDto) throws Throwable {
 
         //这个就是我们前端表单传入的UserDto（封装了前端提交的帐号密码），目的是为了后面检查帐号密码是否正确
         //--------------------
@@ -87,13 +88,13 @@ public class LoginServiceImpl implements LoginService {
 
         //将LoginUser对象存入Redis，证明已经登录了
         redisTemplate.opsForValue().set(LOGIN_KEY_PREFIX+userid,loginUser,expired, TimeUnit.MILLISECONDS);
-        Map<String, String> map = new ConcurrentHashMap<>();
-        //将accessToken放到map中，并返回给前端
-        map.put(jwtProperties.getAccessTokenName(),accessToken);
-        //将refreshToken放到map中，并返回给前端
-        map.put(jwtProperties.getRefreshTokenName(),refreshToken);
 
-        return new ResponseResult(ResponseType.SUCCESS.getCode(),"登录成功--success",map);
+        //将accessToken和refreshToken封装成TokenVO返回给前端
+        TokenVO tokenVO = new TokenVO()
+                .setAccessToken(accessToken)
+                .setRefreshToken(refreshToken);
+
+        return new ResponseResult(ResponseType.SUCCESS.getCode(),"登录成功--success",tokenVO);
     }
 
 }

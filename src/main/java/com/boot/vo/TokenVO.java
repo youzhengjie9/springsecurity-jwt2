@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  * 封装Token
- * @author youzhengjie
+ * @author youzhengjie 2022-10-01 23:46:35
  */
 @Data
 @NoArgsConstructor

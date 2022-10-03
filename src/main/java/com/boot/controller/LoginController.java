@@ -3,6 +3,7 @@ package com.boot.controller;
 import com.boot.data.ResponseResult;
 import com.boot.dto.UserDto;
 import com.boot.service.LoginService;
+import com.boot.vo.TokenVO;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class LoginController {
 
 
     @PostMapping("/user/login")
-    public ResponseResult login(@RequestBody UserDto userDto) throws Throwable {
+    public ResponseResult<TokenVO> login(@RequestBody UserDto userDto) throws Throwable {
 
 
         return loginService.login(userDto);
