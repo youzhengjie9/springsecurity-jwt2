@@ -9,6 +9,7 @@ import com.boot.vo.TokenVO;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -23,8 +24,16 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Autowired
     private JwtProperties jwtProperties;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
     public ResponseResult<TokenVO> refresh(String refreshToken) {
+
+        //如果refreshToken在redis黑名单中，则直接返回失败
+        if(redisTemplate.hasKey(jwtProperties.getRefreshTokenBlacklistPrefix()+refreshToken)){
+            return new ResponseResult<>(ResponseType.REFRESH_TOKEN_ERROR.getCode(),ResponseType.REFRESH_TOKEN_ERROR.getMessage(),null);
+        }
         //1：判断前端传过来的refreshToken是否合法、是否过期
         if(JwtUtil.canRefresh(refreshToken)){
             //如果可以刷新token的话

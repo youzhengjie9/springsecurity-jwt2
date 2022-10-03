@@ -61,6 +61,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 throw new ParseTokenException();
             }
 
+            // 判断这个accessToken是否在redis黑名单中,如果在黑名单中，则直接返回失败
+            if(redisTemplate.hasKey(jwtProperties.getAccessTokenBlacklistPrefix()+accessToken)){
+                log.error("用户未登录，请重新登录！");
+                throw new NotLoginException();
+            }
+
             //通过userid去redis中查询（拿到的就是loginUser对象），如果没有记录则直接报错（说明未登录）
             //只有redis中存在该用户的loginUser对象才能证明用户已经登录，否则说明用户未登录
             String key=LOGIN_KEY_PREFIX+userid;
