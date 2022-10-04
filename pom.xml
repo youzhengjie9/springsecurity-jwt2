@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <swagger.version>3.0.0</swagger.version>
         <!--        springboot版本-->
         <spring-boot.version>2.7.2</spring-boot.version>
         <!--        mapstruct版本-->
@@ -89,23 +90,17 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--        swagger2-->
+        <!--        swagger3-->
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
-        </dependency>
-        <!--        swagger ui-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
         <!--        knife4j 美化swagger ui -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>2.0.9</version>
+            <version>3.0.3</version>
         </dependency>
 
         <!--        lombok-->
@@ -171,7 +166,7 @@
                 <configuration>
                     <includeSystemScope>true</includeSystemScope>
                     <!--                    指定主类，也就是springboot启动类 -->
-                    <mainClass>com.boot</mainClass>
+                    <mainClass>com.boot.SecurityJwtApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

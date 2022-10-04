@@ -1,6 +1,11 @@
 server:
   port: 8188
+
 spring:
+  mvc:
+    pathmatch:
+      #swagger所需要的配置
+      matching-strategy: ant_path_matcher
   application:
     name: security-jwt2
     #这里我们使用的是mysql8.0的配置

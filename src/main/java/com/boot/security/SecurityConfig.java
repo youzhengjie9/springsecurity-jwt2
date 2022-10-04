@@ -35,7 +35,14 @@ public class SecurityConfig {
      */
     private final String[] PERMITALL_PATH={
             "/user/login",
-            "/refreshToken"
+            "/refreshToken",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/webjars/**",
+            "/doc.html"
     };
 
     @Autowired
