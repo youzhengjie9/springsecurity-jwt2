@@ -54,6 +54,21 @@
             <scope>compile</scope>
         </dependency>
 
+<!--     解决mapstruct和lombok1.18.16以上版本发生冲突出现No property named "xxx" exists in source parameter(s)的异常   -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+
+        <!--        lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+        </dependency>
+
+
         <!--        springboot-web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -101,13 +116,6 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>3.0.3</version>
-        </dependency>
-
-        <!--        lombok-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
         </dependency>
 
         <!--        String工具类包 -->

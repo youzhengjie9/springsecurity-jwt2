@@ -23,6 +23,8 @@ import java.util.Date;
 @Builder
 public class User implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
     * 主键
     * mp会自动为@TableId("id")属性生成id（默认是雪花算法生成的分布式id）。

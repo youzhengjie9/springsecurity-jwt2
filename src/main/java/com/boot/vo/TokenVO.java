@@ -17,6 +17,8 @@ import java.io.Serializable;
 @Builder
 public class TokenVO implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private String accessToken;
 
     private String refreshToken;

@@ -25,6 +25,8 @@ import java.util.Set;
 @EqualsAndHashCode
 public class LoginUser implements UserDetails, Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private User user;
 
     private List<String> permissons;
