@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 封装
@@ -39,21 +41,22 @@ public class LoginUser implements UserDetails, Serializable {
 
     public LoginUser(User user, List<String> permissons){
         this.user=user;
+        //loadUserByUsername方法中从数据库查询出来的权限列表
         this.permissons=permissons;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-//         grantedAuthoritySet = Optional.ofNullable(grantedAuthoritySet)
-//                .orElseGet(() -> permissons
-//                        .stream()
-//                        .distinct()
-//                        .map(SimpleGrantedAuthority::new)
-//                        .collect(Collectors.toSet()));
-
-//        return grantedAuthoritySet;
-        return null;
+        //如果grantedAuthoritySet为null才去生成GrantedAuthority类型的权限集合
+        if(Objects.isNull(grantedAuthoritySet)){
+            this.grantedAuthoritySet=permissons
+                    .stream()
+                    .distinct()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toSet());
+            return grantedAuthoritySet;
+        }
+        return grantedAuthoritySet;
     }
 
     @Override

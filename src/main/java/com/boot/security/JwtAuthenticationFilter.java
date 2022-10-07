@@ -83,7 +83,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             //UsernamePasswordAuthenticationToken两个参数的构造方法就是用来分别传递帐号密码的。
             //UsernamePasswordAuthenticationToken三个参数的构造方法才是用来证明用户已经登录。（这里我们一定要使用这个）
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                    new UsernamePasswordAuthenticationToken(loginUser,null,null);
+                    new UsernamePasswordAuthenticationToken(loginUser,null,loginUser.getAuthorities());
 
             //这里会把loginUser封装成Authentication放进SecurityContextHolder中，告诉spring security我们已经成功登录了。
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

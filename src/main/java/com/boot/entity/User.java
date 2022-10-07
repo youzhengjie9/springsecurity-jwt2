@@ -18,7 +18,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_user")
+@TableName("sys_user")
 @EqualsAndHashCode
 @Builder
 public class User implements Serializable {

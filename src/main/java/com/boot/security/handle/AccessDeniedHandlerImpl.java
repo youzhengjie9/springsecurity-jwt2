@@ -22,10 +22,6 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-        accessDeniedException.printStackTrace();
-        System.out.println(accessDeniedException.getMessage());
-
-
         ResponseResult result = new ResponseResult(ResponseType.NOT_PERMISSION.getCode(), ResponseType.NOT_PERMISSION.getMessage());
         String jsonString = JSON.toJSONString(result);
         WebUtil.writeJsonString(response,jsonString);

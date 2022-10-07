@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot.mapper.MenuMapper">
+
+    <select id="getBlackEndPermissionByUserId" resultType="String">
+        SELECT
+            DISTINCT perms
+        FROM
+            sys_user_role AS sur
+                LEFT JOIN sys_role AS sr ON sr.id=sur.role_id
+                LEFT JOIN sys_role_menu AS srm ON srm.role_id=sur.role_id
+                LEFT JOIN sys_menu AS sm ON sm.id=srm.menu_id
+        WHERE
+            sur.user_id=#{id}
+          AND
+            sr.status=0
+          AND
+            sm.status=0
+          AND sm.type=2;
+    </select>
+    <select id="getFrontEndMenuByUserId" resultType="com.boot.entity.Menu">
+
+        SELECT
+            DISTINCT sm.id,sm.parent_id,sm.menu_name,sm.path,sm.component,sm.visible,sm.type
+        FROM
+            sys_user_role AS sur
+                LEFT JOIN sys_role AS sr ON sr.id=sur.role_id
+                LEFT JOIN sys_role_menu AS srm ON srm.role_id=sur.role_id
+                LEFT JOIN sys_menu AS sm ON sm.id=srm.menu_id
+        WHERE
+            sur.user_id=#{id}
+          AND
+            sr.status=0
+          AND
+            sm.status=0
+          AND sm.type != 2;
+
+    </select>
+
+    <select id="getFrontEndMenuByUserIdAndParantId" resultType="com.boot.entity.Menu">
+
+        SELECT
+            DISTINCT sm.id,sm.parent_id,sm.menu_name,sm.path,sm.component,sm.visible,sm.type
+        FROM
+            sys_user_role AS sur
+                LEFT JOIN sys_role AS sr ON sr.id=sur.role_id
+                LEFT JOIN sys_role_menu AS srm ON srm.role_id=sur.role_id
+                LEFT JOIN sys_menu AS sm ON sm.id=srm.menu_id
+        WHERE
+            sur.user_id=#{id}
+          AND
+            sr.status=0
+          AND
+            sm.status=0
+          AND sm.type != 2
+          AND sm.parent_id=#{parentId};
+
+    </select>
+
+
+</mapper>
+
+
+
+

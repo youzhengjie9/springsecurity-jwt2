@@ -1,10 +1,13 @@
 package com.boot.config;
 
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.util.TypeUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  * redisTemplate+fastjson配置
@@ -17,6 +20,11 @@ public class RedisTemplateConfig {
     @SuppressWarnings(value = { "unchecked", "rawtypes" })
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory)
     {
+        //解决报错：autoType is not support. org.springframework.security.core.authority.SimpleGrantedAuthority
+        ParserConfig.getGlobalInstance().addAccept("org.springframework.security.core.authority.");
+        TypeUtils.addMapping("org.springframework.security.core.authority.SimpleGrantedAuthority",
+                SimpleGrantedAuthority.class);
+        //----配置
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
 
