@@ -12,9 +12,10 @@ import java.util.Set;
 public interface MenuTreeService {
 
     /**
-     * 前端的后台管理系统侧边栏菜单
+     * 根据用户的userid来构建前端的后台管理系统侧边栏菜单
+     * @return 菜单的json串
      */
-    List<Menu> buildTree(long userid);
+    String buildTree(long userid);
 
 
 

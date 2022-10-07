@@ -1,5 +1,6 @@
 package com.boot.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.boot.entity.Menu;
 import com.boot.service.MenuService;
 import com.boot.service.MenuTreeService;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 动态构建前端的后台管理系统的侧边栏菜单
@@ -22,26 +22,58 @@ public class MenuTreeServiceImpl implements MenuTreeService {
     @Autowired
     private MenuService menuService;
 
-    // 构建子树
-    public Menu buildChildren(Menu rootNode,long userid){
-        List<Menu> childrenTree = new ArrayList<>();
-        List<Menu> menuList = menuService.getFrontEndMenuByUserId(userid);
-        for (Menu menu : menuList) {
-            if (menu.getParentId().equals(rootNode.getId())){
-                childrenTree.add(buildChildren(rootNode,userid));
+    /**
+     * 根据用户的userid来构建前端的后台管理系统侧边栏菜单
+     * @return 菜单的json串
+     */
+    @Override
+    public String buildTree(long userid){
+        try {
+            //查询所有菜单
+            List<Menu> allMenu = menuService.getFrontEndMenuByUserId(userid);
+            //根节点
+            List<Menu> rootMenu = new ArrayList<Menu>();
+            for (Menu nav : allMenu) {
+                if(nav.getParentId()==0){//父节点是0的，为根节点。
+                    rootMenu.add(nav);
+                }
             }
+            /* 根据Menu类的order排序 */
+//            Collections.sort(rootMenu, order());
+
+            //为根菜单设置子菜单，getClild是递归调用的
+            for (Menu nav : rootMenu) {
+                /* 获取根节点下的所有子节点 使用getChild方法*/
+                List<Menu> childList = getChild(nav.getId(), allMenu);
+                nav.setChildren(childList);//给根节点设置子节点
+            }
+            return JSON.toJSONString(rootMenu);
+        } catch (Exception e) {
+            return null;
         }
-        rootNode.setChildren(childrenTree);
-        return rootNode;
     }
 
-    @Override
-    public List<Menu> buildTree(long userid) {
-        List<Menu> menus = menuService.getFrontEndMenuByUserIdAndParantId(userid,0);
-        for (Menu menu : menus) {
-            buildChildren(menu,userid);
+    private List<Menu> getChild(long id,List<Menu> allMenu){
+        //子菜单
+        List<Menu> childList = new ArrayList<Menu>();
+        for (Menu nav : allMenu) {
+            // 遍历所有节点，将所有菜单的父id与传过来的根节点的id比较
+            //相等说明：为该根节点的子节点。
+            if(nav.getParentId().equals(id)){
+                childList.add(nav);
+            }
         }
-        return menus;
+        //递归
+        for (Menu nav : childList) {
+            nav.setChildren(getChild(nav.getId(), allMenu));
+        }
+//        Collections.sort(childList,order());//排序
+
+        //如果节点下没有子节点，返回一个空List（递归退出）
+        if(childList.size() == 0){
+            return new ArrayList<Menu>();
+        }
+        return childList;
     }
 
 
