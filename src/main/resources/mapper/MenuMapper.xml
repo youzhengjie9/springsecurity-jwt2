@@ -21,7 +21,7 @@
     <select id="getFrontEndMenuByUserId" resultType="com.boot.entity.Menu">
 
         SELECT
-            DISTINCT sm.id,sm.parent_id,sm.menu_name,sm.path,sm.component,sm.visible,sm.type
+            DISTINCT sm.id,sm.parent_id,sm.menu_name,sm.path,sm.component,sm.visible,sm.type,sm.icon,sm.sort
         FROM
             sys_user_role AS sur
                 LEFT JOIN sys_role AS sr ON sr.id=sur.role_id
@@ -40,7 +40,7 @@
     <select id="getFrontEndMenuByUserIdAndParantId" resultType="com.boot.entity.Menu">
 
         SELECT
-            DISTINCT sm.id,sm.parent_id,sm.menu_name,sm.path,sm.component,sm.visible,sm.type
+            DISTINCT sm.id,sm.parent_id,sm.menu_name,sm.path,sm.component,sm.visible,sm.type,sm.icon,sm.sort
         FROM
             sys_user_role AS sur
                 LEFT JOIN sys_role AS sr ON sr.id=sur.role_id

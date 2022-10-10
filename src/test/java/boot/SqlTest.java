@@ -32,7 +32,7 @@ public class SqlTest {
     @Test
     void buildTree(){
 
-        String menuTree = menuTreeService.buildTree(1002);
+        String menuTree = menuTreeService.buildTree(1001);
         System.out.println(menuTree);
     }
 

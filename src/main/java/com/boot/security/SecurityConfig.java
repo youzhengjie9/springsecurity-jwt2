@@ -42,7 +42,8 @@ public class SecurityConfig {
             "/v2/api-docs",
             "/v3/api-docs",
             "/webjars/**",
-            "/doc.html"
+            "/doc.html",
+            "/api/captcha"
     };
 
     @Autowired

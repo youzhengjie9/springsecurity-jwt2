@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public class MenuTreeServiceImpl implements MenuTreeService {
                 }
             }
             /* 根据Menu类的order排序 */
-//            Collections.sort(rootMenu, order());
+            Collections.sort(rootMenu);
 
             //为根菜单设置子菜单，getClild是递归调用的
             for (Menu nav : rootMenu) {
@@ -67,7 +68,7 @@ public class MenuTreeServiceImpl implements MenuTreeService {
         for (Menu nav : childList) {
             nav.setChildren(getChild(nav.getId(), allMenu));
         }
-//        Collections.sort(childList,order());//排序
+        Collections.sort(childList);//排序
 
         //如果节点下没有子节点，返回一个空List（递归退出）
         if(childList.size() == 0){

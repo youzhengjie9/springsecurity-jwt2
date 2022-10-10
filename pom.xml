@@ -32,6 +32,14 @@
 
 
     <dependencies>
+
+<!--      easy-captcha验证码插件  -->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
         <!--
         实现自定义的properties（@ConfigurationProperties注解下的内容）可以在application.yml出现提示。
         导入了这个依赖，当我们运行项目后就会在target目录下面自动生成/META-INF/spring-configuration-metadata.json文件
