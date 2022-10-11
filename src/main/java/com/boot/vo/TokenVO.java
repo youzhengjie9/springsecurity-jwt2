@@ -19,6 +19,12 @@ public class TokenVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String userName;
+
+    private String nickName;
+
+    private String avatar;
+
     private String accessToken;
 
     private String refreshToken;

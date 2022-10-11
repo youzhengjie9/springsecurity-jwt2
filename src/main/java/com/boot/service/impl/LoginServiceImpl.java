@@ -2,7 +2,7 @@ package com.boot.service.impl;
 
 import com.boot.config.JwtProperties;
 import com.boot.data.ResponseResult;
-import com.boot.dto.UserDto;
+import com.boot.dto.UserLoginDto;
 import com.boot.enums.ResponseType;
 import com.boot.exception.UserNameOrPassWordException;
 import com.boot.security.LoginUser;
@@ -60,14 +60,20 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public ResponseResult<TokenVO> login(UserDto userDto) throws Throwable {
+    public ResponseResult<TokenVO> login(UserLoginDto userLoginDto) throws Throwable {
 
+        //通过codeKey就可以从Redis中获取正确的验证码
+        String realCode = (String) redisTemplate.opsForValue().get(userLoginDto.getCodeKey());
+        //校验验证码是否正确，如果不正确返回604响应码
+        if(!userLoginDto.getCode().equals(realCode)){
+            return new ResponseResult<>(ResponseType.CODE_ERROR.getCode(),ResponseType.CODE_ERROR.getMessage());
+        }
         //这个就是我们前端表单传入的UserDto（封装了前端提交的帐号密码），目的是为了后面检查帐号密码是否正确
         //--------------------
         //UsernamePasswordAuthenticationToken两个参数的构造方法就是用来分别传递帐号密码的。（这里我们一定要使用这个）
         //UsernamePasswordAuthenticationToken三个参数的构造方法才是用来证明用户已经登录。
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(userDto.getUserName(),userDto.getPassword());
+                new UsernamePasswordAuthenticationToken(userLoginDto.getUsername(),userLoginDto.getPassword());
 
         //1：authenticationManager.authenticate底层就是调用了UserDetailsService的loadUserByUserName方法，获取到UserDetails对象（也就是LoginUser对象）
         //2：将usernamePasswordAuthenticationToken（前端传入的帐号密码）和loadUserByUsername中的userMapper.selectOne(lambdaQueryWrapper)方法查询的帐号密码进行比对，判断帐号密码输入是否正确。
@@ -92,7 +98,10 @@ public class LoginServiceImpl implements LoginService {
         //将accessToken和refreshToken封装成TokenVO返回给前端
         TokenVO tokenVO = new TokenVO()
                 .setAccessToken(accessToken)
-                .setRefreshToken(refreshToken);
+                .setRefreshToken(refreshToken)
+                .setNickName(loginUser.getUser().getNickName())
+                .setAvatar(loginUser.getUser().getAvatar())
+                .setUserName(loginUser.getUser().getUserName());
 
         return new ResponseResult(ResponseType.LOGIN_SUCCESS.getCode(),ResponseType.LOGIN_SUCCESS.getMessage(),tokenVO);
     }

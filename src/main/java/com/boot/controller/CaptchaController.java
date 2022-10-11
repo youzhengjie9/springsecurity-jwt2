@@ -26,7 +26,6 @@ import java.util.concurrent.TimeUnit;
  * @date 2022/10/10 16:56:28
  */
 @RestController
-@RequestMapping("/api")
 public class CaptchaController {
 
     @Autowired
@@ -49,7 +48,7 @@ public class CaptchaController {
         String imageBase64 = specCaptcha.toBase64();
         //将验证码的key和验证码图片的base64返回给前端
         Map<String, String> result = new ConcurrentHashMap<>();
-        result.put("key",key);
+        result.put("codeKey",key);
         result.put("imageBase64",imageBase64);
         return new ResponseResult
                 (ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),result);

@@ -36,7 +36,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
             result=new ResponseResult(ResponseType.USERNAME_PASSWORD_ERROR.getCode(), ResponseType.USERNAME_PASSWORD_ERROR.getMessage());
         }
         else {
-            result=new ResponseResult(ResponseType.LOGIN_ERROR.getCode(), ResponseType.LOGIN_ERROR.getMessage());
+            result=new ResponseResult(ResponseType.USERNAME_PASSWORD_ERROR.getCode(), ResponseType.USERNAME_PASSWORD_ERROR.getMessage());
         }
         String jsonString = JSON.toJSONString(result);
         WebUtil.writeJsonString(response,jsonString);

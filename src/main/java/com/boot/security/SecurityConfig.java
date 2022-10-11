@@ -43,7 +43,7 @@ public class SecurityConfig {
             "/v3/api-docs",
             "/webjars/**",
             "/doc.html",
-            "/api/captcha"
+            "/captcha"
     };
 
     @Autowired
@@ -69,9 +69,9 @@ public class SecurityConfig {
         return http
                 //关闭csrf
                 .csrf().disable()
-                //配置跨域
-//                .cors()
-//                .and()
+                //设置允许跨域
+                .cors()
+                .and()
                 //关闭session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
