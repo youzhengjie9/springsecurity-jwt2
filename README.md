@@ -1,4 +1,10 @@
 
+### 仓库介绍
+- **该仓库是SpringBoot开发的后端项目**
+- **与之一一对应的前端仓库地址为：https://gitee.com/youzhengjie/security-jwt2-vue-admin**  
+
+
+
 用户登录流程
 
 
