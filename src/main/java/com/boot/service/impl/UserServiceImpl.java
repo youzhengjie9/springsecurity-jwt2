@@ -2,6 +2,7 @@ package com.boot.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.config.JwtProperties;
+import com.boot.dto.UserFormDto;
 import com.boot.entity.User;
 import com.boot.mapper.UserMapper;
 import com.boot.security.LoginUser;
@@ -11,6 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -32,6 +34,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     private long expired;
 
+    @Autowired
+    private UserMapper userMapper;
     /**
      * 初始化配置
      */
@@ -58,5 +62,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public List<User> selectAllUserByLimit(int page, int size) {
+        return userMapper.selectAllUserByLimit(page, size);
+    }
+
+    @Override
+    public int selectAllUserCount() {
+        return userMapper.selectAllUserCount();
+    }
+
+    @Override
+    public boolean addUser(UserFormDto userFormDto) {
+
+
+
+        return true;
     }
 }

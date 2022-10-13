@@ -1,8 +1,11 @@
 package com.boot.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.boot.dto.UserFormDto;
 import com.boot.entity.User;
 import com.boot.security.LoginUser;
+
+import java.util.List;
 
 /**
  * UserService通过继承IService接口，便可以获得IService接口提供的基础功能
@@ -19,5 +22,17 @@ public interface UserService extends IService<User> {
      * @return true为更新成功，false为更新失败
      */
     boolean updateLoginUser(LoginUser loginUser);
+
+    /**
+     * 查询所有用户并分页（并对分页功能进行性能调优）
+     */
+    List<User> selectAllUserByLimit(int page,int size);
+
+    /**
+     * 查询总用户数
+     */
+    int selectAllUserCount();
+
+    boolean addUser(UserFormDto userFormDto);
 
 }

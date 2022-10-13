@@ -1,5 +1,6 @@
 package com.boot.mapstruct;
 
+import com.boot.dto.UserFormDto;
 import com.boot.dto.UserLoginDto;
 import com.boot.entity.User;
 import com.boot.security.LoginUser;
@@ -28,7 +29,7 @@ public interface UserMapStruct {
 //    UserLoginDto toUserDto(User user);
 
     /**
-     * loginUser拷贝到TokenVO
+     * LoginUser拷贝到TokenVO
      *
      * @param loginUser
      * @return {@link TokenVO}
@@ -41,5 +42,22 @@ public interface UserMapStruct {
     TokenVO loginUserToTokenVO(LoginUser loginUser);
 
 
+    /**
+     * UserFormDto拷贝到User
+     *
+     * @param userFormDto 用户表单dto
+     * @return {@link User}
+     */
+    @Mappings({
+            @Mapping(source = "userFormDto.userName",target = "userName"),
+            @Mapping(source = "userFormDto.nickName",target = "nickName"),
+            @Mapping(source = "userFormDto.password",target = "password"),
+            @Mapping(source = "userFormDto.status",target = "status"),
+            @Mapping(source = "userFormDto.email",target = "email"),
+            @Mapping(source = "userFormDto.phone",target = "phone"),
+            @Mapping(source = "userFormDto.sex",target = "sex"),
+            @Mapping(source = "userFormDto.avatar",target = "avatar"),
+    })
+    User userFormDtoToUser(UserFormDto userFormDto);
 
 }

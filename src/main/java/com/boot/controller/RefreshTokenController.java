@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 刷新令牌控制器
+ *
  * @author youzhengjie 2022-09-30 00:39:43
  */
 @RestController

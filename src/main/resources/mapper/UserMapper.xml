@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot.mapper.UserMapper">
+
+
+<!--   这种增强版的分页sql的子查询一定要加上ORDER BY id，不然数据会不一致 -->
+    <select id="selectAllUserByLimit" resultType="com.boot.entity.User">
+        SELECT *
+        FROM sys_user
+        WHERE id >= (select id from sys_user ORDER BY id limit #{page},1)
+          AND status = 0
+          AND del_flag = 0
+        limit #{size}
+    </select>
+    <select id="selectAllUserCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM sys_user
+        WHERE status=0 AND del_flag=0
+    </select>
+</mapper>

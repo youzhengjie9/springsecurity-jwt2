@@ -2,6 +2,11 @@ server:
   port: 8188
 
 spring:
+  servlet:
+    #文件上传配置
+    multipart:
+      max-file-size: 3MB
+      max-request-size: 6MB
   mvc:
     pathmatch:
       #swagger所需要的配置
@@ -48,3 +53,14 @@ jwt:
     access-token-blacklist-prefix: accessBlack_
     # refreshToken黑名单key前缀
     refresh-token-blacklist-prefix: refreshBlack_
+
+#七牛云oss配置
+qiniu:
+  # 密钥管理的AK
+  accessKey: xPu-62ptMpg-kolm4nPVcvWgUnK1EZgu27ffKpBE
+  #密钥管理的SK
+  secretKey: gDxkqTu7i7BBgbsvoQ7h4bmE5m16aRyHXyQ1Zc6D
+  #指定我们文件上传的存储空间名称
+  bucket: java-qiniu
+  # 七牛云图片服务器域名（有效期30天，过期可以重新创建新的存储空间）
+  ossUrl: http://rjc4vwz0g.hn-bkt.clouddn.com/

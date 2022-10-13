@@ -5,6 +5,7 @@ import com.boot.SecurityJwtApplication;
 import com.boot.entity.Menu;
 import com.boot.service.MenuService;
 import com.boot.service.MenuTreeService;
+import com.boot.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,9 @@ public class SqlTest {
 
     @Autowired
     private MenuTreeService menuTreeService;
+
+    @Autowired
+    private UserService userService;
 
     @Test
     void test01(){
@@ -36,6 +40,10 @@ public class SqlTest {
         System.out.println(menuTree);
     }
 
+    @Test
+    void getUserList(){
+        System.out.println(JSON.toJSONString(userService.selectAllUserByLimit(0,10)));
+    }
 
 
 
