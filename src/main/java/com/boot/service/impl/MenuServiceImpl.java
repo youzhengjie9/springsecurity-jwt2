@@ -17,20 +17,20 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuMapper menuMapper;
 
-    @Override
-    public List<String> getBlackEndPermissionByUserId(long id) {
 
-        return menuMapper.getBlackEndPermissionByUserId(id);
+    @Override
+    public List<Menu> getMenuListByUserId(long userId) {
+        return menuMapper.getMenuListByUserId(userId);
     }
 
     @Override
-    public List<Menu> getFrontEndMenuByUserId(long id) {
-        return menuMapper.getFrontEndMenuByUserId(id);
+    public List<String> getUserPermissionByUserId(long userid) {
+        return menuMapper.getUserPermissionByUserId(userid);
     }
 
     @Override
-    public List<Menu> getFrontEndMenuByUserIdAndParantId(long id, long parentId) {
-        return menuMapper.getFrontEndMenuByUserIdAndParantId(id, parentId);
+    public List<Menu> getAllMenuPermission() {
+        return menuMapper.getAllMenuPermission();
     }
 
 }

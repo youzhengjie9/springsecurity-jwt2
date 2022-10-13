@@ -3,6 +3,7 @@ package boot;
 import com.alibaba.fastjson.JSON;
 import com.boot.SecurityJwtApplication;
 import com.boot.entity.Menu;
+import com.boot.mapper.MenuMapper;
 import com.boot.service.MenuService;
 import com.boot.service.MenuTreeService;
 import com.boot.service.UserService;
@@ -16,6 +17,8 @@ import java.util.*;
 public class SqlTest {
 
     @Autowired
+    private MenuMapper menuMapper;
+    @Autowired
     private MenuService menuService;
 
     @Autowired
@@ -25,18 +28,9 @@ public class SqlTest {
     private UserService userService;
 
     @Test
-    void test01(){
-
-        menuService.getBlackEndPermissionByUserId(1001)
-                .stream()
-                .forEach(System.out::println);
-
-    }
-
-    @Test
     void buildTree(){
 
-        String menuTree = menuTreeService.buildTree(1001);
+        String menuTree = menuTreeService.buildTreeByUserId(1001);
         System.out.println(menuTree);
     }
 
@@ -45,6 +39,10 @@ public class SqlTest {
         System.out.println(JSON.toJSONString(userService.selectAllUserByLimit(0,10)));
     }
 
+    @Test
+    void getAllMenuPermission(){
+        System.out.println(menuTreeService.buildAllMenuPermissionTree());
+    }
 
 
 }

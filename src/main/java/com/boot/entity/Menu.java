@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class Menu implements Serializable,Comparable<Menu> {
 
 
     @TableId("id")
-    @ApiModelProperty("主键id,mp会自动为@TableId(\"id\")属性生成id（默认是雪花算法生成的分布式id）")
+    @ApiModelProperty(name = "id",value = "主键")
     private Long id;
 
 
@@ -47,12 +48,12 @@ public class Menu implements Serializable,Comparable<Menu> {
 
 
     @TableField("path")
-    @ApiModelProperty("vue路由地址（type=1才会生效，type=2不生效）")
+    @ApiModelProperty("vue路由地址（type=1才会生效，type=0和2不生效）")
     private String path;
 
 
     @TableField("component")
-    @ApiModelProperty("动态路由要用到。views目录下的组件页面名,自动会补上前缀../views（type=1才会生效，type=2不生效）")
+    @ApiModelProperty("动态路由要用到。views目录下的组件页面名,自动会补上前缀‘..’两个点（type=1才会生效，type=0和2不生效）")
     private String component;
 
     @TableField("status")
@@ -65,11 +66,11 @@ public class Menu implements Serializable,Comparable<Menu> {
 
 
     @TableField("perms")
-    @ApiModelProperty("前后端的权限标识，比如sys:user:list")
+    @ApiModelProperty("权限标识，比如sys:user:list(type=0设置为null即可，不会生效)")
     private String perms;
 
     @TableField("type")
-    @ApiModelProperty("菜单类型。0：目录（点击后台侧边栏可以展开成下一级菜单的按钮）;1：菜单（点击后台侧边栏直接跳转vue路由组件的按钮）;2：普通后台服务器接口;（与后台侧边栏无关，仅仅是普通接口权限）")
+    @ApiModelProperty("菜单类型。0：目录（点击后台侧边栏可以展开成下一级菜单的按钮）;1：菜单（点击后台侧边栏直接跳转vue路由组件的按钮）;2：按钮;菜单里面的按钮")
     private int type;
 
     @TableField("icon")
@@ -78,12 +79,11 @@ public class Menu implements Serializable,Comparable<Menu> {
 
     @TableField("create_time")
     @ApiModelProperty("创建时间")
-    private String createTime;
+    private LocalDateTime createTime;
 
     @TableField("update_time")
     @ApiModelProperty("最后一次修改时间")
-    private String updateTime;
-
+    private LocalDateTime updateTime;
 
     @TableLogic//逻辑删除
     @TableField("del_flag")

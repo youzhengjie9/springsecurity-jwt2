@@ -28,10 +28,37 @@ public class MenuTreeServiceImpl implements MenuTreeService {
      * @return 菜单的json串
      */
     @Override
-    public String buildTree(long userid){
+    public String buildTreeByUserId(long userid){
         try {
             //查询所有菜单
-            List<Menu> allMenu = menuService.getFrontEndMenuByUserId(userid);
+            List<Menu> allMenu = menuService.getMenuListByUserId(userid);
+            //根节点
+            List<Menu> rootMenu = new ArrayList<Menu>();
+            for (Menu nav : allMenu) {
+                if(nav.getParentId()==0){//父节点是0的，为根节点。
+                    rootMenu.add(nav);
+                }
+            }
+            /* 根据Menu类的order排序 */
+            Collections.sort(rootMenu);
+
+            //为根菜单设置子菜单，getClild是递归调用的
+            for (Menu nav : rootMenu) {
+                /* 获取根节点下的所有子节点 使用getChild方法*/
+                List<Menu> childList = getChild(nav.getId(), allMenu);
+                nav.setChildren(childList);//给根节点设置子节点
+            }
+            return JSON.toJSONString(rootMenu);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public String buildAllMenuPermissionTree() {
+        try {
+            //查询所有菜单
+            List<Menu> allMenu = menuService.getAllMenuPermission();
             //根节点
             List<Menu> rootMenu = new ArrayList<Menu>();
             for (Menu nav : allMenu) {

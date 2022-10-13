@@ -47,11 +47,14 @@ public class UserController {
     @PostMapping("/addUser")
     public ResponseResult addUser(@RequestBody UserFormDto userFormDto){
 
-
-//        userService.save
-
-        return new ResponseResult(ResponseType.SUCCESS.getCode(),
-                ResponseType.SUCCESS.getMessage());
+        try {
+            userService.addUser(userFormDto);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage());
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
     }
 
 }

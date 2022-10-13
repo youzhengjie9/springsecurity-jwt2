@@ -5,6 +5,7 @@ import com.boot.config.JwtProperties;
 import com.boot.dto.UserFormDto;
 import com.boot.entity.User;
 import com.boot.mapper.UserMapper;
+import com.boot.mapstruct.UserMapStruct;
 import com.boot.security.LoginUser;
 import com.boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserMapStruct userMapStruct;
     /**
      * 初始化配置
      */
@@ -75,10 +79,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public boolean addUser(UserFormDto userFormDto) {
+    public int addUser(UserFormDto userFormDto) {
+
+        User user = userMapStruct.userFormDtoToUser(userFormDto);
+        //然后再补充一些前端没有传过来的属性
 
 
-
-        return true;
+        return userMapper.insert(user);
     }
 }

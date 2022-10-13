@@ -36,8 +36,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UserNameOrPassWordException();
         }
 
-        //查询用户后端接口权限，并放到loginUser中返回
-        List<String> permissions = menuService.getBlackEndPermissionByUserId(user.getId());
+        //查询用户菜单权限（就是查询Menu类中type=1和2的菜单权限标识perms，但是不包括type=0），并放到loginUser中返回
+        List<String> permissions = menuService.getUserPermissionByUserId(user.getId());
 
         //封装返回loginUser对象
         return new LoginUser(user,permissions);

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -30,6 +31,7 @@ public class User implements Serializable {
     * mp会自动为@TableId("id")属性生成id（默认是雪花算法生成的分布式id）。
     */
     @TableId("id")
+    @ApiModelProperty(name = "id",value = "主键")
     private Long id;
     /**
     * 用户名
@@ -84,13 +86,13 @@ public class User implements Serializable {
     */
     @TableField("create_time")
     @ApiModelProperty(name = "createTime",value = "创建时间",example = "2022-01-10")
-    private Date createTime;
+    private LocalDate createTime;
     /**
     * 更新时间
     */
     @TableField("update_time")
     @ApiModelProperty(name = "updateTime",value = "更新时间",example = "2022-05-20")
-    private Date updateTime;
+    private LocalDate updateTime;
     /**
     * 删除标志（0代表未删除，1代表已删除）
     */

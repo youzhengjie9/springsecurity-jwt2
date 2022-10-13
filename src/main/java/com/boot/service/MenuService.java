@@ -1,10 +1,7 @@
 package com.boot.service;
 
 import com.boot.entity.Menu;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author youzhengjie 2022-10-06 14:18:29
@@ -12,20 +9,18 @@ import java.util.Set;
 public interface MenuService {
 
     /**
-     * 查询普通后台接口权限perms集合
+     * 查询指定用户的所有菜单（包括目录和菜单，但是不包括按钮）
      */
-    List<String> getBlackEndPermissionByUserId(long id);
+    List<Menu> getMenuListByUserId(long userId);
 
     /**
-     * 查询前端侧边栏菜单
+     * 根据userid获取用户权限。（说白了就是获取sys_menu表中type=1和type=2的perms），这就是我们访问任何接口和菜单的权限
      */
-    List<Menu> getFrontEndMenuByUserId(long id);
+    List<String> getUserPermissionByUserId(long userid);
 
     /**
-     * 根据userid和parentid获取前端侧边栏菜单
+     * 获取菜单管理列表中的树型展示数据（说白了就是获取到sys_menu表中type=0和1和2所有数据）
      */
-    List<Menu> getFrontEndMenuByUserIdAndParantId(@Param("id") long id,@Param("parentId") long parentId);
-
-
+    List<Menu> getAllMenuPermission();
 
 }

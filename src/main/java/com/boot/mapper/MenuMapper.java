@@ -15,27 +15,21 @@ import java.util.Set;
 @Repository
 public interface MenuMapper {
 
-
     /**
-     * 查询普通后台接口权限perms集合
+     * 查询指定用户的所有菜单列表（包括目录和菜单，但是不包括按钮）,说白了就是type=0和type=1，后面要构建菜单树
      */
-    List<String> getBlackEndPermissionByUserId(@Param("id") long id);
-
-
-    /**
-     * 查询前端侧边栏菜单所有数据
-     */
-    List<Menu> getFrontEndMenuByUserId(@Param("id") long id);
+    List<Menu> getMenuListByUserId(@Param("userid") long userid);
 
 
     /**
-     * 根据userid和parentid获取前端侧边栏菜单
+     * 根据userid获取用户权限。（说白了就是获取sys_menu表中type=1和type=2的perms），这就是我们访问任何接口和菜单的权限
      */
-    List<Menu> getFrontEndMenuByUserIdAndParantId(@Param("id") long id,@Param("parentId") long parentId);
+    List<String> getUserPermissionByUserId(@Param("userid") long userid);
 
 
-
-
-
+    /**
+     * 获取菜单管理列表中的树型展示数据（说白了就是获取到sys_menu表中type=0和1和2所有数据）
+     */
+    List<Menu> getAllMenuPermission();
 
 }

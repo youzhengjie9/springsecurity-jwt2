@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     /**
-     * 当用户在数据库查询出有sys:test菜单才可以访问这个接口
+     * 当用户在数据库查询出有sys:user:list菜单才可以访问这个接口
      */
-    @PreAuthorize("hasAuthority('sys:test')")
+    @PreAuthorize("hasAuthority('sys:user:list')")
     @GetMapping(path = "/test")
     public ResponseResult test(){
 

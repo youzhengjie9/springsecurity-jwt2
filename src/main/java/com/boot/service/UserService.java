@@ -33,6 +33,6 @@ public interface UserService extends IService<User> {
      */
     int selectAllUserCount();
 
-    boolean addUser(UserFormDto userFormDto);
+    int addUser(UserFormDto userFormDto);
 
 }
