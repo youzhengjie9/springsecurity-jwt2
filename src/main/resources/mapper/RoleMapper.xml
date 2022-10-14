@@ -8,13 +8,12 @@
         SELECT *
         FROM sys_role
         WHERE id >= (select id from sys_role ORDER BY id limit #{page},1)
-          AND status = 0
           AND del_flag = 0
         limit #{size}
     </select>
     <select id="selectAllRoleCount" resultType="java.lang.Integer">
         SELECT COUNT(*)
         FROM sys_role
-        WHERE status=0 AND del_flag=0
+        WHERE del_flag=0
     </select>
 </mapper>

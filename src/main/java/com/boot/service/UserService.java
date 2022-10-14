@@ -35,4 +35,6 @@ public interface UserService extends IService<User> {
 
     int addUser(UserFormDto userFormDto);
 
+    int updateUser(UserFormDto userFormDto);
+
 }

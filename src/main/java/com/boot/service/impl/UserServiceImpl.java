@@ -13,6 +13,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -83,8 +85,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         User user = userMapStruct.userFormDtoToUser(userFormDto);
         //然后再补充一些前端没有传过来的属性
-
+        user.setCreateTime(LocalDate.now());
+        user.setUpdateTime(LocalDateTime.now());
 
         return userMapper.insert(user);
+    }
+
+    @Override
+    public int updateUser(UserFormDto userFormDto) {
+        User user = userMapStruct.userFormDtoToUser(userFormDto);
+        //然后再补充一些前端没有传过来的属性
+        user.setUpdateTime(LocalDateTime.now());
+        return userMapper.updateById(user);
     }
 }

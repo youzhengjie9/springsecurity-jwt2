@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -91,8 +92,8 @@ public class User implements Serializable {
     * 更新时间
     */
     @TableField("update_time")
-    @ApiModelProperty(name = "updateTime",value = "更新时间",example = "2022-05-20")
-    private LocalDate updateTime;
+    @ApiModelProperty(name = "updateTime",value = "最后一次修改时间",example = "2022-05-20 10:20:30")
+    private LocalDateTime updateTime;
     /**
     * 删除标志（0代表未删除，1代表已删除）
     */

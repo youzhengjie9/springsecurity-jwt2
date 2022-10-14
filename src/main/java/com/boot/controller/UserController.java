@@ -6,6 +6,7 @@ import com.boot.enums.ResponseType;
 import com.boot.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping(path = "/selectAllUserCount")
     public ResponseResult selectAllUserCount(){
@@ -48,7 +52,23 @@ public class UserController {
     public ResponseResult addUser(@RequestBody UserFormDto userFormDto){
 
         try {
+            //将密码进行加密
+            String encodePassword = passwordEncoder.encode(userFormDto.getPassword());
+            userFormDto.setPassword(encodePassword);
             userService.addUser(userFormDto);
+
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage());
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
+    }
+
+    @PostMapping(path = "/updateUser")
+    public ResponseResult updateUser(@RequestBody UserFormDto userFormDto){
+        try {
+            userService.updateUser(userFormDto);
             return new ResponseResult(ResponseType.SUCCESS.getCode(),
                     ResponseType.SUCCESS.getMessage());
         }catch (Exception e){
