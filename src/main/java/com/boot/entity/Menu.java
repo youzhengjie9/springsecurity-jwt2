@@ -5,13 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -33,11 +33,13 @@ public class Menu implements Serializable,Comparable<Menu> {
 
 
     @TableId("id")
+    @JsonSerialize(using = ToStringSerializer.class) //解决雪花算法生成的id过长导致前端js精度丢失问题（也就是js拿到的数据和后端不一致问题）
     @ApiModelProperty(name = "id",value = "主键")
     private Long id;
 
 
     @TableField("parent_id")
+    @JsonSerialize(using = ToStringSerializer.class) //解决雪花算法生成的id过长导致前端js精度丢失问题（也就是js拿到的数据和后端不一致问题）
     @ApiModelProperty("后台侧边栏。父菜单ID,一级菜单为0")
     private Long parentId;
 
@@ -105,7 +107,7 @@ public class Menu implements Serializable,Comparable<Menu> {
 
     //实现排序接口
     @Override
-    public int compareTo(@NotNull Menu o) {
+    public int compareTo(Menu o) {
         //升序
         return this.sort - o.getSort();
     }

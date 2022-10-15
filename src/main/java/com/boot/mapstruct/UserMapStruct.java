@@ -52,10 +52,11 @@ public interface UserMapStruct {
             @Mapping(source = "userFormDto.userName",target = "userName"),
             @Mapping(source = "userFormDto.nickName",target = "nickName"),
             @Mapping(source = "userFormDto.password",target = "password"),
-            @Mapping(source = "userFormDto.status",target = "status"),
             @Mapping(source = "userFormDto.email",target = "email"),
+            //布尔值要进行排除映射。
+            @Mapping(ignore = true,target = "status"),
             @Mapping(source = "userFormDto.phone",target = "phone"),
-            @Mapping(source = "userFormDto.sex",target = "sex"),
+            @Mapping(ignore = true,target = "sex"),
             @Mapping(source = "userFormDto.avatar",target = "avatar"),
     })
     User userFormDtoToUser(UserFormDto userFormDto);

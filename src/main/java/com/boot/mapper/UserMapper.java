@@ -22,4 +22,9 @@ public interface UserMapper extends BaseMapper<User> {
      */
     int selectAllUserCount();
 
+    /**
+     * 用户信息修改
+     */
+    int updateUser(User user);
+
 }

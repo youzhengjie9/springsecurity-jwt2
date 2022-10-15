@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.boot.mapper.UserMapper">
 
-
-<!--   这种增强版的分页sql的子查询一定要加上ORDER BY id，不然数据会不一致 -->
+    <!--   这种增强版的分页sql的子查询一定要加上ORDER BY id，不然数据会不一致 -->
     <select id="selectAllUserByLimit" resultType="com.boot.entity.User">
         SELECT
         sys_user.id,
@@ -27,4 +26,17 @@
         FROM sys_user
         WHERE  del_flag=0
     </select>
+
+    <update id="updateUser" parameterType="com.boot.entity.User">
+        UPDATE sys_user SET user_name=#{userName},nick_name=#{nickName},
+        <if test="password != null and password != ''">
+            password=#{password},
+        </if>
+        status=#{status},email=#{email},phone=#{phone},sex=#{sex},
+        <if test="avatar != null and avatar != ''">
+            avatar=#{avatar},
+        </if>
+        update_time=#{updateTime}
+        WHERE id =#{id}
+    </update>
 </mapper>

@@ -7,7 +7,10 @@ import com.boot.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * 用户控制器
@@ -49,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/addUser")
-    public ResponseResult addUser(@RequestBody UserFormDto userFormDto){
+    public ResponseResult addUser(@RequestBody @Valid UserFormDto userFormDto){
 
         try {
             //将密码进行加密
@@ -66,8 +69,14 @@ public class UserController {
     }
 
     @PostMapping(path = "/updateUser")
-    public ResponseResult updateUser(@RequestBody UserFormDto userFormDto){
+    public ResponseResult updateUser(@RequestBody @Valid UserFormDto userFormDto){
         try {
+            //如果密码不为空，则进行加密再存储到数据库中
+            if(StringUtils.hasText(userFormDto.getPassword())){
+                //将密码进行加密
+                String encodePassword = passwordEncoder.encode(userFormDto.getPassword());
+                userFormDto.setPassword(encodePassword);
+            }
             userService.updateUser(userFormDto);
             return new ResponseResult(ResponseType.SUCCESS.getCode(),
                     ResponseType.SUCCESS.getMessage());

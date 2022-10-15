@@ -1,7 +1,9 @@
 package com.boot.controller;
 
 import com.boot.data.ResponseResult;
+import com.boot.enums.ResponseType;
 import com.boot.service.OssUploadService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping(path = "/upload")
+@Slf4j
 public class UploadController {
 
     @Autowired
@@ -28,13 +31,15 @@ public class UploadController {
     /**
      * 上传头像
      *
-     * @param avatar 头像
+     * @param avatarFile 头像文件（名字一定要和el-upload的:name属性一致）
      * @return {@link ResponseResult}
      */
     @PostMapping(path = "/avatar")
-    public ResponseResult uploadAvatar(MultipartFile avatar){
+    public ResponseResult uploadAvatar(MultipartFile avatarFile){
 
-        return ossUploadService.imageUpload(avatar);
+        ResponseResult result = ossUploadService.imageUpload(avatarFile);
+        log.info("上传头像："+result.getData());
+        return result;
     }
 
     /**

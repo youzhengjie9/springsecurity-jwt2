@@ -33,6 +33,13 @@
 
     <dependencies>
 
+        <!--  参数校验 hibernate-validator-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.2.3.Final</version>
+        </dependency>
+
         <!--        七牛云oss sdk-->
         <dependency>
             <groupId>com.qiniu</groupId>

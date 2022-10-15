@@ -82,8 +82,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public int addUser(UserFormDto userFormDto) {
-
         User user = userMapStruct.userFormDtoToUser(userFormDto);
+        user.setStatus(userFormDto.getStatus() ?0:1);
+
+        if("男".equals(userFormDto.getSex())){
+            user.setSex(0);
+        }else if("女".equals(userFormDto.getSex())){
+            user.setSex(1);
+        }else{
+            user.setSex(2);
+        }
         //然后再补充一些前端没有传过来的属性
         user.setCreateTime(LocalDate.now());
         user.setUpdateTime(LocalDateTime.now());
@@ -93,9 +101,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public int updateUser(UserFormDto userFormDto) {
+
         User user = userMapStruct.userFormDtoToUser(userFormDto);
+        user.setStatus(userFormDto.getStatus() ?0:1);
+
+        if("男".equals(userFormDto.getSex())){
+            user.setSex(0);
+        }else if("女".equals(userFormDto.getSex())){
+            user.setSex(1);
+        }else{
+            user.setSex(2);
+        }
         //然后再补充一些前端没有传过来的属性
         user.setUpdateTime(LocalDateTime.now());
-        return userMapper.updateById(user);
+        return userMapper.updateUser(user);
     }
 }

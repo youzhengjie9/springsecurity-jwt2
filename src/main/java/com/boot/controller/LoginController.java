@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
  * 登录控制器
  *
@@ -39,7 +41,7 @@ public class LoginController {
      * @throws Throwable throwable
      */
     @PostMapping("/user/login")
-    public ResponseResult<TokenVO> login(@RequestBody UserLoginDto userLoginDto) throws Throwable {
+    public ResponseResult<TokenVO> login(@RequestBody @Valid UserLoginDto userLoginDto) throws Throwable {
 
 
         return loginService.login(userLoginDto);
