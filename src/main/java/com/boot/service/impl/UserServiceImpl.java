@@ -1,9 +1,11 @@
 package com.boot.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.config.JwtProperties;
 import com.boot.dto.UserFormDto;
 import com.boot.entity.User;
+import com.boot.entity.UserRole;
 import com.boot.mapper.UserMapper;
 import com.boot.mapstruct.UserMapStruct;
 import com.boot.security.LoginUser;
@@ -11,6 +13,7 @@ import com.boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -19,6 +22,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@Transactional //开启事务
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     /**
@@ -105,9 +109,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = userMapStruct.userFormDtoToUser(userFormDto);
         user.setStatus(userFormDto.getStatus() ?0:1);
 
-        if("男".equals(userFormDto.getSex())){
+        System.out.println("====="+userFormDto.getSex());
+        if("0".equals(userFormDto.getSex())){
             user.setSex(0);
-        }else if("女".equals(userFormDto.getSex())){
+        }else if("1".equals(userFormDto.getSex())){
             user.setSex(1);
         }else{
             user.setSex(2);
@@ -115,5 +120,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         //然后再补充一些前端没有传过来的属性
         user.setUpdateTime(LocalDateTime.now());
         return userMapper.updateUser(user);
+    }
+
+    @Override
+    public int deleteUser(long id) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getId,id);
+        return userMapper.delete(lambdaQueryWrapper);
+    }
+
+
+    /**
+     * 将角色分配给用户
+     *
+     * @param userRoleList 用户角色列表
+     * @return boolean
+     */
+    @Override
+    public boolean assignRoleToUser(List<UserRole> userRoleList) {
+        try {
+            //先删除用户所有角色
+            userMapper.deleteUserAllRoles(userRoleList.get(0).getUserId());
+            //再把所有新的角色（包括以前选过的）都重新添加到数据库中
+            userMapper.addRoleToUser(userRoleList);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("assignRoleToUser异常,事务已回滚。");
+        }
     }
 }

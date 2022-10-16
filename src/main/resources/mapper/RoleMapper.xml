@@ -16,4 +16,19 @@
         FROM sys_role
         WHERE del_flag=0
     </select>
+    <select id="selectAllRole" resultType="com.boot.entity.Role">
+        SELECT *
+        FROM sys_role
+        WHERE del_flag = 0
+        AND status=0
+    </select>
+    <resultMap id="res1" type="com.boot.entity.Role">
+        <association property="id" column="role_id"/>
+    </resultMap>
+    <select id="selectUserCheckedRoleByUserId" resultMap="res1">
+        SELECT DISTINCT role_id
+        from sys_user_role
+        WHERE user_id = #{userid}
+    </select>
+
 </mapper>

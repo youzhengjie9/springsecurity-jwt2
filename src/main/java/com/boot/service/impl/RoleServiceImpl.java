@@ -26,4 +26,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public int selectAllRoleCount() {
         return roleMapper.selectAllRoleCount();
     }
+
+    @Override
+    public List<Role> selectAllRole() {
+        return roleMapper.selectAllRole();
+    }
+
+    @Override
+    public List<Role> selectUserCheckedRoleByUserId(long userid) {
+        return roleMapper.selectUserCheckedRoleByUserId(userid);
+    }
 }

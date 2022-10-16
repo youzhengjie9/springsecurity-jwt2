@@ -3,7 +3,9 @@ package com.boot.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.boot.dto.UserFormDto;
 import com.boot.entity.User;
+import com.boot.entity.UserRole;
 import com.boot.security.LoginUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -33,9 +35,38 @@ public interface UserService extends IService<User> {
      */
     int selectAllUserCount();
 
+    /**
+     * 添加用户
+     *
+     * @param userFormDto 用户表单dto
+     * @return int
+     */
     int addUser(UserFormDto userFormDto);
 
+    /**
+     * 更新用户
+     *
+     * @param userFormDto 用户表单dto
+     * @return int
+     */
     int updateUser(UserFormDto userFormDto);
 
+
+    /**
+     * 删除用户
+     *
+     * @param id id
+     * @return int
+     */
+    int deleteUser(long id);
+
+
+    /**
+     * 将角色分配给用户
+     *
+     * @param userRoleList 用户角色列表
+     * @return boolean
+     */
+    boolean assignRoleToUser(List<UserRole> userRoleList);
 
 }

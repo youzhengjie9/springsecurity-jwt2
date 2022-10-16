@@ -2,6 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.boot.mapper.UserMapper">
 
+    <insert id="addRoleToUser">
+        INSERT INTO sys_user_role(id,user_id,role_id)
+        values
+        <foreach collection="userRoleList" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.userId},
+            #{item.roleId}
+            )
+        </foreach>
+    </insert>
+    <delete id="deleteUserAllRoles">
+        DELETE
+        FROM
+        sys_user_role
+        WHERE user_id=#{userid}
+    </delete>
+
     <!--   这种增强版的分页sql的子查询一定要加上ORDER BY id，不然数据会不一致 -->
     <select id="selectAllUserByLimit" resultType="com.boot.entity.User">
         SELECT

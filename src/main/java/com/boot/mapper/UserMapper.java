@@ -2,6 +2,7 @@ package com.boot.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.boot.entity.User;
+import com.boot.entity.UserRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -27,4 +28,20 @@ public interface UserMapper extends BaseMapper<User> {
      */
     int updateUser(User user);
 
+
+    /**
+     * 给用户添加角色
+     *
+     * @param userRoleList 用户角色列表
+     * @return int
+     */
+    int addRoleToUser(@Param("userRoleList") List<UserRole> userRoleList);
+
+    /**
+     * 删除用户所有角色
+     *
+     * @param userid 用户标识
+     * @return int
+     */
+    int deleteUserAllRoles(@Param("userid") long userid);
 }

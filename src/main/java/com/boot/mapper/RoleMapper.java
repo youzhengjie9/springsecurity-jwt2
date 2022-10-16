@@ -29,6 +29,20 @@ public interface RoleMapper extends BaseMapper<Role> {
      */
     int selectAllRoleCount();
 
+    /**
+     * 查询所有角色
+     */
+    List<Role> selectAllRole();
+
+
+    /**
+     * 通过userid来查询指定用户当前所拥有的role角色列表
+     *
+     * @param userid 用户标识
+     * @return {@link List}<{@link Role}>
+     */
+    List<Role> selectUserCheckedRoleByUserId(@Param("userid") long userid);
+
 
 
 }

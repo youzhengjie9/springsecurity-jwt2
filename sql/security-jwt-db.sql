@@ -157,9 +157,20 @@ CREATE TABLE `sys_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色表';
 
 
-INSERT INTO sys_role VALUES (2001,'管理员','admin',0,0,'2022-09-26 23:46:02','2022-09-28 23:46:02','管理员角色');
-INSERT INTO sys_role VALUES (2002,'普通用户','user',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','普通用户角色');
-INSERT INTO sys_role VALUES (2003,'黑名单用户','blackListUser',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','黑名单角色');
+INSERT INTO sys_role VALUES (2001,'超级管理员','admin',0,0,'2022-09-26 23:46:02','2022-09-28 23:46:02','超级管理员角色');
+INSERT INTO sys_role VALUES (2002,'普通角色','user',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','普通角色');
+INSERT INTO sys_role VALUES (2003,'黑名单角色','blackListUser',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','黑名单角色');
+INSERT INTO sys_role VALUES (2004,'测试角色1','testRole1',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','测试角色1');
+
+INSERT INTO sys_role VALUES (2005,'测试角色2','testRole2',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','测试角色2');
+INSERT INTO sys_role VALUES (2006,'测试角色3','testRole3',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','测试角色3');
+INSERT INTO sys_role VALUES (2007,'测试角色4','testRole4',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','测试角色4');
+INSERT INTO sys_role VALUES (2008,'测试角色5','testRole5',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','测试角色5');
+INSERT INTO sys_role VALUES (2009,'测试角色6','testRole6',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','测试角色6');
+INSERT INTO sys_role VALUES (2010,'测试角色7','testRole7',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','测试角色7');
+INSERT INTO sys_role VALUES (2011,'测试角色8','testRole8',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','测试角色8');
+INSERT INTO sys_role VALUES (1581238859201536002,'测试角色9','testRole9',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','测试角色9');
+INSERT INTO sys_role VALUES (1581238859201581195,'测试角色10','testRole10',0,0,'2022-09-25 10:23:02','2022-09-28 10:33:02','测试角色10');
 
 
 /* 菜单表。也就是后台侧边栏菜单（本质上其实也是接口菜单权限）与接口菜单权限的表 */
@@ -220,6 +231,9 @@ CREATE TABLE `sys_user_role` (
 
 INSERT INTO sys_user_role VALUES (4001,1001,2001);
 INSERT INTO sys_user_role VALUES (4002,1001,2002);
+INSERT INTO sys_user_role VALUES (4002,1001,2007);
+INSERT INTO sys_user_role VALUES (4002,1001,1581238859201536002);
+
 INSERT INTO sys_user_role VALUES (4003,1002,2002);
 
 
