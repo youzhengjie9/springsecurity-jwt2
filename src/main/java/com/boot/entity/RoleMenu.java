@@ -11,10 +11,10 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sys_user_role")
+@TableName("sys_role_menu")
 @EqualsAndHashCode
 @Builder
-public class UserRole implements Serializable {
+public class RoleMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,12 +25,13 @@ public class UserRole implements Serializable {
     @ApiModelProperty(name = "id",value = "主键")
     private Long id;
 
-    @TableField("user_id")
-    @ApiModelProperty("用户id")
-    private Long userId;
-
     @TableField("role_id")
     @ApiModelProperty("角色id")
     private Long roleId;
+
+    @TableField("menu_id")
+    @ApiModelProperty("菜单id")
+    private Long menuId;
+
 
 }

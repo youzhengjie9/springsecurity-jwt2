@@ -1,18 +1,21 @@
 package com.boot.controller;
 
 import com.boot.data.ResponseResult;
+import com.boot.dto.RoleFormDto;
+import com.boot.dto.UserFormDto;
 import com.boot.entity.Role;
 import com.boot.enums.ResponseType;
 import com.boot.service.RoleService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Api("角色接口")
 @RequestMapping(path = "/role")
 public class RoleController {
 
@@ -81,4 +84,48 @@ public class RoleController {
         }
     }
 
+    @PostMapping("/addRole")
+    public ResponseResult addRole(@RequestBody @Valid RoleFormDto roleFormDto){
+        try {
+            roleService.addRole(roleFormDto);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage());
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
+    }
+
+    @PostMapping(path = "/updateRole")
+    public ResponseResult updateRole(@RequestBody @Valid RoleFormDto roleFormDto){
+
+        try {
+            roleService.updateRole(roleFormDto);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage());
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
+    }
+
+    /**
+     * 删除角色
+     *
+     * @param id id
+     * @return {@link ResponseResult}
+     */
+    @DeleteMapping(path = "/deleteRole")
+    public ResponseResult deleteRole(@RequestParam("id") long id){
+        ResponseResult<Object> result = new ResponseResult<>();
+        try {
+            roleService.deleteRole(id);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage());
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
+
+    }
 }

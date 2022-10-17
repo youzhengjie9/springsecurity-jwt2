@@ -109,7 +109,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = userMapStruct.userFormDtoToUser(userFormDto);
         user.setStatus(userFormDto.getStatus() ?0:1);
 
-        System.out.println("====="+userFormDto.getSex());
         if("0".equals(userFormDto.getSex())){
             user.setSex(0);
         }else if("1".equals(userFormDto.getSex())){

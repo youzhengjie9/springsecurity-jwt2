@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 /**
- * 拷贝User类
+ * 拷贝User
  * @author youzhengjie 2022-09-29 18:08:09
  */
 
@@ -49,6 +49,7 @@ public interface UserMapStruct {
      * @return {@link User}
      */
     @Mappings({
+            @Mapping(source = "userFormDto.id",target = "id"),
             @Mapping(source = "userFormDto.userName",target = "userName"),
             @Mapping(source = "userFormDto.nickName",target = "nickName"),
             @Mapping(source = "userFormDto.password",target = "password"),

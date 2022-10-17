@@ -5,6 +5,7 @@ import com.boot.enums.ResponseType;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import com.wf.captcha.utils.CaptchaUtil;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2022/10/10 16:56:28
  */
 @RestController
+@Api("验证码接口")
 public class CaptchaController {
 
     @Autowired

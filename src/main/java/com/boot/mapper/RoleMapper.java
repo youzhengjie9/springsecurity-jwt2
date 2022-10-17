@@ -1,6 +1,7 @@
 package com.boot.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.boot.dto.RoleFormDto;
 import com.boot.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -42,7 +43,6 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @return {@link List}<{@link Role}>
      */
     List<Role> selectUserCheckedRoleByUserId(@Param("userid") long userid);
-
 
 
 }

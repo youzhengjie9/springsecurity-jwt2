@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping(path = "/user")
-@Api("用户控制器")
+@Api("用户接口")
 public class UserController {
 
     @Autowired
@@ -134,9 +134,7 @@ public class UserController {
      */
     @DeleteMapping(path = "/deleteUser")
     public ResponseResult deleteUser(@RequestParam("id") long id){
-        ResponseResult<Object> result = new ResponseResult<>();
         try {
-
             userService.deleteUser(id);
             return new ResponseResult(ResponseType.SUCCESS.getCode(),
                     ResponseType.SUCCESS.getMessage());

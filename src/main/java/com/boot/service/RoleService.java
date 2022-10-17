@@ -1,7 +1,10 @@
 package com.boot.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.boot.dto.RoleFormDto;
 import com.boot.entity.Role;
+import com.boot.entity.RoleMenu;
+import com.boot.entity.UserRole;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -36,4 +39,38 @@ public interface RoleService extends IService<Role> {
      * @return {@link List}<{@link Role}>
      */
     List<Role> selectUserCheckedRoleByUserId(long userid);
+
+    /**
+     * 添加角色
+     *
+     * @param roleFormDto 角色表单dto
+     * @return int
+     */
+    int addRole(RoleFormDto roleFormDto);
+
+    /**
+     * 更新角色
+     *
+     * @param roleFormDto 角色表单dto
+     * @return int
+     */
+    int updateRole(RoleFormDto roleFormDto);
+
+
+    /**
+     * 删除角色
+     *
+     * @param id id
+     * @return int
+     */
+    int deleteRole(long id);
+
+
+    /**
+     * 给角色分配菜单权限
+     * @param roleMenuList 角色菜单列表
+     * @return boolean
+     */
+    boolean assignMenuToRole(List<RoleMenu> roleMenuList);
+
 }
