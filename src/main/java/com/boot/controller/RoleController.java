@@ -31,32 +31,54 @@ public class RoleController {
     @GetMapping(path = "/selectAllRoleByLimit")
     public ResponseResult selectAllRoleByLimit(int page,int size){
         page=(page-1)*size;
-        return new ResponseResult
-                (ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),roleService.selectAllRoleByLimit(page, size));
+        try {
+            List<Role> roles = roleService.selectAllRoleByLimit(page, size);
+            return new ResponseResult
+                    (ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),roles);
+        }catch (Exception e){
+            return new ResponseResult
+                    (ResponseType.ERROR.getCode(), ResponseType.ERROR.getMessage());
+        }
     }
 
     @GetMapping(path = "/selectAllRoleCount")
     public ResponseResult selectAllRoleCount(){
 
-        return new ResponseResult
-                (ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),roleService.selectAllRoleCount());
+        try {
+            int count = roleService.selectAllRoleCount();
+            return new ResponseResult
+                    (ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),count);
+        }catch (Exception e){
+            return new ResponseResult
+                    (ResponseType.ERROR.getCode(), ResponseType.ERROR.getMessage());
+        }
+
     }
 
     @GetMapping(path = "/selectAllRole")
     public ResponseResult selectAllRole(){
-
-        return new ResponseResult
-                (ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),roleService.selectAllRole());
+        try {
+            List<Role> roles = roleService.selectAllRole();
+            return new ResponseResult
+                    (ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),roles);
+        }catch (Exception e){
+            return new ResponseResult
+                    (ResponseType.ERROR.getCode(), ResponseType.ERROR.getMessage());
+        }
     }
 
     @GetMapping(path = "/selectUserCheckedRoleByUserId")
     public ResponseResult selectUserCheckedRoleByUserId(@RequestParam("id") String id){
 
-        long userid = Long.parseLong(id);
-        List<Role> roles = roleService.selectUserCheckedRoleByUserId(userid);
-
-        return new ResponseResult
-                (ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),roles);
+        try {
+            long userid = Long.parseLong(id);
+            List<Role> roles = roleService.selectUserCheckedRoleByUserId(userid);
+            return new ResponseResult
+                    (ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),roles);
+        }catch (Exception e){
+            return new ResponseResult
+                    (ResponseType.ERROR.getCode(), ResponseType.ERROR.getMessage());
+        }
     }
 
 }

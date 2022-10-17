@@ -4,6 +4,7 @@ import com.boot.data.ResponseResult;
 import com.boot.dto.AssignRoleDto;
 import com.boot.dto.UserFormDto;
 import com.boot.entity.Role;
+import com.boot.entity.User;
 import com.boot.entity.UserRole;
 import com.boot.enums.ResponseType;
 import com.boot.service.UserService;
@@ -46,7 +47,14 @@ public class UserController {
     @GetMapping(path = "/selectAllUserCount")
     public ResponseResult selectAllUserCount(){
 
-        return new ResponseResult(ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),userService.selectAllUserCount());
+        try {
+            int count = userService.selectAllUserCount();
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage(),count);
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
     }
 
     /**
@@ -61,8 +69,14 @@ public class UserController {
     @GetMapping(path = "/selectAllUserByLimit")
     public ResponseResult selectAllUserByLimit(int page,int size){
         page=(page-1)*size;
-        return new ResponseResult(ResponseType.SUCCESS.getCode(),
-                ResponseType.SUCCESS.getMessage(),userService.selectAllUserByLimit(page, size));
+        try {
+            List<User> users = userService.selectAllUserByLimit(page, size);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage(),users);
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
     }
 
     /**
@@ -177,10 +191,40 @@ public class UserController {
             return new ResponseResult(ResponseType.SUCCESS.getCode(),
                     ResponseType.SUCCESS.getMessage());
         }catch (Exception e){
-            return new ResponseResult(ResponseType.SUCCESS.getCode(),
-                    ResponseType.SUCCESS.getMessage());
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
         }
 
+    }
+
+
+    @GetMapping(path = "/searchUserByUserNameAndLimit")
+    public ResponseResult searchUserByUserNameAndLimit(@RequestParam("userName") String userName,
+                                                       @RequestParam("page") int page,
+                                                       @RequestParam("size") int size){
+        page=(page-1)*size;
+
+        try {
+            List<User> users = userService.searchUserByUserNameAndLimit(userName, page, size);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage(),users);
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
+    }
+
+    @GetMapping(path = "/searchUserCountByUserName")
+    public ResponseResult searchUserCountByUserName(@RequestParam("userName") String userName){
+
+        try {
+            int count = userService.searchUserCountByUserName(userName);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage(),count);
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
     }
 
 }

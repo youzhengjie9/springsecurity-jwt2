@@ -44,4 +44,21 @@ public interface UserMapper extends BaseMapper<User> {
      * @return int
      */
     int deleteUserAllRoles(@Param("userid") long userid);
+
+    /**
+     * mysql通过userName关键字搜索（后期为了性能要放到elasticsearch中，mysql速度不高）
+     */
+    List<User> searchUserByUserNameAndLimit(@Param("userName") String userName,
+                                            @Param("page") int page,
+                                            @Param("size") int size);
+
+
+    /**
+     * 按用户名搜索用户数量
+     *
+     * @param userName 用户名
+     * @return int
+     */
+    int searchUserCountByUserName(@Param("userName") String userName);
+
 }

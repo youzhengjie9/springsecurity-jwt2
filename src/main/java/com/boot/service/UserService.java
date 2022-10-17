@@ -69,4 +69,21 @@ public interface UserService extends IService<User> {
      */
     boolean assignRoleToUser(List<UserRole> userRoleList);
 
+    /**
+     * mysql通过userName关键字搜索（后期为了性能要放到elasticsearch中，mysql速度不高）
+     */
+    List<User> searchUserByUserNameAndLimit(String userName,
+                                            int page,
+                                            int size);
+
+
+    /**
+     * 按用户名搜索用户数量
+     *
+     * @param userName 用户名
+     * @return int
+     */
+    int searchUserCountByUserName(String userName);
+
+
 }

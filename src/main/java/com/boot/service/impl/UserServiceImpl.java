@@ -149,4 +149,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new RuntimeException("assignRoleToUser异常,事务已回滚。");
         }
     }
+
+    @Override
+    public List<User> searchUserByUserNameAndLimit(String userName, int page, int size) {
+        return userMapper.searchUserByUserNameAndLimit(userName, page, size);
+    }
+
+    @Override
+    public int searchUserCountByUserName(String userName) {
+        return userMapper.searchUserCountByUserName(userName);
+    }
 }
