@@ -50,6 +50,26 @@
           ORDER BY sm.sort
     </select>
 
+    <select id="getAssignMenuTreePermission" resultType="com.boot.entity.Menu">
+        SELECT DISTINCT sm.id, sm.parent_id, sm.menu_name, sm.visible,sm.type,sm.sort
+        FROM sys_user_role AS sur
+                 LEFT JOIN sys_role AS sr ON sr.id = sur.role_id
+                 LEFT JOIN sys_role_menu AS srm ON srm.role_id = sur.role_id
+                 LEFT JOIN sys_menu AS sm ON sm.id = srm.menu_id
+        WHERE sr.status = 0
+          AND sm.status = 0
+          AND sm.visible = 0
+        ORDER BY sm.sort
+    </select>
+    <resultMap id="res1" type="com.boot.entity.Menu">
+        <result property="id" column="menu_id"/>
+    </resultMap>
+    <select id="selectRoleCheckedMenuByRoleId" resultMap="res1">
+        SELECT DISTINCT menu_id
+        FROM sys_role_menu
+        WHERE role_id = #{roleid}
+    </select>
+
 
 </mapper>
 

@@ -1,11 +1,15 @@
 package com.boot.controller;
 
 import com.boot.data.ResponseResult;
+import com.boot.dto.AssignMenuDto;
+import com.boot.dto.AssignRoleDto;
 import com.boot.dto.RoleFormDto;
 import com.boot.dto.UserFormDto;
 import com.boot.entity.Role;
+import com.boot.entity.UserRole;
 import com.boot.enums.ResponseType;
 import com.boot.service.RoleService;
+import com.boot.utils.SnowId;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 @RestController
 @Api("角色接口")
@@ -128,4 +134,55 @@ public class RoleController {
         }
 
     }
+
+    /**
+     * 分配菜单
+     *
+     * @param assignMenuDto 分配菜单dto
+     * @return {@link ResponseResult}
+     */
+    @PostMapping(path = "/assignMenu")
+    public ResponseResult assignMenu(@RequestBody @Valid AssignMenuDto assignMenuDto){
+
+        System.out.println(assignMenuDto.getMenus());
+        System.out.println(assignMenuDto.getRoleid());
+        return null;
+//        try {
+//            if(assignMenuDto.getMenus()==null || assignMenuDto.getMenus().size()==0){
+//                return new ResponseResult(ResponseType.SUCCESS.getCode(),
+//                        ResponseType.SUCCESS.getMessage());
+//            }
+//            //通过stream流把role的id组成一个新的集合
+//            List<Long> roleIds = assignRoleDto
+//                    .getRoles()
+//                    .stream()
+//                    .map(role -> role.getId())
+//                    //要进行去重
+//                    .distinct()
+//                    .collect(Collectors.toList());
+//            long userid = Long.parseLong(assignRoleDto.getUserid());
+//
+//            List<UserRole> userRoleList=new CopyOnWriteArrayList<>();
+//            for (Long roleId : roleIds) {
+//                UserRole userRole = UserRole
+//                        .builder()
+//                        //手动使用雪花算法生成分布式id
+//                        .id(SnowId.nextId())
+//                        .roleId(roleId)
+//                        .userId(userid)
+//                        .build();
+//                userRoleList.add(userRole);
+//            }
+//            //调用分配角色业务类
+//            userService.assignRoleToUser(userRoleList);
+//
+//            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+//                    ResponseType.SUCCESS.getMessage());
+//        }catch (Exception e){
+//            return new ResponseResult(ResponseType.ERROR.getCode(),
+//                    ResponseType.ERROR.getMessage());
+//        }
+
+    }
+
 }

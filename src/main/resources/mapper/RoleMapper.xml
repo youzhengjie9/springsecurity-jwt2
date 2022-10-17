@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.boot.mapper.RoleMapper">
 
-
     <!--   这种增强版的分页sql的子查询一定要加上ORDER BY id，不然数据会不一致 -->
     <select id="selectAllRoleByLimit" resultType="com.boot.entity.Role">
         SELECT *
@@ -23,7 +22,7 @@
         AND status=0
     </select>
     <resultMap id="res1" type="com.boot.entity.Role">
-        <association property="id" column="role_id"/>
+        <result property="id" column="role_id"/>
     </resultMap>
     <select id="selectUserCheckedRoleByUserId" resultMap="res1">
         SELECT DISTINCT role_id
@@ -31,4 +30,22 @@
         WHERE user_id = #{userid}
     </select>
 
+    <delete id="deleteRoleAllMenu">
+        DELETE
+        FROM
+        sys_role_menu
+        WHERE role_id=#{roleId}
+    </delete>
+
+    <insert id="addMenuToRole">
+        INSERT INTO sys_role_menu(id,role_id,menu_id)
+        VALUES
+        <foreach collection="roleMenuList" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.roleId},
+            #{item.menuId}
+            )
+        </foreach>
+    </insert>
 </mapper>

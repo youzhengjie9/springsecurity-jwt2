@@ -10,6 +10,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 菜单服务impl
+ *
+ * @author youzhengjie
+ * @date 2022/10/17 23:22:12
+ */
 @Service
 @Slf4j
 public class MenuServiceImpl implements MenuService {
@@ -31,6 +37,17 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<Menu> getAllMenuPermission() {
         return menuMapper.getAllMenuPermission();
+    }
+
+    @Override
+    public List<Menu> getAssignMenuTreePermission() {
+        return menuMapper.getAssignMenuTreePermission();
+    }
+
+    @Override
+    public List<Menu> selectRoleCheckedMenuByRoleId(long roleid) {
+
+        return menuMapper.selectRoleCheckedMenuByRoleId(roleid);
     }
 
 }

@@ -32,4 +32,20 @@ public interface MenuMapper {
      */
     List<Menu> getAllMenuPermission();
 
+    /**
+     * 获取菜单管理列表中的树型展示数据（说白了就是获取到sys_menu表中type=0和1和2所有数据）
+     * 和上面getAllMenuPermission方法的区别仅仅是这个方法只展示部分字段
+     *
+     * @return {@link List}<{@link Menu}>
+     */
+    List<Menu> getAssignMenuTreePermission();
+
+    /**
+     * 通过roleid来查询指定用户当前所拥有的menu菜单列表
+     *
+     * @param roleid 用户标识
+     * @return {@link List}<{@link Menu}>
+     */
+    List<Menu> selectRoleCheckedMenuByRoleId(@Param("roleid") long roleid);
+
 }

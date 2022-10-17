@@ -13,8 +13,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 动态构建前端的后台管理系统的侧边栏菜单
- * @author youzhengjie 2022-10-06 15:05:52
+ * 菜单树服务impl
+ *
+ * @author youzhengjie
+ * @date 2022-10-06 15:05:52
  */
 @Service
 @Slf4j
@@ -59,6 +61,38 @@ public class MenuTreeServiceImpl implements MenuTreeService {
         try {
             //查询所有菜单
             List<Menu> allMenu = menuService.getAllMenuPermission();
+            //根节点
+            List<Menu> rootMenu = new ArrayList<Menu>();
+            for (Menu nav : allMenu) {
+                if(nav.getParentId()==0){//父节点是0的，为根节点。
+                    rootMenu.add(nav);
+                }
+            }
+            /* 根据Menu类的order排序 */
+            Collections.sort(rootMenu);
+
+            //为根菜单设置子菜单，getClild是递归调用的
+            for (Menu nav : rootMenu) {
+                /* 获取根节点下的所有子节点 使用getChild方法*/
+                List<Menu> childList = getChild(nav.getId(), allMenu);
+                nav.setChildren(childList);//给根节点设置子节点
+            }
+            return JSON.toJSONString(rootMenu);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * 构建分配菜单的树（和上面buildAllMenuPermissionTree方法区别仅仅是这个方法只展示部分需要的字段、而buildAllMenuPermissionTree方法展示所有字段）
+     *
+     * @return {@link String}
+     */
+    @Override
+    public String buildAssignMenuTree() {
+        try {
+            //查询菜单
+            List<Menu> allMenu = menuService.getAssignMenuTreePermission();
             //根节点
             List<Menu> rootMenu = new ArrayList<Menu>();
             for (Menu nav : allMenu) {

@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 /**
- * @author youzhengjie 2022-10-03 14:38:15
+ * 刷新令牌服务impl
+ *
+ * @author youzhengjie
+ * @date 2022-10-03 14:38:15
  */
 @Service
 @Slf4j

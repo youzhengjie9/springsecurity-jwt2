@@ -65,7 +65,6 @@ public interface RoleService extends IService<Role> {
      */
     int deleteRole(long id);
 
-
     /**
      * 给角色分配菜单权限
      * @param roleMenuList 角色菜单列表

@@ -44,5 +44,10 @@ public class SqlTest {
         System.out.println(menuTreeService.buildAllMenuPermissionTree());
     }
 
+    @Test
+    void getAssignMenuTreePermission(){
+        System.out.println(menuTreeService.buildAssignMenuTree());
+    }
+
 
 }

@@ -24,7 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author youzhengjie 2022-09-29 23:36:12
+ * 登录服务impl
+ *
+ * @author youzhengjie
+ * @date 2022-09-29 23:36:12
  */
 @Service
 @Slf4j

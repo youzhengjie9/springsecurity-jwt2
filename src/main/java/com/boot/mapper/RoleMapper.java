@@ -3,6 +3,7 @@ package com.boot.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.boot.dto.RoleFormDto;
 import com.boot.entity.Role;
+import com.boot.entity.RoleMenu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -44,5 +45,21 @@ public interface RoleMapper extends BaseMapper<Role> {
      */
     List<Role> selectUserCheckedRoleByUserId(@Param("userid") long userid);
 
+
+    /**
+     * 删除角色所有菜单
+     *
+     * @param roleId 角色id
+     * @return int
+     */
+    int deleteRoleAllMenu(@Param("roleId") Long roleId);
+
+    /**
+     * 给角色添加所有菜单
+     *
+     * @param roleMenuList 角色菜单列表
+     * @return int
+     */
+    int addMenuToRole(@Param("roleMenuList") List<RoleMenu> roleMenuList);
 
 }

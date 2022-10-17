@@ -11,13 +11,21 @@ import com.boot.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * 角色服务impl
+ *
+ * @author youzhengjie
+ * @date 2022/10/17 23:23:21
+ */
 @Service
 @Slf4j
+@Transactional //开启事务
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
     @Autowired
@@ -88,6 +96,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public boolean assignMenuToRole(List<RoleMenu> roleMenuList) {
-        return false;
+
+        try {
+            //先删除角色对应的所有菜单
+            roleMapper.deleteRoleAllMenu(roleMenuList.get(0).getRoleId());
+            //再把所有新的菜单（包括以前选过的）都重新添加到数据库中
+            roleMapper.addMenuToRole(roleMenuList);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("assignMenuToRole异常,事务已回滚。");
+        }
+
     }
 }

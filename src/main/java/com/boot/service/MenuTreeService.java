@@ -18,4 +18,10 @@ public interface MenuTreeService {
      */
     String buildAllMenuPermissionTree();
 
+    /**
+     * 构建分配菜单的树（和上面buildAllMenuPermissionTree方法区别仅仅是这个方法只展示部分需要的字段、而buildAllMenuPermissionTree方法展示所有字段）
+     *
+     * @return {@link String}
+     */
+    String buildAssignMenuTree();
 }

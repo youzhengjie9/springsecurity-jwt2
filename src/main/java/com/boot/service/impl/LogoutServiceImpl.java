@@ -18,6 +18,12 @@ import org.springframework.util.StringUtils;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 注销服务impl
+ *
+ * @author youzhengjie
+ * @date 2022/10/17 23:22:05
+ */
 @Service
 @Slf4j
 public class LogoutServiceImpl implements LogoutService {

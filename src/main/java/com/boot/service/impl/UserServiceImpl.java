@@ -21,6 +21,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 用户服务impl
+ *
+ * @author youzhengjie
+ * @date 2022/10/17 23:23:41
+ */
 @Service
 @Transactional //开启事务
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
