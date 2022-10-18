@@ -1,5 +1,7 @@
 package com.boot.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.entity.Menu;
 import com.boot.mapper.MenuMapper;
 import com.boot.service.MenuService;
@@ -18,7 +20,7 @@ import java.util.Set;
  */
 @Service
 @Slf4j
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements MenuService {
 
     @Autowired
     private MenuMapper menuMapper;
@@ -48,6 +50,22 @@ public class MenuServiceImpl implements MenuService {
     public List<Menu> selectRoleCheckedMenuByRoleId(long roleid) {
 
         return menuMapper.selectRoleCheckedMenuByRoleId(roleid);
+    }
+
+    @Override
+    public List<Menu> onlySelectDirectory() {
+        return menuMapper.onlySelectDirectory();
+    }
+
+    @Override
+    public List<Menu> onlySelectMenu() {
+        return menuMapper.onlySelectMenu();
+    }
+
+    @Override
+    public String selectMenuNameByMenuId(long menuid) {
+
+        return menuMapper.selectMenuNameByMenuId(menuid);
     }
 
 }

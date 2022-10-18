@@ -1,5 +1,6 @@
 package com.boot.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.boot.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +14,7 @@ import java.util.Set;
  */
 @Mapper
 @Repository
-public interface MenuMapper {
+public interface MenuMapper extends BaseMapper<Menu> {
 
     /**
      * 查询指定用户的所有菜单列表（包括目录和菜单，但是不包括按钮）,说白了就是type=0和type=1，后面要构建菜单树
@@ -47,5 +48,23 @@ public interface MenuMapper {
      * @return {@link List}<{@link Menu}>
      */
     List<Menu> selectRoleCheckedMenuByRoleId(@Param("roleid") long roleid);
+
+    /**
+     * 查询sys_menu表，但是只查询目录（type=0）
+     */
+    List<Menu> onlySelectDirectory();
+
+    /**
+     * 查询sys_menu表，但是只查询菜单（type=1）
+     */
+    List<Menu> onlySelectMenu();
+
+    /**
+     * 通过菜单id查询菜单名称
+     *
+     * @param menuid menuid
+     * @return {@link String}
+     */
+    String selectMenuNameByMenuId(@Param("menuid") long menuid);
 
 }

@@ -55,7 +55,10 @@ public class MenuTreeServiceImpl implements MenuTreeService {
             return null;
         }
     }
-
+    /**
+     * 将系统所有菜单权限构建成一棵树（应用于菜单管理表格数据）
+     * @return
+     */
     @Override
     public String buildAllMenuPermissionTree() {
         try {
@@ -112,6 +115,58 @@ public class MenuTreeServiceImpl implements MenuTreeService {
             return JSON.toJSONString(rootMenu);
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    /**
+     * 根据新增的菜单的菜单类型来构建可以选择的菜单树（应用于菜单管理中的所属菜单上）
+     *
+     * 如果新增的是目录type=0（可以选择的所属菜单有）：顶层目录（也就是第一层目录）、其他目录
+     * 如果新增的是菜单type=1（可以选择的所属菜单有）：顶层目录（也就是第一层目录）、其他目录
+     * 如果新增的是按钮type=2（可以选择的所属菜单有）：菜单
+     * @param type 类型
+     * @return {@link String}
+     */
+    @Override
+    public String buildCanChooseMenuTreeByNewMenuType(int type) {
+
+        //如果新增的是目录或者菜单
+        if(type==0 || type==1){
+
+            try {
+                //如果新增的是目录或者菜单，那么只查询目录-----
+                List<Menu> allMenu = menuService.onlySelectDirectory();
+                //根节点
+                List<Menu> rootMenu = new ArrayList<Menu>();
+                for (Menu nav : allMenu) {
+                    if(nav.getParentId()==0){//父节点是0的，为根节点。
+                        rootMenu.add(nav);
+                    }
+                }
+                /* 根据Menu类的order排序 */
+                Collections.sort(rootMenu);
+
+                //为根菜单设置子菜单，getClild是递归调用的
+                for (Menu nav : rootMenu) {
+                    /* 获取根节点下的所有子节点 使用getChild方法*/
+                    List<Menu> childList = getChild(nav.getId(), allMenu);
+                    nav.setChildren(childList);//给根节点设置子节点
+                }
+                return JSON.toJSONString(rootMenu);
+            } catch (Exception e) {
+                return null;
+            }
+
+        }
+        //如果新增的是按钮
+        else {
+
+            //如果新增的是按钮，那么只查询菜单
+            List<Menu> menus = menuService.onlySelectMenu();
+
+            //由于菜单不具有子菜单，所以这里不需要调用getChild进行构建菜单树，直接返回即可
+
+            return JSON.toJSONString(menus);
         }
     }
 

@@ -39,4 +39,22 @@ public interface MenuService {
      */
     List<Menu> selectRoleCheckedMenuByRoleId(long roleid);
 
+
+    /**
+     * 查询sys_menu表，但是只查询目录（type=0）
+     */
+    List<Menu> onlySelectDirectory();
+
+    /**
+     * 查询sys_menu表，但是只查询菜单（type=1）
+     */
+    List<Menu> onlySelectMenu();
+
+    /**
+     * 通过菜单id查询菜单名称
+     *
+     * @param menuid menuid
+     * @return {@link String}
+     */
+    String selectMenuNameByMenuId(long menuid);
 }

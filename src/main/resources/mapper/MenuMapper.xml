@@ -69,6 +69,31 @@
         FROM sys_role_menu
         WHERE role_id = #{roleid}
     </select>
+    <select id="onlySelectDirectory" resultType="com.boot.entity.Menu">
+        SELECT *
+        FROM sys_menu
+        WHERE type = 0
+          AND status = 0
+          AND visible = 0
+          AND del_flag = 0
+        ORDER BY sort
+    </select>
+    <select id="onlySelectMenu" resultType="com.boot.entity.Menu">
+        SELECT *
+        FROM sys_menu
+        WHERE type = 1
+          AND status = 0
+          AND visible = 0
+          AND del_flag = 0
+        ORDER BY sort
+    </select>
+    <select id="selectMenuNameByMenuId" resultType="java.lang.String">
+        SELECT menu_name
+        FROM sys_menu
+        WHERE id = #{menuid}
+          AND status = 0
+          AND visible = 0;
+    </select>
 
 
 </mapper>

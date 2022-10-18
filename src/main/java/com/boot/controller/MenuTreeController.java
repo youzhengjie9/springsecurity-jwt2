@@ -42,7 +42,7 @@ public class MenuTreeController {
     }
 
     /**
-     * 将系统所有菜单权限构建成一棵树
+     * 将系统所有菜单权限构建成一棵树（应用于菜单管理表格数据）
      * @return
      */
     @GetMapping(path = "/buildAllMenuPermissionTree")
@@ -75,6 +75,29 @@ public class MenuTreeController {
         }
 
     }
+
+    /**
+     * 根据新增的菜单的菜单类型来构建可以选择的菜单树（应用于菜单管理中的所属菜单上）
+     *
+     * 如果新增的是目录type=0（可以选择的所属菜单有）：顶层目录（也就是第一层目录）、其他目录
+     * 如果新增的是菜单type=1（可以选择的所属菜单有）：顶层目录（也就是第一层目录）、其他目录
+     * 如果新增的是按钮type=2（可以选择的所属菜单有）：菜单
+     *
+     */
+    @GetMapping(path = "/buildCanChooseMenuTreeByNewMenuType")
+    public ResponseResult<String> buildCanChooseMenuTreeByNewMenuType(@RequestParam("type") int type){
+        try {
+            String menuTree = menuTreeService.buildCanChooseMenuTreeByNewMenuType(type);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage(),menuTree);
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
+
+    }
+
+
 
 
 }

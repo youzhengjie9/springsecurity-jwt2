@@ -192,7 +192,8 @@ CREATE TABLE `sys_menu` (
                             `del_flag` tinyint(1) DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
                             `sort` int DEFAULT '1' COMMENT '前端菜单排序，默认值为1，1的优先级最高，排在最上面',
                             `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-                            PRIMARY KEY (`id`)
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY(`menu_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='菜单表';
 
 INSERT INTO sys_menu VALUES (3001,0,'仪表盘','/dashboard','/views/dashboard/index.vue',0,0,'sys:dashboard',1,'el-icon-s-home','2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
