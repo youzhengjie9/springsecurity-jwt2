@@ -138,6 +138,7 @@ public class MenuTreeServiceImpl implements MenuTreeService {
                 List<Menu> allMenu = menuService.onlySelectDirectory();
                 //根节点
                 List<Menu> rootMenu = new ArrayList<Menu>();
+
                 for (Menu nav : allMenu) {
                     if(nav.getParentId()==0){//父节点是0的，为根节点。
                         rootMenu.add(nav);
@@ -152,6 +153,21 @@ public class MenuTreeServiceImpl implements MenuTreeService {
                     List<Menu> childList = getChild(nav.getId(), allMenu);
                     nav.setChildren(childList);//给根节点设置子节点
                 }
+
+                //当树生成好之后我们再给它第一个位置补上“顶层菜单”
+                //初始化一个默认的顶层菜单
+                Menu topMenu =
+                        Menu.builder()
+                                //顶层菜单名称
+                                .menuName("顶层菜单")
+                                //顶层菜单id
+                                .id(999L)
+                                .parentId(0L)
+                                .sort(1)
+                                .type(0)
+                                .build();
+                rootMenu.add(0,topMenu);
+
                 return JSON.toJSONString(rootMenu);
             } catch (Exception e) {
                 return null;

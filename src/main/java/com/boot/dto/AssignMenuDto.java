@@ -23,11 +23,10 @@ public class AssignMenuDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("该角色新的菜单列表")
-    private List<Menu> menus;
+    @ApiModelProperty("该角色新的菜单列表的id数组")
+    private long[] menuList;
 
-    @NotBlank(message = "需要分配菜单的角色id不能为空")
-    private String roleid;
 
+    private long roleid;
 
 }

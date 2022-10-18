@@ -196,6 +196,14 @@ public class UserController {
     }
 
 
+    /**
+     * mysql通过userName关键字搜索
+     *
+     * @param userName 用户名
+     * @param page     页面
+     * @param size     大小
+     * @return {@link ResponseResult}
+     */
     @GetMapping(path = "/searchUserByUserNameAndLimit")
     public ResponseResult searchUserByUserNameAndLimit(@RequestParam("userName") String userName,
                                                        @RequestParam("page") int page,
@@ -212,6 +220,12 @@ public class UserController {
         }
     }
 
+    /**
+     * 按用户名搜索用户数量
+     *
+     * @param userName 用户名
+     * @return {@link ResponseResult}
+     */
     @GetMapping(path = "/searchUserCountByUserName")
     public ResponseResult searchUserCountByUserName(@RequestParam("userName") String userName){
 

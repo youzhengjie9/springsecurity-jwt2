@@ -72,4 +72,21 @@ public interface RoleService extends IService<Role> {
      */
     boolean assignMenuToRole(List<RoleMenu> roleMenuList);
 
+    /**
+     * mysql通过role的name关键字搜索
+     *
+     * @param roleName 角色名
+     * @param page     页面
+     * @param size     大小
+     * @return {@link List}<{@link Role}>
+     */
+    List<Role> searchRoleByRoleNameAndLimit(String roleName, int page, int size);
+
+    /**
+     * 按role的name搜索role数量
+     *
+     * @param roleName 角色名
+     * @return int
+     */
+    int searchRoleCountByRoleName(String roleName);
 }

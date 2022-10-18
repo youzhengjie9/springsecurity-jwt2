@@ -88,6 +88,8 @@ public class MenuTreeController {
     public ResponseResult<String> buildCanChooseMenuTreeByNewMenuType(@RequestParam("type") int type){
         try {
             String menuTree = menuTreeService.buildCanChooseMenuTreeByNewMenuType(type);
+            System.out.println("=======");
+            System.out.println(menuTree);
             return new ResponseResult(ResponseType.SUCCESS.getCode(),
                     ResponseType.SUCCESS.getMessage(),menuTree);
         }catch (Exception e){

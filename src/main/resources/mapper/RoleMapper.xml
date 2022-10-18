@@ -48,4 +48,19 @@
             )
         </foreach>
     </insert>
+
+    <select id="searchRoleByRoleNameAndLimit" resultType="com.boot.entity.Role">
+        SELECT *
+        FROM sys_role
+        WHERE id >= (SELECT id FROM sys_role ORDER BY id limit #{page},1)
+          AND del_flag = 0
+          AND `name` LIKE CONCAT('%',#{roleName}, '%')
+        limit #{size}
+    </select>
+    <select id="searchRoleCountByRoleName" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM sys_role
+        WHERE `name` LIKE CONCAT('%', #{roleName}, '%')
+          AND del_flag = 0
+    </select>
 </mapper>

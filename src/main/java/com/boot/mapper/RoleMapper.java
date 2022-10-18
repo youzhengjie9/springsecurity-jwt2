@@ -62,4 +62,24 @@ public interface RoleMapper extends BaseMapper<Role> {
      */
     int addMenuToRole(@Param("roleMenuList") List<RoleMenu> roleMenuList);
 
+    /**
+     * mysql通过role的name关键字搜索
+     *
+     * @param roleName 角色名
+     * @param page     页面
+     * @param size     大小
+     * @return {@link List}<{@link Role}>
+     */
+    List<Role> searchRoleByRoleNameAndLimit(@Param("roleName") String roleName,
+                                            @Param("page") int page,
+                                            @Param("size") int size);
+
+    /**
+     * 按role的name搜索role数量
+     *
+     * @param roleName 角色名
+     * @return int
+     */
+    int searchRoleCountByRoleName(@Param("roleName") String roleName);
+
 }

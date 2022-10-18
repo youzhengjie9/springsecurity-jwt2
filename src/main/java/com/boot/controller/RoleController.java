@@ -5,7 +5,9 @@ import com.boot.dto.AssignMenuDto;
 import com.boot.dto.AssignRoleDto;
 import com.boot.dto.RoleFormDto;
 import com.boot.dto.UserFormDto;
+import com.boot.entity.Menu;
 import com.boot.entity.Role;
+import com.boot.entity.RoleMenu;
 import com.boot.entity.UserRole;
 import com.boot.enums.ResponseType;
 import com.boot.service.RoleService;
@@ -144,45 +146,79 @@ public class RoleController {
     @PostMapping(path = "/assignMenu")
     public ResponseResult assignMenu(@RequestBody @Valid AssignMenuDto assignMenuDto){
 
-        System.out.println(assignMenuDto.getMenus());
-        System.out.println(assignMenuDto.getRoleid());
-        return null;
-//        try {
-//            if(assignMenuDto.getMenus()==null || assignMenuDto.getMenus().size()==0){
-//                return new ResponseResult(ResponseType.SUCCESS.getCode(),
-//                        ResponseType.SUCCESS.getMessage());
-//            }
-//            //通过stream流把role的id组成一个新的集合
-//            List<Long> roleIds = assignRoleDto
-//                    .getRoles()
-//                    .stream()
-//                    .map(role -> role.getId())
-//                    //要进行去重
-//                    .distinct()
-//                    .collect(Collectors.toList());
-//            long userid = Long.parseLong(assignRoleDto.getUserid());
-//
-//            List<UserRole> userRoleList=new CopyOnWriteArrayList<>();
-//            for (Long roleId : roleIds) {
-//                UserRole userRole = UserRole
-//                        .builder()
-//                        //手动使用雪花算法生成分布式id
-//                        .id(SnowId.nextId())
-//                        .roleId(roleId)
-//                        .userId(userid)
-//                        .build();
-//                userRoleList.add(userRole);
-//            }
-//            //调用分配角色业务类
-//            userService.assignRoleToUser(userRoleList);
-//
-//            return new ResponseResult(ResponseType.SUCCESS.getCode(),
-//                    ResponseType.SUCCESS.getMessage());
-//        }catch (Exception e){
-//            return new ResponseResult(ResponseType.ERROR.getCode(),
-//                    ResponseType.ERROR.getMessage());
-//        }
+        try {
+            if(assignMenuDto.getMenuList()==null || assignMenuDto.getMenuList().length==0){
+                return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                        ResponseType.SUCCESS.getMessage());
+            }
 
+            List<RoleMenu> roleMenuList=new CopyOnWriteArrayList<>();
+
+            for (long menuId : assignMenuDto.getMenuList()) {
+                RoleMenu roleMenu = RoleMenu
+                        .builder()
+                        //手动使用雪花算法生成分布式id
+                        .id(SnowId.nextId())
+                        .roleId(assignMenuDto.getRoleid())
+                        .menuId(menuId)
+                        .build();
+                roleMenuList.add(roleMenu);
+            }
+
+            //调用分配角色业务类
+            roleService.assignMenuToRole(roleMenuList);
+
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage());
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
+
+    }
+
+
+    /**
+     * mysql通过role的name关键字搜索
+     *
+     * @param roleName 角色名
+     * @param page     页面
+     * @param size     大小
+     * @return {@link ResponseResult}
+     */
+    @GetMapping(path = "/searchRoleByRoleNameAndLimit")
+    public ResponseResult searchRoleByRoleNameAndLimit(@RequestParam("roleName") String roleName,
+                                                       @RequestParam("page") int page,
+                                                       @RequestParam("size") int size){
+        page=(page-1)*size;
+
+        try {
+            List<Role> roles = roleService.searchRoleByRoleNameAndLimit(roleName, page, size);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage(),roles);
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
+    }
+
+    /**
+     * 按role的name搜索role数量
+     *
+     * @param roleName 角色名
+     * @return {@link ResponseResult}
+     */
+    @GetMapping(path = "/searchRoleCountByRoleName")
+    public ResponseResult searchRoleCountByRoleName(@RequestParam("roleName") String roleName){
+
+        try {
+            int count = roleService.searchRoleCountByRoleName(roleName);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage(),count);
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
     }
 
 }

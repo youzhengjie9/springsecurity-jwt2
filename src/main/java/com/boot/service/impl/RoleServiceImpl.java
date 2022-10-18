@@ -109,4 +109,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         }
 
     }
+
+    @Override
+    public List<Role> searchRoleByRoleNameAndLimit(String roleName, int page, int size) {
+        return roleMapper.searchRoleByRoleNameAndLimit(roleName, page, size);
+    }
+
+    @Override
+    public int searchRoleCountByRoleName(String roleName) {
+        return roleMapper.searchRoleCountByRoleName(roleName);
+    }
 }
