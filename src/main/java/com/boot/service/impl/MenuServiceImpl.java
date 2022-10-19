@@ -71,7 +71,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements Men
 
     @Override
     public String getRouterByUserId(long userid) {
-        return JSON.toJSONString(menuMapper.getRouterByUserId(userid));
+        List<Menu> router = menuMapper.getRouterByUserId(userid);
+        //这个代码十分重要，解决前端因为有些用户没有菜单/路由（也就是这个getRouterByUserId方法查不到数据导致一直死循环）
+        //设置一个默认的路由，不管是什么用户、有没有菜单都会有这个默认的路由。防止前端死循环
+        Menu defaultRouter = Menu.builder()
+                .path("/dashboard")
+                .component("/dashboard/index")
+                .build();
+        router.add(0,defaultRouter);
+        return JSON.toJSONString(router);
     }
 
 }

@@ -73,12 +73,13 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ResponseResult<TokenVO> login(UserLoginDto userLoginDto) throws Throwable {
 
-        //通过codeKey就可以从Redis中获取正确的验证码
-        String realCode = (String) redisTemplate.opsForValue().get(userLoginDto.getCodeKey());
-        //校验验证码是否正确，如果不正确返回604响应码
-        if(!userLoginDto.getCode().equals(realCode)){
-            return new ResponseResult<>(ResponseType.CODE_ERROR.getCode(),ResponseType.CODE_ERROR.getMessage());
-        }
+//        //通过codeKey就可以从Redis中获取正确的验证码
+//        String realCode = (String) redisTemplate.opsForValue().get(userLoginDto.getCodeKey());
+//        //校验验证码是否正确，如果不正确返回604响应码
+//        if(!userLoginDto.getCode().equals(realCode)){
+//            return new ResponseResult<>(ResponseType.CODE_ERROR.getCode(),ResponseType.CODE_ERROR.getMessage());
+//        }
+
         //这个就是我们前端表单传入的UserDto（封装了前端提交的帐号密码），目的是为了后面检查帐号密码是否正确
         //--------------------
         //UsernamePasswordAuthenticationToken两个参数的构造方法就是用来分别传递帐号密码的。（这里我们一定要使用这个）
