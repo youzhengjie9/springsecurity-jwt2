@@ -1,5 +1,6 @@
 package com.boot.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.entity.Menu;
@@ -66,6 +67,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements Men
     public String selectMenuNameByMenuId(long menuid) {
 
         return menuMapper.selectMenuNameByMenuId(menuid);
+    }
+
+    @Override
+    public String getRouterByUserId(long userid) {
+        return JSON.toJSONString(menuMapper.getRouterByUserId(userid));
     }
 
 }

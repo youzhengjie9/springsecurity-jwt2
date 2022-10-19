@@ -2,7 +2,6 @@ package com.boot.vo;
 
 import lombok.*;
 import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 
 /**
@@ -28,5 +27,10 @@ public class TokenVO implements Serializable {
     private String accessToken;
 
     private String refreshToken;
+    //该用户的动态菜单（侧边栏）
+    private String dynamicMenu;
+    //该用户的动态路由
+    private String dynamicRouter;
+
 
 }

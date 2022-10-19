@@ -181,7 +181,7 @@ CREATE TABLE `sys_menu` (
                             `parent_id` bigint(20) DEFAULT '0' COMMENT '后台侧边栏。父菜单ID,一级菜单为0',
                             `menu_name` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '菜单/权限名称',
                             `path` varchar(200) DEFAULT NULL COMMENT 'vue路由地址（type=1才会生效，type=0和2不生效）',
-                            `component` varchar(255) DEFAULT NULL COMMENT '动态路由要用到。views目录下的组件页面名,自动会补上前缀‘..’两个点（type=1才会生效，type=0和2不生效）',
+                            `component` varchar(255) DEFAULT NULL COMMENT '动态路由要用到。views目录下的组件名,自动会补上前缀‘../views’，这个前缀是固定的写法不能写到数据库里不然会报错（type=1才会生效，type=0和2不生效）',
                             `status` tinyint(1) DEFAULT '0' COMMENT '菜单状态（0正常 1停用）',
                             `visible` tinyint(1) DEFAULT '0' COMMENT '菜单显示状态（0显示 1隐藏）（type=0或者1才会生效，type=2不生效）',
                             `perms` varchar(100) DEFAULT NULL COMMENT '菜单权限标识，比如sys:user:list(type=0设置为null即可，不会生效)',
@@ -196,25 +196,24 @@ CREATE TABLE `sys_menu` (
                             UNIQUE KEY(`menu_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='菜单表';
 
-INSERT INTO sys_menu VALUES (3001,0,'仪表盘','/dashboard','/views/dashboard/index.vue',0,0,'sys:dashboard',1,'el-icon-s-home','2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
 # 用户管理菜单
-INSERT INTO sys_menu VALUES (3002,0,'用户管理','/user/list','/views/user-list/index.vue',0,0,'sys:user:list',1,'el-icon-s-order','2022-09-26 23:46:02','2022-09-28 23:46:02',0,2,'bz');
+INSERT INTO sys_menu VALUES (3002,0,'用户管理','/user/list','/user-list/index',0,0,'sys:user:list',1,'el-icon-s-order','2022-09-26 23:46:02','2022-09-28 23:46:02',0,2,'bz');
 # 用户管理里面的按钮权限
 INSERT INTO sys_menu VALUES (3010,3002,'新增用户',null,null,0,0,'sys:user:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
 # 角色管理菜单
-INSERT INTO sys_menu VALUES (3003,0,'角色管理','/role/list','/views/role-list/index.vue',0,0,'sys:role:list',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,3,'bz');
+INSERT INTO sys_menu VALUES (3003,0,'角色管理','/role/list','/role-list/index',0,0,'sys:role:list',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,3,'bz');
 # 角色管理里面的按钮权限
 INSERT INTO sys_menu VALUES (3011,3003,'新增角色',null,null,0,0,'sys:role:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
 # 菜单（权限）管理
-INSERT INTO sys_menu VALUES (3004,0,'菜单管理','/menu/list','/views/menu-list/index.vue',0,0,'sys:menu:list',1,'el-icon-s-custom','2022-09-26 23:46:02','2022-09-28 23:46:02',0,4,'bz');
+INSERT INTO sys_menu VALUES (3004,0,'菜单管理','/menu/list','/menu-list/index',0,0,'sys:menu:list',1,'el-icon-s-custom','2022-09-26 23:46:02','2022-09-28 23:46:02',0,4,'bz');
 # 菜单管理里面的按钮权限
 INSERT INTO sys_menu VALUES (3012,3004,'新增菜单',null,null,0,0,'sys:menu:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
 
 INSERT INTO sys_menu VALUES (3005,0,'一级菜单',null,null,0,0,null,0,'el-icon-s-tools','2022-09-26 23:46:02','2022-09-28 23:46:02',0,5,'bz');
 INSERT INTO sys_menu VALUES (3006,3005,'二级菜单',null,null,0,0,null,0,'el-icon-eleme','2022-09-26 23:46:02','2022-09-28 23:46:02',0,6,'bz');
-INSERT INTO sys_menu VALUES (3007,3006,'三级菜单1','/page1','/views/test-page/page1.vue',0,0,'sys:third1',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,9,'bz');
-INSERT INTO sys_menu VALUES (3008,3006,'三级菜单2','/page2','/views/test-page/page2.vue',0,0,'sys:third2',1,'el-icon-tickets','2022-09-26 23:46:02','2022-09-28 23:46:02',0,7,'bz');
-INSERT INTO sys_menu VALUES (3009,3006,'三级菜单3','/page3','/views/test-page/page3.vue',0,0,'sys:third3',1,'el-icon-tickets','2022-09-26 23:46:02','2022-09-28 23:46:02',0,8,'bz');
+INSERT INTO sys_menu VALUES (3007,3006,'三级菜单1','/page1','/test-page/page1',0,0,'sys:third1',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,9,'bz');
+INSERT INTO sys_menu VALUES (3008,3006,'三级菜单2','/page2','/test-page/page2',0,0,'sys:third2',1,'el-icon-tickets','2022-09-26 23:46:02','2022-09-28 23:46:02',0,7,'bz');
+INSERT INTO sys_menu VALUES (3009,3006,'三级菜单3','/page3','/test-page/page3',0,0,'sys:third3',1,'el-icon-tickets','2022-09-26 23:46:02','2022-09-28 23:46:02',0,8,'bz');
 
 
 
@@ -250,7 +249,6 @@ CREATE TABLE `sys_role_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色-菜单表';
 
 -- 管理员菜单
-INSERT INTO sys_role_menu VALUES (5001,2001,3001);
 INSERT INTO sys_role_menu VALUES (5002,2001,3002);
 INSERT INTO sys_role_menu VALUES (5003,2001,3003);
 INSERT INTO sys_role_menu VALUES (5004,2001,3004);
@@ -267,8 +265,6 @@ INSERT INTO sys_role_menu VALUES (5012,2001,3012);
 
 
 -- 普通用户菜单
-
-INSERT INTO sys_role_menu VALUES (5013,2002,3001);
 INSERT INTO sys_role_menu VALUES (5014,2002,3005);
 INSERT INTO sys_role_menu VALUES (5015,2002,3006);
 INSERT INTO sys_role_menu VALUES (5016,2002,3007);

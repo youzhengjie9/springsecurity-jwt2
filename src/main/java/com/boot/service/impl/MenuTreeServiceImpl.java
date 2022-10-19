@@ -1,6 +1,7 @@
 package com.boot.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.boot.entity.Menu;
 import com.boot.service.MenuService;
 import com.boot.service.MenuTreeService;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * 菜单树服务impl
@@ -24,6 +27,9 @@ public class MenuTreeServiceImpl implements MenuTreeService {
 
     @Autowired
     private MenuService menuService;
+
+    //顶层菜单固定id
+    private static final Long TOP_MENU_ID=-999L;
 
     /**
      * 根据用户的userid来构建前端的后台管理系统侧边栏菜单
@@ -50,6 +56,16 @@ public class MenuTreeServiceImpl implements MenuTreeService {
                 List<Menu> childList = getChild(nav.getId(), allMenu);
                 nav.setChildren(childList);//给根节点设置子节点
             }
+            Menu dashboardMenu = Menu.builder()
+                    .id(-66L)
+                    .menuName("仪表盘")
+                    .path("/dashboard")
+                    .icon("el-icon-s-home")
+                    .component("../views/dashboard/index")
+                    .children(new ArrayList<>())
+                    .build();
+            rootMenu.add(0,dashboardMenu);
+
             return JSON.toJSONString(rootMenu);
         } catch (Exception e) {
             return null;
@@ -161,7 +177,7 @@ public class MenuTreeServiceImpl implements MenuTreeService {
                                 //顶层菜单名称
                                 .menuName("顶层菜单")
                                 //顶层菜单id
-                                .id(999L)
+                                .id(TOP_MENU_ID)
                                 .parentId(0L)
                                 .sort(1)
                                 .type(0)

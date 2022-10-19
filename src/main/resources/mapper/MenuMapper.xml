@@ -94,6 +94,22 @@
           AND status = 0
           AND visible = 0;
     </select>
+    <select id="getRouterByUserId" resultType="com.boot.entity.Menu">
+        SELECT
+            DISTINCT sm.path,sm.component
+        FROM
+            sys_user_role AS sur
+                LEFT JOIN sys_role AS sr ON sr.id=sur.role_id
+                LEFT JOIN sys_role_menu AS srm ON srm.role_id=sur.role_id
+                LEFT JOIN sys_menu AS sm ON sm.id=srm.menu_id
+        WHERE
+            sur.user_id=#{userid}
+          AND
+            sr.status=0
+          AND
+            sm.status=0
+          AND sm.type =1;
+    </select>
 
 
 </mapper>

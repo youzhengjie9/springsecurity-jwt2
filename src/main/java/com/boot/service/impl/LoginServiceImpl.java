@@ -7,6 +7,8 @@ import com.boot.enums.ResponseType;
 import com.boot.exception.UserNameOrPassWordException;
 import com.boot.security.LoginUser;
 import com.boot.service.LoginService;
+import com.boot.service.MenuService;
+import com.boot.service.MenuTreeService;
 import com.boot.utils.JwtUtil;
 import com.boot.vo.TokenVO;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +48,12 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private JwtProperties jwtProperties;
+
+    @Autowired
+    private MenuTreeService menuTreeService;
+
+    @Autowired
+    private MenuService menuService;
 
     /**
      * loginUser过期时间。默认单位（毫秒）,accessToken初始化过期时间+（refreshToken初始化过期时间/2）*最大刷新token次数
@@ -98,13 +106,19 @@ public class LoginServiceImpl implements LoginService {
         //将LoginUser对象存入Redis，证明已经登录了
         redisTemplate.opsForValue().set(LOGIN_KEY_PREFIX+userid,loginUser,expired, TimeUnit.MILLISECONDS);
 
+        //生成该用户的动态菜单
+        String dynamicMenu = menuTreeService.buildTreeByUserId(Long.parseLong(userid));
+        //获取该用户的所有路由（只包含类型为菜单，type=1的菜单）
+        String dynamicRouter = menuService.getRouterByUserId(Long.parseLong(userid));
         //将accessToken和refreshToken封装成TokenVO返回给前端
         TokenVO tokenVO = new TokenVO()
                 .setAccessToken(accessToken)
                 .setRefreshToken(refreshToken)
                 .setNickName(loginUser.getUser().getNickName())
                 .setAvatar(loginUser.getUser().getAvatar())
-                .setUserName(loginUser.getUser().getUserName());
+                .setUserName(loginUser.getUser().getUserName())
+                .setDynamicMenu(dynamicMenu)
+                .setDynamicRouter(dynamicRouter);
 
         return new ResponseResult(ResponseType.LOGIN_SUCCESS.getCode(),ResponseType.LOGIN_SUCCESS.getMessage(),tokenVO);
     }

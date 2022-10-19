@@ -67,4 +67,11 @@ public interface MenuMapper extends BaseMapper<Menu> {
      */
     String selectMenuNameByMenuId(@Param("menuid") long menuid);
 
+    /**
+     * 根据用户id拿到这个用户的动态路由（也就是只获取type为1的菜单），返回vue实现动态路由添加
+     *
+     * @param userid 用户标识
+     * @return {@link List}<{@link Menu}>
+     */
+    List<Menu> getRouterByUserId(@Param("userid") long userid);
 }

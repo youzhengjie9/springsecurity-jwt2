@@ -1,6 +1,7 @@
 package com.boot.service;
 
 import com.boot.entity.Menu;
+
 import java.util.List;
 
 /**
@@ -57,4 +58,11 @@ public interface MenuService {
      * @return {@link String}
      */
     String selectMenuNameByMenuId(long menuid);
+
+    /**
+     * 根据用户id拿到这个用户的动态路由（也就是只获取type为1的菜单），返回vue实现动态路由添加
+     *
+     * @param userid 用户标识
+     */
+    String getRouterByUserId(long userid);
 }

@@ -55,7 +55,7 @@ public class Menu implements Serializable,Comparable<Menu> {
 
 
     @TableField("component")
-    @ApiModelProperty("动态路由要用到。views目录下的组件页面名,自动会补上前缀‘..’两个点（type=1才会生效，type=0和2不生效）")
+    @ApiModelProperty("动态路由要用到。views目录下的组件名,自动会补上前缀‘../views’，这个前缀是固定的写法不能写到数据库里不然会报错（type=1才会生效，type=0和2不生效）")
     private String component;
 
     @TableField("status")
