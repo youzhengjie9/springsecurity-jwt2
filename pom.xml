@@ -33,6 +33,18 @@
 
     <dependencies>
 
+<!--        mica-xss依赖，防止xss攻击，version和springboot的版本一样即可-->
+        <dependency>
+            <groupId>net.dreamlu</groupId>
+            <artifactId>mica-core</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.dreamlu</groupId>
+            <artifactId>mica-xss</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
         <!--        雪花漂移算法(雪花算法增强版)-->
         <dependency>
             <groupId>com.github.yitter</groupId>
@@ -180,11 +192,19 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!--        redis-->
+        <!--       spring-data-redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
+<!--        spring-data-redis配置连接池所必须要的依赖。-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+
     </dependencies>
 
 

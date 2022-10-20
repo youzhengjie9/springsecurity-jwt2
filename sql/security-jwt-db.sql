@@ -195,24 +195,73 @@ CREATE TABLE `sys_menu` (
                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='菜单表';
 
-# 用户管理菜单
-INSERT INTO sys_menu VALUES (3002,0,'用户管理','/user/list','/user-list/index',0,0,'sys:user:list',1,'el-icon-s-order','2022-09-26 23:46:02','2022-09-28 23:46:02',0,2,'bz');
-# 用户管理里面的按钮权限
-INSERT INTO sys_menu VALUES (3010,3002,'新增用户',null,null,0,0,'sys:user:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
-# 角色管理菜单
-INSERT INTO sys_menu VALUES (3003,0,'角色管理','/role/list','/role-list/index',0,0,'sys:role:list',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,3,'bz');
-# 角色管理里面的按钮权限
-INSERT INTO sys_menu VALUES (3011,3003,'新增角色',null,null,0,0,'sys:role:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
-# 菜单（权限）管理
-INSERT INTO sys_menu VALUES (3004,0,'菜单管理','/menu/list','/menu-list/index',0,0,'sys:menu:list',1,'el-icon-s-custom','2022-09-26 23:46:02','2022-09-28 23:46:02',0,4,'bz');
-# 菜单管理里面的按钮权限
-INSERT INTO sys_menu VALUES (3012,3004,'新增菜单',null,null,0,0,'sys:menu:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
 
-INSERT INTO sys_menu VALUES (3005,0,'一级菜单',null,null,0,0,null,0,'el-icon-s-tools','2022-09-26 23:46:02','2022-09-28 23:46:02',0,5,'bz');
-INSERT INTO sys_menu VALUES (3006,3005,'二级菜单',null,null,0,0,null,0,'el-icon-eleme','2022-09-26 23:46:02','2022-09-28 23:46:02',0,6,'bz');
-INSERT INTO sys_menu VALUES (3007,3006,'三级菜单1','/page1','/test-page/page1',0,0,'sys:third1',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,9,'bz');
-INSERT INTO sys_menu VALUES (3008,3006,'三级菜单2','/page2','/test-page/page2',0,0,'sys:third2',1,'el-icon-tickets','2022-09-26 23:46:02','2022-09-28 23:46:02',0,7,'bz');
-INSERT INTO sys_menu VALUES (3009,3006,'三级菜单3','/page3','/test-page/page3',0,0,'sys:third3',1,'el-icon-tickets','2022-09-26 23:46:02','2022-09-28 23:46:02',0,8,'bz');
+/* 系统管理目录 */
+INSERT INTO sys_menu VALUES (3001,0,'系统管理',null,null,0,0,null,0,'el-icon-eleme','2022-09-26 23:46:02','2022-09-28 23:46:02',0,5,'bz');
+
+/* 用户管理菜单 */
+INSERT INTO sys_menu VALUES (3002,3001,'用户管理','/user/list','/user-list/index',0,0,'sys:user:list',1,'el-icon-s-order','2022-09-26 23:46:02','2022-09-28 23:46:02',0,2,'bz');
+
+/* 用户管理里面的按钮权限 */
+INSERT INTO sys_menu VALUES (3003,3002,'新增用户',null,null,0,0,'sys:user:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+INSERT INTO sys_menu VALUES (3004,3002,'修改用户',null,null,0,0,'sys:user:list:update',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+INSERT INTO sys_menu VALUES (3005,3002,'删除用户',null,null,0,0,'sys:user:list:delete',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+
+
+/* 角色管理菜单 */
+INSERT INTO sys_menu VALUES (3006,3001,'角色管理','/role/list','/role-list/index',0,0,'sys:role:list',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,3,'bz');
+/* 角色管理里面的按钮权限 */
+INSERT INTO sys_menu VALUES (3007,3006,'新增角色',null,null,0,0,'sys:role:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+INSERT INTO sys_menu VALUES (3008,3006,'修改角色',null,null,0,0,'sys:role:list:update',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+INSERT INTO sys_menu VALUES (3009,3006,'删除角色',null,null,0,0,'sys:role:list:delete',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+
+
+/* 菜单（权限）管理 */
+INSERT INTO sys_menu VALUES (3010,3001,'菜单管理','/menu/list','/menu-list/index',0,0,'sys:menu:list',1,'el-icon-s-custom','2022-09-26 23:46:02','2022-09-28 23:46:02',0,4,'bz');
+
+/* 菜单管理里面的按钮权限 */
+INSERT INTO sys_menu VALUES (3011,3010,'新增菜单',null,null,0,0,'sys:menu:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+INSERT INTO sys_menu VALUES (3012,3010,'修改菜单',null,null,0,0,'sys:menu:list:update',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+INSERT INTO sys_menu VALUES (3013,3010,'删除菜单',null,null,0,0,'sys:menu:list:delete',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+
+
+-- 菜单扩展部分
+
+/* 登录日志菜单 */
+INSERT INTO sys_menu VALUES (3014,3001,'登录日志','/log/login/list','/login-log/index',0,0,'sys:log:login',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,3,'bz');
+
+/* 登录日志菜单里面的删除日志权限 */
+INSERT INTO sys_menu VALUES (3015,3014,'删除登录日志',null,null,0,0,'sys:log:login:delete',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+
+
+/* 操作日志菜单 */
+INSERT INTO sys_menu VALUES (3016,3001,'操作日志','/log/operation/list','/operation-log/index',0,0,'sys:log:operation',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,5,'bz');
+
+/* 操作日志菜单里面的删除日志权限 */
+INSERT INTO sys_menu VALUES (3017,3016,'删除操作日志',null,null,0,0,'sys:log:operation:delete',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+
+/* SQL监控菜单 */
+INSERT INTO sys_menu VALUES (3018,3001,'SQL监控','/monitor/sql','/monitor-sql/index',0,0,'sys:monitor:sql',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,3,'bz');
+
+/* 系统监控菜单 */
+INSERT INTO sys_menu VALUES (3019,3001,'系统监控','/monitor/system','/monitor-system/index',0,0,'sys:monitor:system',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,3,'bz');
+
+/* token管理菜单 */
+INSERT INTO sys_menu VALUES (3020,3001,'token管理','/token/list','/token-list/index',0,0,'sys:token:list',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,3,'bz');
+
+/* token管理的按钮权限 */
+INSERT INTO sys_menu VALUES (3021,3020,'新增token',null,null,0,0,'sys:token:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+INSERT INTO sys_menu VALUES (3022,3020,'修改token',null,null,0,0,'sys:token:list:update',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+INSERT INTO sys_menu VALUES (3023,3020,'删除token',null,null,0,0,'sys:token:list:delete',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,1,'bz');
+
+
+
+/* 三级目录 */
+INSERT INTO sys_menu VALUES (3050,0,'一级菜单',null,null,0,0,null,0,'el-icon-s-tools','2022-09-26 23:46:02','2022-09-28 23:46:02',0,5,'bz');
+INSERT INTO sys_menu VALUES (3051,3050,'二级菜单',null,null,0,0,null,0,'el-icon-eleme','2022-09-26 23:46:02','2022-09-28 23:46:02',0,6,'bz');
+INSERT INTO sys_menu VALUES (3052,3051,'三级菜单1','/page1','/test-page/page1',0,0,'sys:third1',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,9,'bz');
+INSERT INTO sys_menu VALUES (3053,3051,'三级菜单2','/page2','/test-page/page2',0,0,'sys:third2',1,'el-icon-tickets','2022-09-26 23:46:02','2022-09-28 23:46:02',0,7,'bz');
+INSERT INTO sys_menu VALUES (3054,3051,'三级菜单3','/page3','/test-page/page3',0,0,'sys:third3',1,'el-icon-tickets','2022-09-26 23:46:02','2022-09-28 23:46:02',0,8,'bz');
 
 
 
@@ -233,7 +282,10 @@ INSERT INTO sys_user_role VALUES (4002,1001,2002);
 INSERT INTO sys_user_role VALUES (4003,1001,2007);
 INSERT INTO sys_user_role VALUES (4004,1001,1581238859201536002);
 
+
 INSERT INTO sys_user_role VALUES (4005,1002,2002);
+
+
 
 INSERT INTO sys_user_role VALUES (4006,1003,2003);
 
@@ -249,7 +301,8 @@ CREATE TABLE `sys_role_menu` (
                                  PRIMARY KEY (`role_id`,`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色-菜单表';
 
--- 管理员菜单
+-- 管理员菜单(即使是目录也要把这个目录记录添加到sys_role_menu表中，否则展示不出来）
+INSERT INTO sys_role_menu VALUES (5001,2001,3001);
 INSERT INTO sys_role_menu VALUES (5002,2001,3002);
 INSERT INTO sys_role_menu VALUES (5003,2001,3003);
 INSERT INTO sys_role_menu VALUES (5004,2001,3004);
@@ -258,22 +311,45 @@ INSERT INTO sys_role_menu VALUES (5006,2001,3006);
 INSERT INTO sys_role_menu VALUES (5007,2001,3007);
 INSERT INTO sys_role_menu VALUES (5008,2001,3008);
 INSERT INTO sys_role_menu VALUES (5009,2001,3009);
--- 按钮权限
 INSERT INTO sys_role_menu VALUES (5010,2001,3010);
 INSERT INTO sys_role_menu VALUES (5011,2001,3011);
 INSERT INTO sys_role_menu VALUES (5012,2001,3012);
+INSERT INTO sys_role_menu VALUES (5013,2001,3013);
+INSERT INTO sys_role_menu VALUES (5014,2001,3014);
+INSERT INTO sys_role_menu VALUES (5015,2001,3015);
+INSERT INTO sys_role_menu VALUES (5016,2001,3016);
+INSERT INTO sys_role_menu VALUES (5017,2001,3017);
+INSERT INTO sys_role_menu VALUES (5018,2001,3018);
+INSERT INTO sys_role_menu VALUES (5019,2001,3019);
+INSERT INTO sys_role_menu VALUES (5020,2001,3020);
+INSERT INTO sys_role_menu VALUES (5021,2001,3021);
+INSERT INTO sys_role_menu VALUES (5022,2001,3022);
+INSERT INTO sys_role_menu VALUES (5023,2001,3023);
+
+
+-- 多级菜单权限
+INSERT INTO sys_role_menu VALUES (5050,2001,3050);
+INSERT INTO sys_role_menu VALUES (5051,2001,3051);
+INSERT INTO sys_role_menu VALUES (5052,2001,3052);
+INSERT INTO sys_role_menu VALUES (5053,2001,3053);
+INSERT INTO sys_role_menu VALUES (5054,2001,3054);
 
 
 
--- 普通用户菜单
-INSERT INTO sys_role_menu VALUES (5014,2002,3005);
-INSERT INTO sys_role_menu VALUES (5015,2002,3006);
-INSERT INTO sys_role_menu VALUES (5016,2002,3007);
-INSERT INTO sys_role_menu VALUES (5017,2002,3008);
-INSERT INTO sys_role_menu VALUES (5018,2002,3002);
-INSERT INTO sys_role_menu VALUES (5019,2002,3004);
+-- 普通用户菜单(即使是目录也要把这个目录记录添加到sys_role_menu表中，否则展示不出来）
+INSERT INTO sys_role_menu VALUES (5059,2002,3001);
+INSERT INTO sys_role_menu VALUES (5060,2002,3002);
+INSERT INTO sys_role_menu VALUES (5061,2002,3006);
+INSERT INTO sys_role_menu VALUES (5062,2002,3010);
+INSERT INTO sys_role_menu VALUES (5063,2002,3019);
 
--- 按钮权限
-INSERT INTO sys_role_menu VALUES (5020,2002,3010);
+
+/* 菜单权限扩展部分 */
+
+
+-- 多级菜单权限
+INSERT INTO sys_role_menu VALUES (5099,2002,3050);
+INSERT INTO sys_role_menu VALUES (5100,2002,3051);
+INSERT INTO sys_role_menu VALUES (5101,2002,3052);
 
 

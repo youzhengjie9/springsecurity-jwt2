@@ -20,11 +20,22 @@ spring:
     url: jdbc:mysql://192.168.184.123:3308/security-jwt-db?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
     username: root
     password: 123456
-  # redis
+  # spring-data-redis配置
   redis:
     database: 2
     host: 192.168.184.123
     port: 6379
+    #配置lettuce连接池，大幅提高性能（如果不进行配置，则默认是不使用连接池,只有进行了下面的配置，连接池才会生效）
+    lettuce:
+      pool:
+        #min-idle建议配置：0
+        min-idle: 0
+        #max-idle建议配置：cpu核心数*2，由于我们cpu是i5-9300H，是4核cpu，所以建议设置8
+        max-idle: 8
+        #max-active建议配置：大于等于cpu核心数*2，也是推荐设置8
+        max-active: 8
+        #使用redis默认值即可：-1
+        max-wait: -1
 
 mybatis-plus:
   configuration:
