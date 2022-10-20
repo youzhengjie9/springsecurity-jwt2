@@ -25,8 +25,10 @@ public class MenuDto implements Serializable {
 
     private Menu menu;
 
-    //所属菜单名
-    @NotBlank(message = "所属菜单名不能为空")
-    private String parentMenuName;
+    //所属菜单id（也就是父菜单id）
+    private Long parentId;
+
+    //新增/修改菜单的类型（0目录、1菜单、2按钮）
+    private int menuType;
 
 }

@@ -1,5 +1,6 @@
 package com.boot.service;
 
+import com.boot.dto.MenuDto;
 import com.boot.entity.Menu;
 
 import java.util.List;
@@ -65,4 +66,28 @@ public interface MenuService {
      * @param userid 用户标识
      */
     String getRouterByUserId(long userid);
+
+    /**
+     * 添加菜单
+     *
+     * @param menuDto 菜单dto
+     * @return int
+     */
+    int addMenu(MenuDto menuDto);
+
+    /**
+     * 修改菜单
+     *
+     * @param menuDto 菜单dto
+     * @return int
+     */
+    int updateMenu(MenuDto menuDto);
+
+    /**
+     * 删除菜单
+     *
+     * @param menuid menuid
+     * @return int
+     */
+    int deleteMenu(long menuid);
 }

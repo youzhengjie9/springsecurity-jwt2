@@ -192,8 +192,7 @@ CREATE TABLE `sys_menu` (
                             `del_flag` tinyint(1) DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
                             `sort` int DEFAULT '1' COMMENT '前端菜单排序，默认值为1，1的优先级最高，排在最上面',
                             `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-                            PRIMARY KEY (`id`),
-                            UNIQUE KEY(`menu_name`)
+                            PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='菜单表';
 
 # 用户管理菜单

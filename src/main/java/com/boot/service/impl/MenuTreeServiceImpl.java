@@ -29,7 +29,7 @@ public class MenuTreeServiceImpl implements MenuTreeService {
     private MenuService menuService;
 
     //顶层菜单固定id
-    private static final Long TOP_MENU_ID=-999L;
+    private static final Long TOP_MENU_ID=0L;
 
     /**
      * 根据用户的userid来构建前端的后台管理系统侧边栏菜单

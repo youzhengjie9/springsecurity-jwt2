@@ -1,6 +1,7 @@
 package com.boot.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.boot.dto.MenuDto;
 import com.boot.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -74,4 +75,22 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return {@link List}<{@link Menu}>
      */
     List<Menu> getRouterByUserId(@Param("userid") long userid);
+
+    /**
+     * 添加菜单
+     *
+     * @param menu 菜单
+     * @return int
+     */
+    int addMenu(Menu menu);
+
+
+    /**
+     * 修改菜单
+     *
+     * @param menu 菜单
+     * @return int
+     */
+    int updateMenu(Menu menu);
+
 }

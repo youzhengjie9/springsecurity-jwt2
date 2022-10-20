@@ -36,27 +36,26 @@
 
     </select>
     <select id="getAllMenuPermission" resultType="com.boot.entity.Menu">
-        SELECT
-            DISTINCT sm.id,sm.parent_id,sm.menu_name,sm.path,sm.component,sm.visible,sm.type,sm.icon,sm.sort,sm.perms
-        FROM
-            sys_user_role AS sur
-                LEFT JOIN sys_role AS sr ON sr.id=sur.role_id
-                LEFT JOIN sys_role_menu AS srm ON srm.role_id=sur.role_id
-                LEFT JOIN sys_menu AS sm ON sm.id=srm.menu_id
-        WHERE
-            sr.status=0
-          AND
-            sm.status=0
-          ORDER BY sm.sort
+        SELECT sm.id,
+               sm.parent_id,
+               sm.menu_name,
+               sm.path,
+               sm.component,
+               sm.status,
+               sm.visible,
+               sm.type,
+               sm.icon,
+               sm.sort,
+               sm.perms
+        FROM sys_menu as sm
+        WHERE del_flag=0
+        ORDER BY sm.sort
     </select>
 
     <select id="getAssignMenuTreePermission" resultType="com.boot.entity.Menu">
-        SELECT DISTINCT sm.id, sm.parent_id, sm.menu_name, sm.visible,sm.type,sm.sort
-        FROM sys_user_role AS sur
-                 LEFT JOIN sys_role AS sr ON sr.id = sur.role_id
-                 LEFT JOIN sys_role_menu AS srm ON srm.role_id = sur.role_id
-                 LEFT JOIN sys_menu AS sm ON sm.id = srm.menu_id
-        WHERE sr.status = 0
+        SELECT sm.id, sm.parent_id, sm.menu_name, sm.visible, sm.type, sm.sort
+        FROM sys_menu as sm
+        WHERE del_flag = 0
           AND sm.status = 0
           AND sm.visible = 0
         ORDER BY sm.sort
@@ -74,7 +73,6 @@
         FROM sys_menu
         WHERE type = 0
           AND status = 0
-          AND visible = 0
           AND del_flag = 0
         ORDER BY sort
     </select>
@@ -83,7 +81,6 @@
         FROM sys_menu
         WHERE type = 1
           AND status = 0
-          AND visible = 0
           AND del_flag = 0
         ORDER BY sort
     </select>
@@ -110,6 +107,27 @@
             sm.status=0
           AND sm.type =1;
     </select>
+
+    <insert id="addMenu" parameterType="com.boot.entity.Menu">
+        INSERT INTO sys_menu
+        VALUES (#{id},#{parentId},#{menuName},#{path},#{component},#{status},#{visible},#{perms},#{type},#{icon},#{createTime},#{updateTime},0,#{sort},#{remark})
+    </insert>
+    <update id="updateMenu" parameterType="com.boot.entity.Menu">
+        UPDATE sys_menu
+        SET parent_id=#{parentId},
+            menu_name=#{menuName},
+            path=#{path},
+            component=#{component},
+            status=#{status},
+            visible=#{visible},
+            perms=#{perms},
+            type=#{type},
+            icon=#{icon},
+            update_time=#{updateTime},
+            sort=#{sort},
+            remark=#{remark}
+        WHERE id=#{id}
+    </update>
 
 
 </mapper>

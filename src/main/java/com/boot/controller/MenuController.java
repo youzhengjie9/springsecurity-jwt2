@@ -53,9 +53,7 @@ public class MenuController {
     public ResponseResult addMenu(@RequestBody @Valid MenuDto menuDto){
 
         try {
-            System.out.println(menuDto.getMenu());
-            System.out.println(menuDto.getParentMenuName());
-
+            menuService.addMenu(menuDto);
             return new ResponseResult(ResponseType.SUCCESS.getCode(),
                     ResponseType.SUCCESS.getMessage());
         }catch (Exception e){
@@ -65,7 +63,7 @@ public class MenuController {
     }
 
     /**
-     * 更新菜单
+     * 修改菜单
      *
      * @param menuDto 菜单dto
      * @return {@link ResponseResult}
@@ -74,9 +72,25 @@ public class MenuController {
     public ResponseResult updateMenu(@RequestBody @Valid MenuDto menuDto){
 
         try {
-            System.out.println(menuDto.getMenu());
-            System.out.println(menuDto.getParentMenuName());
+            menuService.updateMenu(menuDto);
+            return new ResponseResult(ResponseType.SUCCESS.getCode(),
+                    ResponseType.SUCCESS.getMessage());
+        }catch (Exception e){
+            return new ResponseResult(ResponseType.ERROR.getCode(),
+                    ResponseType.ERROR.getMessage());
+        }
+    }
 
+    /**
+     * 删除菜单
+     *
+     * @param menuid menuid
+     * @return {@link ResponseResult}
+     */
+    @DeleteMapping(path = "/deleteMenu")
+    public ResponseResult deleteMenu(@RequestParam("menuid") long menuid){
+        try {
+            menuService.deleteMenu(menuid);
             return new ResponseResult(ResponseType.SUCCESS.getCode(),
                     ResponseType.SUCCESS.getMessage());
         }catch (Exception e){
