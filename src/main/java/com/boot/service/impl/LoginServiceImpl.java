@@ -2,9 +2,8 @@ package com.boot.service.impl;
 
 import com.boot.config.JwtProperties;
 import com.boot.data.ResponseResult;
-import com.boot.dto.UserLoginDto;
+import com.boot.dto.UserLoginDTO;
 import com.boot.enums.ResponseType;
-import com.boot.exception.UserNameOrPassWordException;
 import com.boot.security.LoginUser;
 import com.boot.service.LoginService;
 import com.boot.service.MenuService;
@@ -21,8 +20,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -71,7 +68,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public ResponseResult<TokenVO> login(UserLoginDto userLoginDto) throws Throwable {
+    public ResponseResult<TokenVO> login(UserLoginDTO userLoginDto) throws Throwable {
 
 //        //通过codeKey就可以从Redis中获取正确的验证码
 //        String realCode = (String) redisTemplate.opsForValue().get(userLoginDto.getCodeKey());

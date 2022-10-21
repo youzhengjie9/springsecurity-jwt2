@@ -1,26 +1,20 @@
 package com.boot.controller;
 
 import com.boot.data.ResponseResult;
-import com.boot.dto.AssignMenuDto;
-import com.boot.dto.AssignRoleDto;
-import com.boot.dto.RoleFormDto;
-import com.boot.dto.UserFormDto;
-import com.boot.entity.Menu;
+import com.boot.dto.AssignMenuDTO;
+import com.boot.dto.RoleFormDTO;
 import com.boot.entity.Role;
 import com.boot.entity.RoleMenu;
-import com.boot.entity.UserRole;
 import com.boot.enums.ResponseType;
 import com.boot.service.RoleService;
 import com.boot.utils.SnowId;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 
 @RestController
 @Api("角色接口")
@@ -93,7 +87,7 @@ public class RoleController {
     }
 
     @PostMapping("/addRole")
-    public ResponseResult addRole(@RequestBody @Valid RoleFormDto roleFormDto){
+    public ResponseResult addRole(@RequestBody @Valid RoleFormDTO roleFormDto){
         try {
             roleService.addRole(roleFormDto);
             return new ResponseResult(ResponseType.SUCCESS.getCode(),
@@ -105,7 +99,7 @@ public class RoleController {
     }
 
     @PostMapping(path = "/updateRole")
-    public ResponseResult updateRole(@RequestBody @Valid RoleFormDto roleFormDto){
+    public ResponseResult updateRole(@RequestBody @Valid RoleFormDTO roleFormDto){
 
         try {
             roleService.updateRole(roleFormDto);
@@ -144,7 +138,7 @@ public class RoleController {
      * @return {@link ResponseResult}
      */
     @PostMapping(path = "/assignMenu")
-    public ResponseResult assignMenu(@RequestBody @Valid AssignMenuDto assignMenuDto){
+    public ResponseResult assignMenu(@RequestBody @Valid AssignMenuDTO assignMenuDto){
 
         try {
             if(assignMenuDto.getMenuList()==null || assignMenuDto.getMenuList().length==0){

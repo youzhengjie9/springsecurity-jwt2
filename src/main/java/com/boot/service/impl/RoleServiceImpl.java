@@ -2,7 +2,7 @@ package com.boot.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.boot.dto.RoleFormDto;
+import com.boot.dto.RoleFormDTO;
 import com.boot.entity.Role;
 import com.boot.entity.RoleMenu;
 import com.boot.mapper.RoleMapper;
@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public int addRole(RoleFormDto roleFormDto) {
+    public int addRole(RoleFormDTO roleFormDto) {
 
         Role role = roleMapStruct.roleFormDtoToRole(roleFormDto);
         if(roleFormDto.getStatus()){
@@ -72,7 +71,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public int updateRole(RoleFormDto roleFormDto) {
+    public int updateRole(RoleFormDTO roleFormDto) {
         Role role = roleMapStruct.roleFormDtoToRole(roleFormDto);
         if(roleFormDto.getStatus()){
             role.setStatus(0);

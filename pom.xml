@@ -33,6 +33,14 @@
 
     <dependencies>
 
+
+        <!-- 阿里巴巴的druid数据源 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.2.12</version>
+        </dependency>
+
 <!--        mica-xss依赖，防止xss攻击，version和springboot的版本一样即可-->
         <dependency>
             <groupId>net.dreamlu</groupId>
@@ -139,12 +147,6 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
-        </dependency>
-        <!--        druid -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.2.11</version>
         </dependency>
         <!--        单元测试-->
         <dependency>

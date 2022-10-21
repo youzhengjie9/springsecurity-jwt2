@@ -3,11 +3,8 @@ package com.boot.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
@@ -20,7 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class UserFormDto implements Serializable {
+public class UserFormDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

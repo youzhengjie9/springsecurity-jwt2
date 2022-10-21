@@ -1,6 +1,6 @@
 package com.boot.service;
 
-import com.boot.dto.MenuDto;
+import com.boot.dto.MenuDTO;
 import com.boot.entity.Menu;
 
 import java.util.List;
@@ -73,7 +73,7 @@ public interface MenuService {
      * @param menuDto 菜单dto
      * @return int
      */
-    int addMenu(MenuDto menuDto);
+    int addMenu(MenuDTO menuDto);
 
     /**
      * 修改菜单
@@ -81,7 +81,7 @@ public interface MenuService {
      * @param menuDto 菜单dto
      * @return int
      */
-    int updateMenu(MenuDto menuDto);
+    int updateMenu(MenuDTO menuDto);
 
     /**
      * 删除菜单

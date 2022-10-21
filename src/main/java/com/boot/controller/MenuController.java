@@ -1,8 +1,7 @@
 package com.boot.controller;
 
 import com.boot.data.ResponseResult;
-import com.boot.dto.MenuDto;
-import com.boot.dto.UserFormDto;
+import com.boot.dto.MenuDTO;
 import com.boot.entity.Menu;
 import com.boot.enums.ResponseType;
 import com.boot.service.MenuService;
@@ -50,7 +49,7 @@ public class MenuController {
      * @return {@link ResponseResult}
      */
     @PostMapping("/addMenu")
-    public ResponseResult addMenu(@RequestBody @Valid MenuDto menuDto){
+    public ResponseResult addMenu(@RequestBody @Valid MenuDTO menuDto){
 
         try {
             menuService.addMenu(menuDto);
@@ -69,7 +68,7 @@ public class MenuController {
      * @return {@link ResponseResult}
      */
     @PostMapping("/updateMenu")
-    public ResponseResult updateMenu(@RequestBody @Valid MenuDto menuDto){
+    public ResponseResult updateMenu(@RequestBody @Valid MenuDTO menuDto){
 
         try {
             menuService.updateMenu(menuDto);

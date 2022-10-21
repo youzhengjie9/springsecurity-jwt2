@@ -3,7 +3,7 @@ package com.boot.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.boot.dto.MenuDto;
+import com.boot.dto.MenuDTO;
 import com.boot.entity.Menu;
 import com.boot.mapper.MenuMapper;
 import com.boot.service.MenuService;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 菜单服务impl
@@ -89,7 +88,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements Men
     }
 
     @Override
-    public int addMenu(MenuDto menuDto) {
+    public int addMenu(MenuDTO menuDto) {
 
         Menu menu = menuDto.getMenu();
         //生成分布式id
@@ -107,7 +106,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper,Menu> implements Men
     }
 
     @Override
-    public int updateMenu(MenuDto menuDto) {
+    public int updateMenu(MenuDTO menuDto) {
 
         Menu menu = menuDto.getMenu();
         //设置parentid

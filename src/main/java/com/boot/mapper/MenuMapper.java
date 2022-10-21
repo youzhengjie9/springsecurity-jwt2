@@ -1,14 +1,12 @@
 package com.boot.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.boot.dto.MenuDto;
 import com.boot.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author youzhengjie 2022-10-06 14:15:49

@@ -43,7 +43,8 @@ public class SecurityConfig {
             "/v3/api-docs",
             "/webjars/**",
             "/doc.html",
-            "/captcha"
+            "/captcha",
+            "/druid/**"
     };
 
     @Autowired
@@ -67,6 +68,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                //解决前端vue无法通过iframe嵌套druid这些外部监控页面问题
+                .headers().frameOptions().disable()
+                .and()
                 //关闭csrf
                 .csrf().disable()
                 //设置允许跨域

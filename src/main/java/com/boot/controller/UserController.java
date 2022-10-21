@@ -1,9 +1,8 @@
 package com.boot.controller;
 
 import com.boot.data.ResponseResult;
-import com.boot.dto.AssignRoleDto;
-import com.boot.dto.UserFormDto;
-import com.boot.entity.Role;
+import com.boot.dto.AssignRoleDTO;
+import com.boot.dto.UserFormDTO;
 import com.boot.entity.User;
 import com.boot.entity.UserRole;
 import com.boot.enums.ResponseType;
@@ -16,10 +15,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -86,7 +83,7 @@ public class UserController {
      * @return {@link ResponseResult}
      */
     @PostMapping("/addUser")
-    public ResponseResult addUser(@RequestBody @Valid UserFormDto userFormDto){
+    public ResponseResult addUser(@RequestBody @Valid UserFormDTO userFormDto){
 
         try {
             //将密码进行加密
@@ -109,7 +106,7 @@ public class UserController {
      * @return {@link ResponseResult}
      */
     @PostMapping(path = "/updateUser")
-    public ResponseResult updateUser(@RequestBody @Valid UserFormDto userFormDto){
+    public ResponseResult updateUser(@RequestBody @Valid UserFormDTO userFormDto){
         try {
             //如果密码不为空，则进行加密再存储到数据库中
             if(StringUtils.hasText(userFormDto.getPassword())){
@@ -155,7 +152,7 @@ public class UserController {
      * @return {@link ResponseResult}
      */
     @PostMapping(path = "/assignRole")
-    public ResponseResult assignRole(@RequestBody @Valid AssignRoleDto assignRoleDto){
+    public ResponseResult assignRole(@RequestBody @Valid AssignRoleDTO assignRoleDto){
 
         try {
             if(assignRoleDto.getRoles()==null || assignRoleDto.getRoles().size()==0){

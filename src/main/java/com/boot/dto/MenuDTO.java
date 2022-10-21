@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -21,7 +20,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
-public class MenuDto implements Serializable {
+public class MenuDTO implements Serializable {
 
     private Menu menu;
 

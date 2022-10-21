@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class RoleFormDto implements Serializable {
+public class RoleFormDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

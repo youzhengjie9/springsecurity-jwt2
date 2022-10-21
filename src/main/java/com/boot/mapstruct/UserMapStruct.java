@@ -1,7 +1,6 @@
 package com.boot.mapstruct;
 
-import com.boot.dto.UserFormDto;
-import com.boot.dto.UserLoginDto;
+import com.boot.dto.UserFormDTO;
 import com.boot.entity.User;
 import com.boot.security.LoginUser;
 import com.boot.vo.TokenVO;
@@ -60,6 +59,6 @@ public interface UserMapStruct {
             @Mapping(ignore = true,target = "sex"),
             @Mapping(source = "userFormDto.avatar",target = "avatar"),
     })
-    User userFormDtoToUser(UserFormDto userFormDto);
+    User userFormDtoToUser(UserFormDTO userFormDto);
 
 }

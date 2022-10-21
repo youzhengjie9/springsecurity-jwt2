@@ -3,7 +3,7 @@ package com.boot.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.config.JwtProperties;
-import com.boot.dto.UserFormDto;
+import com.boot.dto.UserFormDTO;
 import com.boot.entity.User;
 import com.boot.entity.UserRole;
 import com.boot.mapper.UserMapper;
@@ -91,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public int addUser(UserFormDto userFormDto) {
+    public int addUser(UserFormDTO userFormDto) {
         User user = userMapStruct.userFormDtoToUser(userFormDto);
         user.setStatus(userFormDto.getStatus() ?0:1);
 
@@ -110,7 +110,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public int updateUser(UserFormDto userFormDto) {
+    public int updateUser(UserFormDTO userFormDto) {
 
         User user = userMapStruct.userFormDtoToUser(userFormDto);
         user.setStatus(userFormDto.getStatus() ?0:1);

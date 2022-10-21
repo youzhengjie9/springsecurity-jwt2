@@ -1,11 +1,10 @@
 package com.boot.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.boot.dto.UserFormDto;
+import com.boot.dto.UserFormDTO;
 import com.boot.entity.User;
 import com.boot.entity.UserRole;
 import com.boot.security.LoginUser;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ public interface UserService extends IService<User> {
      * @param userFormDto 用户表单dto
      * @return int
      */
-    int addUser(UserFormDto userFormDto);
+    int addUser(UserFormDTO userFormDto);
 
     /**
      * 更新用户
@@ -49,7 +48,7 @@ public interface UserService extends IService<User> {
      * @param userFormDto 用户表单dto
      * @return int
      */
-    int updateUser(UserFormDto userFormDto);
+    int updateUser(UserFormDTO userFormDto);
 
 
     /**

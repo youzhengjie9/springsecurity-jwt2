@@ -1,7 +1,6 @@
 package com.boot.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.boot.dto.RoleFormDto;
 import com.boot.entity.Role;
 import com.boot.entity.RoleMenu;
 import org.apache.ibatis.annotations.Mapper;

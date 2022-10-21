@@ -1,6 +1,6 @@
 package com.boot.mapstruct;
 
-import com.boot.dto.RoleFormDto;
+import com.boot.dto.RoleFormDTO;
 import com.boot.entity.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -31,7 +31,7 @@ public interface RoleMapStruct {
             @Mapping(ignore = true,target = "status"),
             @Mapping(source = "roleFormDto.remark",target = "remark")
     })
-    Role roleFormDtoToRole(RoleFormDto roleFormDto);
+    Role roleFormDtoToRole(RoleFormDTO roleFormDto);
 
 
 }

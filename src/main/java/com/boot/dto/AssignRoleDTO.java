@@ -1,6 +1,6 @@
 package com.boot.dto;
 
-import com.boot.entity.Menu;
+import com.boot.entity.Role;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -9,24 +9,24 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 分配菜单dto
+ * 分配角色dto
  *
  * @author youzhengjie
- * @date 2022/10/17 23:34:10
+ * @date 2022/10/16 22:21:30
  */
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @Builder
 @Data
-public class AssignMenuDto implements Serializable {
+public class AssignRoleDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("该角色新的菜单列表的id数组")
-    private long[] menuList;
+    @ApiModelProperty("该用户新的角色列表")
+    private List<Role> roles;
 
-
-    private long roleid;
+    @NotBlank(message = "需要分配角色的用户id不能为空")
+    private String userid;
 
 }

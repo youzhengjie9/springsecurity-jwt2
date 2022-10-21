@@ -1,7 +1,7 @@
 package com.boot.controller;
 
 import com.boot.data.ResponseResult;
-import com.boot.dto.UserLoginDto;
+import com.boot.dto.UserLoginDTO;
 import com.boot.enums.ResponseType;
 import com.boot.mapstruct.UserMapStruct;
 import com.boot.security.LoginUser;
@@ -49,7 +49,7 @@ public class LoginController {
      * @throws Throwable throwable
      */
     @PostMapping("/user/login")
-    public ResponseResult<TokenVO> login(@RequestBody @Valid UserLoginDto userLoginDto) throws Throwable {
+    public ResponseResult<TokenVO> login(@RequestBody @Valid UserLoginDTO userLoginDto) throws Throwable {
 
 
         return loginService.login(userLoginDto);

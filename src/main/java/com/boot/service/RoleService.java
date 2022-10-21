@@ -1,11 +1,9 @@
 package com.boot.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.boot.dto.RoleFormDto;
+import com.boot.dto.RoleFormDTO;
 import com.boot.entity.Role;
 import com.boot.entity.RoleMenu;
-import com.boot.entity.UserRole;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -46,7 +44,7 @@ public interface RoleService extends IService<Role> {
      * @param roleFormDto 角色表单dto
      * @return int
      */
-    int addRole(RoleFormDto roleFormDto);
+    int addRole(RoleFormDTO roleFormDto);
 
     /**
      * 更新角色
@@ -54,7 +52,7 @@ public interface RoleService extends IService<Role> {
      * @param roleFormDto 角色表单dto
      * @return int
      */
-    int updateRole(RoleFormDto roleFormDto);
+    int updateRole(RoleFormDTO roleFormDto);
 
 
     /**

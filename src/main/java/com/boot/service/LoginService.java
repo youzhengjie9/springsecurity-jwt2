@@ -1,7 +1,7 @@
 package com.boot.service;
 
 import com.boot.data.ResponseResult;
-import com.boot.dto.UserLoginDto;
+import com.boot.dto.UserLoginDTO;
 import com.boot.vo.TokenVO;
 
 /**
@@ -10,7 +10,7 @@ import com.boot.vo.TokenVO;
 public interface LoginService {
 
 
-    ResponseResult<TokenVO> login(UserLoginDto userLoginDto) throws Throwable;
+    ResponseResult<TokenVO> login(UserLoginDTO userLoginDto) throws Throwable;
 
 
 }
