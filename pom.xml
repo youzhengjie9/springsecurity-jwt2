@@ -33,6 +33,19 @@
 
     <dependencies>
 
+<!--        获取当前系统（服务器）所有信息-->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>6.2.2</version>
+        </dependency>
+
+        <!--    用来获取访问者的设备的各种信息-->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.21</version>
+        </dependency>
 
         <!-- 阿里巴巴的druid数据源 -->
         <dependency>

@@ -243,8 +243,8 @@ INSERT INTO sys_menu VALUES (3017,3016,'删除操作日志',null,null,0,0,'sys:l
 /* SQL监控菜单 */
 INSERT INTO sys_menu VALUES (3018,3001,'SQL监控','/monitor/sql','/monitor-sql/index',0,0,'sys:monitor:sql',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,18,'bz');
 
-/* 系统监控菜单 */
-INSERT INTO sys_menu VALUES (3019,3001,'系统监控','/monitor/system','/monitor-system/index',0,0,'sys:monitor:system',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,19,'bz');
+/* 服务器监控菜单 */
+INSERT INTO sys_menu VALUES (3019,3001,'服务器监控','/monitor/server','/monitor-server/index',0,0,'sys:monitor:server',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,19,'bz');
 
 /* token管理菜单 */
 INSERT INTO sys_menu VALUES (3020,3001,'token管理','/token/list','/token-list/index',0,0,'sys:token:list',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,20,'bz');
