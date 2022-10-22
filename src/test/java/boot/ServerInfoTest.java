@@ -1,7 +1,7 @@
 package boot;
 
 import com.boot.SecurityJwtApplication;
-import com.boot.vo.ServerInfo;
+import com.boot.vo.ServerInfoVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -15,8 +15,8 @@ public class ServerInfoTest {
     @Test
     void test() throws Exception {
 
-        //1：通过调用ServerInfo类的init方法获取到ServerInfo对象
-        ServerInfo serverInfo = ServerInfo.init();
+        //1：通过调用ServerInfoVO类的init方法获取到ServerInfoVO对象
+        ServerInfoVO serverInfo = ServerInfoVO.init();
 
         //2：开始获取
         System.out.println(serverInfo.getCpu().getCpuNum());

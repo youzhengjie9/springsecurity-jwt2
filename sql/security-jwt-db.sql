@@ -11,14 +11,14 @@ DROP TABLE IF EXISTS `sys_user`;
 
 CREATE TABLE `sys_user` (
                             `id` bigint NOT NULL COMMENT '主键',
-                            `user_name` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT '用户名',
-                            `nick_name` VARCHAR(64) NOT NULL DEFAULT 'NULL' COMMENT '昵称',
-                            `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT '密码',
+                            `user_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT '用户名',
+                            `nick_name` varchar(32) NOT NULL DEFAULT 'NULL' COMMENT '昵称',
+                            `password` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT '密码',
                             `status` tinyint(1) DEFAULT '0' COMMENT '账号状态（0正常 1停用）',
-                            `email` varchar(64) DEFAULT NULL COMMENT '邮箱',
+                            `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
                             `phone` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '手机号',
                             `sex` tinyint(1) DEFAULT NULL COMMENT '用户性别（0男，1女，2未知）',
-                            `avatar` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '头像地址',
+                            `avatar` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '头像地址',
                             `create_time` date DEFAULT NULL COMMENT '创建时间',
                             `update_time` datetime DEFAULT NULL COMMENT '最后一次修改时间',
                             `del_flag` tinyint(1) DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
@@ -146,13 +146,13 @@ DROP TABLE IF EXISTS `sys_role`;
 
 CREATE TABLE `sys_role` (
                             `id` bigint(20) NOT NULL COMMENT '主键',
-                            `name` varchar(128) DEFAULT NULL COMMENT '角色权限名称，比如管理员',
-                            `role_key` varchar(100) DEFAULT NULL COMMENT '角色权限关键字，比如admin',
+                            `name` varchar(64) DEFAULT NULL COMMENT '角色权限名称，比如管理员',
+                            `role_key` varchar(64) DEFAULT NULL COMMENT '角色权限关键字，比如admin',
                             `status` tinyint(1) DEFAULT '0' COMMENT '角色状态（0正常 1停用）',
                             `del_flag` tinyint(1) DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
                             `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                             `update_time` datetime DEFAULT NULL COMMENT '最后一次修改时间',
-                            `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+                            `remark` varchar(256) DEFAULT NULL COMMENT '备注',
                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色表';
 
@@ -181,7 +181,7 @@ CREATE TABLE `sys_menu` (
                             `parent_id` bigint(20) DEFAULT '0' COMMENT '后台侧边栏。父菜单ID,一级菜单为0',
                             `menu_name` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '菜单/权限名称',
                             `path` varchar(200) DEFAULT NULL COMMENT 'vue路由地址（type=1才会生效，type=0和2不生效）',
-                            `component` varchar(255) DEFAULT NULL COMMENT '动态路由要用到。views目录下的组件名,自动会补上前缀‘../views’，这个前缀是固定的写法不能写到数据库里不然会报错（type=1才会生效，type=0和2不生效）',
+                            `component` varchar(128) DEFAULT NULL COMMENT '动态路由要用到。views目录下的组件名,自动会补上前缀‘../views’，这个前缀是固定的写法不能写到数据库里不然会报错（type=1才会生效，type=0和2不生效）',
                             `status` tinyint(1) DEFAULT '0' COMMENT '菜单状态（0正常 1停用）',
                             `visible` tinyint(1) DEFAULT '0' COMMENT '菜单显示状态（0显示 1隐藏）（type=0或者1才会生效，type=2不生效）',
                             `perms` varchar(100) DEFAULT NULL COMMENT '菜单权限标识，比如sys:user:list(type=0设置为null即可，不会生效)',
@@ -191,7 +191,7 @@ CREATE TABLE `sys_menu` (
                             `update_time` datetime DEFAULT NULL COMMENT '最后一次修改时间',
                             `del_flag` tinyint(1) DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
                             `sort` int DEFAULT '1' COMMENT '前端菜单排序，默认值为1，1的优先级最高，排在最上面',
-                            `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+                            `remark` varchar(256) DEFAULT NULL COMMENT '备注',
                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='菜单表';
 
@@ -272,8 +272,8 @@ DROP TABLE IF EXISTS `sys_user_role`;
 
 CREATE TABLE `sys_user_role` (
                                  `id` bigint(20) NOT NULL COMMENT '主键',
-                                 `user_id` bigint(200) NOT NULL COMMENT '用户id',
-                                 `role_id` bigint(200) NOT NULL DEFAULT '0' COMMENT '角色id',
+                                 `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                                 `role_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '角色id',
                                  PRIMARY KEY (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户-角色表';
 
@@ -296,8 +296,8 @@ DROP TABLE IF EXISTS `sys_role_menu`;
 
 CREATE TABLE `sys_role_menu` (
                                  `id` bigint(20) NOT NULL COMMENT '主键',
-                                 `role_id` bigint(200) NOT NULL COMMENT '角色ID',
-                                 `menu_id` bigint(200) NOT NULL DEFAULT '0' COMMENT '菜单id',
+                                 `role_id` bigint(20) NOT NULL COMMENT '角色ID',
+                                 `menu_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '菜单id',
                                  PRIMARY KEY (`role_id`,`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色-菜单表';
 
@@ -351,5 +351,41 @@ INSERT INTO sys_role_menu VALUES (5063,2002,3019);
 INSERT INTO sys_role_menu VALUES (5099,2002,3050);
 INSERT INTO sys_role_menu VALUES (5100,2002,3051);
 INSERT INTO sys_role_menu VALUES (5101,2002,3052);
+
+
+
+-- 登录日志表
+
+DROP TABLE IF EXISTS `sys_login_log`;
+
+CREATE TABLE `sys_login_log`  (
+                                  `id` bigint(20) NOT NULL COMMENT '主键',
+                                  `username` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录用户的用户名',
+                                  `ip` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录用户的ip',
+                                  `address` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录用户的ip所在地',
+                                  `browser` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录用户使用的浏览器',
+                                  `os` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录用户使用的操作系统',
+                                  `login_time` datetime NOT NULL COMMENT '登录时间',
+                                  `del_flag` tinyint(1) DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
+                                  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='登录日志表';
+
+-- 操作日志表
+
+DROP TABLE IF EXISTS `sys_oper_log`;
+CREATE TABLE `sys_oper_log`  (
+                                 `id` bigint(20) NOT NULL COMMENT '主键',
+                                 `username` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '执行操作的用户名',
+                                 `type` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '操作类型',
+                                 `uri` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '访问的接口uri',
+                                 `ip` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '执行操作的用户的ip',
+                                 `address` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '执行操作的用户的ip对应的地址',
+                                 `browser` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '执行操作的用户所使用的浏览器',
+                                 `os` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '执行操作的用户所使用的操作系统',
+                                 `oper_time` datetime NOT NULL COMMENT '操作时间',
+                                 `del_flag` tinyint(1) DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
+                                 PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='操作日志表';
+
 
 

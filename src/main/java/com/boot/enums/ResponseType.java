@@ -45,6 +45,11 @@ public enum ResponseType {
     FILE_FORMAT_UNSUPPORT(903,"不支持该文件格式，上传失败"),
     FILE_DELETE_SUCCESS(904,"文件删除成功"),
     FILE_DELETE_ERROR(905,"文件删除失败"),
+
+    /**
+     * 导出excel状态
+     */
+    EXPORT_EXCEL_ERROR(1001,"导出excel失败")
     ;
 
 

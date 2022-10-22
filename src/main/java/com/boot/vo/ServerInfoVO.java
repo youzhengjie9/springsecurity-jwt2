@@ -27,7 +27,7 @@ import oshi.util.Util;
  * @date 2022/10/21 11:32:36
  */
 @Data
-public class ServerInfo implements Serializable {
+public class ServerInfoVO implements Serializable {
 
     //序列化id
     private static final long serialVersionUID = 1L;
@@ -61,18 +61,18 @@ public class ServerInfo implements Serializable {
     private List<SysFile> sysFiles = new LinkedList<SysFile>();
 
     //禁止new对象
-    private ServerInfo(){
+    private ServerInfoVO(){
 
     }
 
     /**
      * 只需要调用init方法即可获取服务器信息
      *
-     * @return {@link ServerInfo}
+     * @return {@link ServerInfoVO}
      * @throws Exception 异常
      */
-    public static ServerInfo init() throws Exception {
-        ServerInfo serverInfo = new ServerInfo();
+    public static ServerInfoVO init() throws Exception {
+        ServerInfoVO serverInfo = new ServerInfoVO();
         serverInfo.copyTo();
         return serverInfo;
     }

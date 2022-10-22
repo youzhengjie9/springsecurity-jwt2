@@ -1,5 +1,6 @@
 package com.boot.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.boot.dto.MenuDTO;
 import com.boot.entity.Menu;
 
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * @author youzhengjie 2022-10-06 14:18:29
  */
-public interface MenuService {
+public interface MenuService extends IService<Menu> {
 
     /**
      * 查询指定用户的所有菜单（包括目录和菜单，但是不包括按钮）

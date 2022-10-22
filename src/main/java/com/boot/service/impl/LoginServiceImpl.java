@@ -3,12 +3,14 @@ package com.boot.service.impl;
 import com.boot.config.JwtProperties;
 import com.boot.data.ResponseResult;
 import com.boot.dto.UserLoginDTO;
+import com.boot.entity.LoginLog;
 import com.boot.enums.ResponseType;
 import com.boot.security.LoginUser;
+import com.boot.service.LoginLogService;
 import com.boot.service.LoginService;
 import com.boot.service.MenuService;
 import com.boot.service.MenuTreeService;
-import com.boot.utils.JwtUtil;
+import com.boot.utils.*;
 import com.boot.vo.TokenVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -52,10 +57,14 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private LoginLogService loginLogService;
+
     /**
      * loginUser过期时间。默认单位（毫秒）,accessToken初始化过期时间+（refreshToken初始化过期时间/2）*最大刷新token次数
      */
     private long expired;
+
 
     /**
      * 初始化配置
@@ -68,7 +77,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public ResponseResult<TokenVO> login(UserLoginDTO userLoginDto) throws Throwable {
+    public ResponseResult<TokenVO> login(UserLoginDTO userLoginDto, HttpServletRequest request) throws Throwable {
 
 //        //通过codeKey就可以从Redis中获取正确的验证码
 //        String realCode = (String) redisTemplate.opsForValue().get(userLoginDto.getCodeKey());
@@ -117,6 +126,19 @@ public class LoginServiceImpl implements LoginService {
                 .setUserName(loginUser.getUser().getUserName())
                 .setDynamicMenu(dynamicMenu)
                 .setDynamicRouter(dynamicRouter);
+
+        //登录成功后添加登录日志，不需要设置id，因为mybatis-plus会自动为我们生成
+        String userIp = IpUtils.getIpAddr(request);
+        LoginLog loginLog = LoginLog.builder()
+                .username(userLoginDto.getUsername())
+                .ip(userIp)
+                .address(IpToAddressUtil.getCityInfo(userIp))
+                .browser(BrowserUtils.getBrowserName(request))
+                .os(BrowserUtils.getOsName(request))
+                .loginTime(LocalDateTime.now())
+                .build();
+        loginLogService.save(loginLog);
+
 
         return new ResponseResult(ResponseType.LOGIN_SUCCESS.getCode(),ResponseType.LOGIN_SUCCESS.getMessage(),tokenVO);
     }

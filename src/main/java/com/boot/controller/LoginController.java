@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -49,10 +50,10 @@ public class LoginController {
      * @throws Throwable throwable
      */
     @PostMapping("/user/login")
-    public ResponseResult<TokenVO> login(@RequestBody @Valid UserLoginDTO userLoginDto) throws Throwable {
+    public ResponseResult<TokenVO> login(@RequestBody @Valid UserLoginDTO userLoginDto, HttpServletRequest request) throws Throwable {
 
 
-        return loginService.login(userLoginDto);
+        return loginService.login(userLoginDto,request);
     }
 
     /**

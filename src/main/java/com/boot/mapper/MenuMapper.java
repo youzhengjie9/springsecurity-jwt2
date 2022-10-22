@@ -9,7 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * @author youzhengjie 2022-10-06 14:15:49
+ * 菜单映射器
+ *
+ * @author youzhengjie
+ * @date 2022-10-06 14:15:49
  */
 @Mapper
 @Repository
