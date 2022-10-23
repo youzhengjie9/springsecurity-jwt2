@@ -115,9 +115,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = userMapStruct.userFormDtoToUser(userFormDto);
         user.setStatus(userFormDto.getStatus() ?0:1);
 
-        if("0".equals(userFormDto.getSex())){
+        if("男".equals(userFormDto.getSex())){
             user.setSex(0);
-        }else if("1".equals(userFormDto.getSex())){
+        }else if("女".equals(userFormDto.getSex())){
             user.setSex(1);
         }else{
             user.setSex(2);

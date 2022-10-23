@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.boot.converter.DelFlagConverter;
 import com.boot.converter.LocalDateTimeConverter;
+import com.boot.converter.StatusConverter;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModelProperty;
@@ -53,13 +55,13 @@ public class Role implements Serializable {
 
     @TableField("status")
     @ApiModelProperty("角色状态（0正常 1停用）")
-    @ExcelProperty("角色状态")
-    private int status;
+    @ExcelProperty(value = "角色状态",converter = StatusConverter.class)
+    private Integer status;
 
     @TableLogic
     @TableField("del_flag")
     @ApiModelProperty("删除标志（0代表未删除，1代表已删除）")
-    @ExcelProperty("删除标志")
+    @ExcelProperty(value = "删除标志",converter = DelFlagConverter.class)
     private int delFlag;
 
     @TableField("create_time")

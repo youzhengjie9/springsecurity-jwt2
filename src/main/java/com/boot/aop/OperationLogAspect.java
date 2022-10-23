@@ -96,20 +96,23 @@ public class OperationLogAspect {
             //访问接口的耗时
             String timeMs=(endMs-startMs)+"ms";
 
-            //插入OperationLog数据到数据库
-            com.boot.entity.OperationLog operationLog = com.boot.entity.OperationLog.builder()
-                    .id(SnowId.nextId())
-                    .username(userName)
-                    .type(annotationValue)
-                    .uri(uri)
-                    .time(timeMs)
-                    .ip(ipAddr)
-                    .address(address)
-                    .browser(browserName)
-                    .os(osName)
-                    .operTime(LocalDateTime.now())
-                    .build();
-            operationLogService.save(operationLog);
+            for (int i = 0; i < 200; i++) {
+                //插入OperationLog数据到数据库
+                com.boot.entity.OperationLog operationLog = com.boot.entity.OperationLog.builder()
+                        .id(SnowId.nextId())
+                        .username(userName)
+                        .type(annotationValue)
+                        .uri(uri)
+                        .time(timeMs)
+                        .ip(ipAddr)
+                        .address(address)
+                        .browser(browserName)
+                        .os(osName)
+                        .operTime(LocalDateTime.now())
+                        .build();
+                operationLogService.save(operationLog);
+            }
+
 
 
             return proceed;

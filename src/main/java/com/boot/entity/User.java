@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.boot.converter.LocalDateConverter;
-import com.boot.converter.LocalDateTimeConverter;
+import com.boot.converter.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,7 +15,6 @@ import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 /**
@@ -67,9 +65,9 @@ public class User implements Serializable {
     * 账号状态（0正常 1停用）
     */
     @TableField("status")
-    @ApiModelProperty(name = "status",value = "账号状态（0正常 1停用）",example = "0")
-    @ExcelProperty("账号状态")
-    private int status;
+    @ApiModelProperty(name = "status",value = "用户状态（0正常 1停用）",example = "0")
+    @ExcelProperty(value = "用户状态",converter = StatusConverter.class)
+    private Integer status;
     /**
     * 邮箱
     */
@@ -89,8 +87,8 @@ public class User implements Serializable {
     */
     @TableField("sex")
     @ApiModelProperty(name = "sex",value = "用户性别（0男，1女，2未知）",example = "0")
-    @ExcelProperty("用户性别")
-    private int sex;
+    @ExcelProperty(value = "用户性别",converter = UserSexConverter.class)
+    private Integer sex;
     /**
     * 头像地址
     */
@@ -118,6 +116,6 @@ public class User implements Serializable {
     @TableLogic //逻辑删除（0代表未删除，1代表已删除）
     @ApiModelProperty(name = "delFlag",value = "删除标志（0代表未删除，1代表已删除）",example = "0")
     @TableField("del_flag")
-    @ExcelProperty("是否删除")
+    @ExcelProperty(value = "是否删除",converter = DelFlagConverter.class)
     private Integer delFlag;
 }
