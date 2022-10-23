@@ -1,9 +1,11 @@
 package com.boot.controller;
 
+import com.boot.annotation.OperationLog;
 import com.boot.data.ResponseResult;
 import com.boot.enums.ResponseType;
 import com.boot.service.MenuTreeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +30,9 @@ public class MenuTreeController {
      * 根据用户的userid来构建前端的后台管理系统侧边栏菜单
      * @return 菜单的json串
      */
+    @OperationLog("根据用户的userid来构建前端的后台管理系统侧边栏菜单")
     @GetMapping(path = "/buildTreeByUserId")
+    @ApiOperation("根据用户的userid来构建前端的后台管理系统侧边栏菜单")
     public ResponseResult<String> buildTreeByUserId(@RequestParam("userid") String userid){
         try {
             String menuTree = menuTreeService.buildTreeByUserId(Long.parseLong(userid));
@@ -45,7 +49,9 @@ public class MenuTreeController {
      * 将系统所有菜单权限构建成一棵树（应用于菜单管理表格数据）
      * @return
      */
+    @OperationLog("将系统所有菜单权限构建成一棵树")
     @GetMapping(path = "/buildAllMenuPermissionTree")
+    @ApiOperation("将系统所有菜单权限构建成一棵树")
     public ResponseResult<String> buildAllMenuPermissionTree(){
         try {
             String menuTree = menuTreeService.buildAllMenuPermissionTree();
@@ -63,7 +69,9 @@ public class MenuTreeController {
      *
      * @return {@link String}
      */
+    @OperationLog("构建分配菜单的树")
     @GetMapping(path = "/buildAssignMenuTree")
+    @ApiOperation("构建分配菜单的树")
     public ResponseResult<String> buildAssignMenuTree(){
         try {
             String menuTree = menuTreeService.buildAssignMenuTree();
@@ -84,7 +92,9 @@ public class MenuTreeController {
      * 如果新增的是按钮type=2（可以选择的所属菜单有）：菜单
      *
      */
+    @OperationLog("根据新增的菜单的菜单类型来构建可以选择的菜单树")
     @GetMapping(path = "/buildCanChooseMenuTreeByNewMenuType")
+    @ApiOperation("根据新增的菜单的菜单类型来构建可以选择的菜单树")
     public ResponseResult<String> buildCanChooseMenuTreeByNewMenuType(@RequestParam("type") int type){
         try {
             String menuTree = menuTreeService.buildCanChooseMenuTreeByNewMenuType(type);

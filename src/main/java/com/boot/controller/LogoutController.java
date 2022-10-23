@@ -4,6 +4,7 @@ import com.boot.data.ResponseResult;
 import com.boot.service.LogoutService;
 import com.boot.vo.TokenVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +23,12 @@ public class LogoutController {
     private LogoutService logoutService;
 
     /**
-     * 用户注销接口。
+     * 用户退出接口。
      * @param accessToken （必须要传）
      * @param refreshToken （可选）
      * @return
      */
+    @ApiOperation("用户退出接口")
     @PostMapping("/user/logout")
     public ResponseResult logout(@RequestHeader(value = "accessToken",required = true) String accessToken,
                                  @RequestHeader(value = "refreshToken",required = false) String refreshToken){

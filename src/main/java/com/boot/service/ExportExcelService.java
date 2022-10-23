@@ -35,4 +35,19 @@ public interface ExportExcelService {
      * @param response       响应
      */
     void exportAllMenu(HttpServletResponse response);
+
+    /**
+     * 导出所有登录日志
+     *
+     * @param response 响应
+     */
+    void exportAllLoginLog(HttpServletResponse response);
+
+
+    /**
+     * 导出所有操作日志
+     *
+     * @param response 响应
+     */
+    void exportAllOperationLog(HttpServletResponse response);
 }

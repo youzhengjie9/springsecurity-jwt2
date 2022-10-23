@@ -3,6 +3,8 @@ package com.boot.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.boot.entity.LoginLog;
 
+import java.util.List;
+
 /**
  * 登录日志服务
  *
@@ -11,5 +13,6 @@ import com.boot.entity.LoginLog;
  */
 public interface LoginLogService extends IService<LoginLog> {
 
+    List<LoginLog> selectAllLoginLogByLimit(int page,int size);
 
 }

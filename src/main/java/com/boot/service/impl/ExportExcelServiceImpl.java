@@ -3,13 +3,8 @@ package com.boot.service.impl;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.util.MapUtils;
 import com.alibaba.fastjson.JSON;
-import com.boot.entity.Menu;
-import com.boot.entity.Role;
-import com.boot.entity.User;
-import com.boot.service.ExportExcelService;
-import com.boot.service.MenuService;
-import com.boot.service.RoleService;
-import com.boot.service.UserService;
+import com.boot.entity.*;
+import com.boot.service.*;
 import com.boot.utils.EasyExcelUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +36,12 @@ public class ExportExcelServiceImpl implements ExportExcelService {
     private MenuService menuService;
 
     @Autowired
+    private LoginLogService loginLogService;
+
+    @Autowired
+    private OperationLogService operationLogService;
+
+    @Autowired
     private EasyExcelUtil easyExcelUtil;
 
     private static final String EXPORT_USER_PREFIX="用户表";
@@ -48,6 +49,10 @@ public class ExportExcelServiceImpl implements ExportExcelService {
     private static final String EXPORT_ROLE_PREFIX="角色表";
 
     private static final String EXPORT_MENU_PREFIX="菜单表";
+
+    private static final String EXPORT_LOGIN_LOG_PREFIX="登录日志表";
+
+    private static final String EXPORT_OPER_LOG_PREFIX="操作日志表";
 
     /**
      * 导出所有用户
@@ -118,5 +123,43 @@ public class ExportExcelServiceImpl implements ExportExcelService {
                 .list();
 
         easyExcelUtil.writeExcel(menuList, Menu.class,EXPORT_MENU_PREFIX,response);
+    }
+
+    @Override
+    public void exportAllLoginLog(HttpServletResponse response) {
+
+        List<LoginLog> loginLogList = loginLogService.lambdaQuery()
+                .select(LoginLog::getId,
+                        LoginLog::getUsername,
+                        LoginLog::getIp,
+                        LoginLog::getAddress,
+                        LoginLog::getBrowser,
+                        LoginLog::getOs,
+                        LoginLog::getLoginTime,
+                        LoginLog::getDelFlag)
+                .orderByDesc(LoginLog::getLoginTime)
+                .list();
+
+        easyExcelUtil.writeExcel(loginLogList, LoginLog.class,EXPORT_LOGIN_LOG_PREFIX,response);
+    }
+
+    @Override
+    public void exportAllOperationLog(HttpServletResponse response) {
+
+        List<OperationLog> operationLogList = operationLogService.lambdaQuery()
+                .select(OperationLog::getId,
+                        OperationLog::getUsername,
+                        OperationLog::getType,
+                        OperationLog::getUri,
+                        OperationLog::getTime,
+                        OperationLog::getIp,
+                        OperationLog::getAddress,
+                        OperationLog::getBrowser,
+                        OperationLog::getOs,
+                        OperationLog::getOperTime,
+                        OperationLog::getDelFlag)
+                .orderByDesc(OperationLog::getOperTime)
+                .list();
+        easyExcelUtil.writeExcel(operationLogList, OperationLog.class,EXPORT_OPER_LOG_PREFIX,response);
     }
 }

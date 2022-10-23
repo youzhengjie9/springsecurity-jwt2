@@ -1,11 +1,13 @@
 package com.boot.controller;
 
+import com.boot.annotation.OperationLog;
 import com.boot.data.ResponseResult;
 import com.boot.enums.ResponseType;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +37,7 @@ public class CaptchaController {
 
 
     @GetMapping("/captcha")
+    @ApiOperation("验证码接口")
     public ResponseResult captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         try {

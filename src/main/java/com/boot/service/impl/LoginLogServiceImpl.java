@@ -5,7 +5,10 @@ import com.boot.entity.LoginLog;
 import com.boot.mapper.LoginLogMapper;
 import com.boot.service.LoginLogService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 登录日志服务impl
@@ -17,5 +20,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> implements LoginLogService {
 
+    @Autowired
+    private LoginLogMapper loginLogMapper;
+
+    @Override
+    public List<LoginLog> selectAllLoginLogByLimit(int page, int size) {
+
+        return loginLogMapper.selectAllLoginLogByLimit(page, size);
+    }
 
 }

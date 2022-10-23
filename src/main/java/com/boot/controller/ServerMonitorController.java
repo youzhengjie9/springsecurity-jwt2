@@ -1,9 +1,11 @@
 package com.boot.controller;
 
+import com.boot.annotation.OperationLog;
 import com.boot.data.ResponseResult;
 import com.boot.enums.ResponseType;
 import com.boot.vo.ServerInfoVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,9 @@ public class ServerMonitorController {
      *
      * @return {@link ResponseResult}<{@link ServerInfoVO}>
      */
+    @OperationLog("获取该服务器所有信息")
     @GetMapping(path = "/getServerInfo")
+    @ApiOperation("获取该服务器所有信息")
     public ResponseResult<ServerInfoVO> getServerInfo(){
 
         try {

@@ -1,5 +1,6 @@
 package com.boot.controller;
 
+import com.boot.annotation.OperationLog;
 import com.boot.data.ResponseResult;
 import com.boot.dto.AssignMenuDTO;
 import com.boot.dto.RoleFormDTO;
@@ -9,6 +10,7 @@ import com.boot.enums.ResponseType;
 import com.boot.service.RoleService;
 import com.boot.utils.SnowId;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +35,9 @@ public class RoleController {
     //1 8 = 0 8
     //2 8 = 8 8
     //3 8 = 16 8
+    @OperationLog("查询所有角色并分页")
     @GetMapping(path = "/selectAllRoleByLimit")
+    @ApiOperation("查询所有角色并分页")
     public ResponseResult selectAllRoleByLimit(int page,int size){
         page=(page-1)*size;
         try {
@@ -46,7 +50,9 @@ public class RoleController {
         }
     }
 
+    @OperationLog("查询所有角色数量")
     @GetMapping(path = "/selectAllRoleCount")
+    @ApiOperation("查询所有角色数量")
     public ResponseResult selectAllRoleCount(){
 
         try {
@@ -60,7 +66,9 @@ public class RoleController {
 
     }
 
+    @OperationLog("查询所有角色")
     @GetMapping(path = "/selectAllRole")
+    @ApiOperation("查询所有角色")
     public ResponseResult selectAllRole(){
         try {
             List<Role> roles = roleService.selectAllRole();
@@ -72,7 +80,9 @@ public class RoleController {
         }
     }
 
+    @OperationLog("根据用户id查询用户已经选择的角色")
     @GetMapping(path = "/selectUserCheckedRoleByUserId")
+    @ApiOperation("根据用户id查询用户已经选择的角色")
     public ResponseResult selectUserCheckedRoleByUserId(@RequestParam("id") String id){
 
         try {
@@ -86,7 +96,9 @@ public class RoleController {
         }
     }
 
+    @OperationLog("添加角色")
     @PostMapping("/addRole")
+    @ApiOperation("添加角色")
     public ResponseResult addRole(@RequestBody @Valid RoleFormDTO roleFormDto){
         try {
             roleService.addRole(roleFormDto);
@@ -98,7 +110,9 @@ public class RoleController {
         }
     }
 
+    @OperationLog("修改角色")
     @PostMapping(path = "/updateRole")
+    @ApiOperation("修改角色")
     public ResponseResult updateRole(@RequestBody @Valid RoleFormDTO roleFormDto){
 
         try {
@@ -117,7 +131,9 @@ public class RoleController {
      * @param id id
      * @return {@link ResponseResult}
      */
+    @OperationLog("删除角色")
     @DeleteMapping(path = "/deleteRole")
+    @ApiOperation("删除角色")
     public ResponseResult deleteRole(@RequestParam("id") long id){
         ResponseResult<Object> result = new ResponseResult<>();
         try {
@@ -137,7 +153,9 @@ public class RoleController {
      * @param assignMenuDto 分配菜单dto
      * @return {@link ResponseResult}
      */
+    @OperationLog("分配菜单")
     @PostMapping(path = "/assignMenu")
+    @ApiOperation("分配菜单")
     public ResponseResult assignMenu(@RequestBody @Valid AssignMenuDTO assignMenuDto){
 
         try {
@@ -180,7 +198,9 @@ public class RoleController {
      * @param size     大小
      * @return {@link ResponseResult}
      */
+    @OperationLog("根据角色名搜索角色并分页")
     @GetMapping(path = "/searchRoleByRoleNameAndLimit")
+    @ApiOperation("根据角色名搜索角色并分页")
     public ResponseResult searchRoleByRoleNameAndLimit(@RequestParam("roleName") String roleName,
                                                        @RequestParam("page") int page,
                                                        @RequestParam("size") int size){
@@ -202,7 +222,9 @@ public class RoleController {
      * @param roleName 角色名
      * @return {@link ResponseResult}
      */
+    @OperationLog("按role的name搜索role数量")
     @GetMapping(path = "/searchRoleCountByRoleName")
+    @ApiOperation("按role的name搜索role数量")
     public ResponseResult searchRoleCountByRoleName(@RequestParam("roleName") String roleName){
 
         try {

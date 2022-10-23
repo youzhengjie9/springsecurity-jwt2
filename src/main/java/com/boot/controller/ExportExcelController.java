@@ -1,5 +1,6 @@
 package com.boot.controller;
 
+import com.boot.annotation.OperationLog;
 import com.boot.service.ExportExcelService;
 import com.boot.utils.EasyExcelUtil;
 import io.swagger.annotations.Api;
@@ -26,6 +27,7 @@ public class ExportExcelController {
     private ExportExcelService exportExcelService;
 
 
+    @OperationLog("导出所有用户")
     @GetMapping("/exportAllUser")
     @ApiOperation(value = "导出所有用户")
     public void exportAllUser(HttpServletResponse response){
@@ -34,6 +36,7 @@ public class ExportExcelController {
     }
 
 
+    @OperationLog("导出所有角色")
     @GetMapping("/exportAllRole")
     @ApiOperation(value = "导出所有角色")
     public void exportAllRole(HttpServletResponse response){
@@ -41,11 +44,28 @@ public class ExportExcelController {
         exportExcelService.exportAllRole(response);
     }
 
+    @OperationLog("导出所有菜单")
     @GetMapping("/exportAllMenu")
     @ApiOperation(value = "导出所有菜单")
     public void exportAllMenu(HttpServletResponse response){
 
         exportExcelService.exportAllMenu(response);
+    }
+
+    @OperationLog("导出所有登录日志")
+    @GetMapping("/exportAllLoginLog")
+    @ApiOperation(value = "导出所有登录日志")
+    public void exportAllLoginLog(HttpServletResponse response){
+
+        exportExcelService.exportAllLoginLog(response);
+    }
+
+    @OperationLog("导出所有操作日志")
+    @GetMapping("/exportAllOperationLog")
+    @ApiOperation(value = "导出所有操作日志")
+    public void exportAllOperationLog(HttpServletResponse response){
+
+        exportExcelService.exportAllOperationLog(response);
     }
 
 

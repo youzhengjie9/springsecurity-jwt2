@@ -64,8 +64,7 @@ public class IpToAddressUtil {
 
             return stringBuilder.toString();
         } else {
-            System.out.println(message);
-            return "暂未检测到所在地址";
+            return "内网IP";
         }
     }
 

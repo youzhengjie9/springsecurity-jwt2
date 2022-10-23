@@ -1,5 +1,6 @@
 package com.boot.controller;
 
+import com.boot.annotation.OperationLog;
 import com.boot.data.ResponseResult;
 import com.boot.dto.UserLoginDTO;
 import com.boot.enums.ResponseType;
@@ -10,6 +11,7 @@ import com.boot.service.MenuService;
 import com.boot.service.MenuTreeService;
 import com.boot.vo.TokenVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +51,7 @@ public class LoginController {
      * @return {@link ResponseResult}<{@link TokenVO}>
      * @throws Throwable throwable
      */
+    @ApiOperation("登录接口")
     @PostMapping("/user/login")
     public ResponseResult<TokenVO> login(@RequestBody @Valid UserLoginDTO userLoginDto, HttpServletRequest request) throws Throwable {
 
@@ -57,11 +60,13 @@ public class LoginController {
     }
 
     /**
-     * 得到当前用户信息
+     * 获取当前用户信息
      * 记住：要携带accessToken
      * @return {@link ResponseResult}
      */
+    @OperationLog("获取当前用户信息")
     @GetMapping("/user/getCurrentUserInfo")
+    @ApiOperation("获取当前用户信息")
     public ResponseResult<TokenVO> getCurrentUserInfo(){
 
         try {

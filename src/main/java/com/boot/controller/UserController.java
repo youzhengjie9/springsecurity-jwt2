@@ -1,5 +1,6 @@
 package com.boot.controller;
 
+import com.boot.annotation.OperationLog;
 import com.boot.data.ResponseResult;
 import com.boot.dto.AssignRoleDTO;
 import com.boot.dto.UserFormDTO;
@@ -9,6 +10,7 @@ import com.boot.enums.ResponseType;
 import com.boot.service.UserService;
 import com.boot.utils.SnowId;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
@@ -37,11 +39,12 @@ public class UserController {
     private BCryptPasswordEncoder passwordEncoder;
 
     /**
-     * 选择所有用户数量
+     * 查询所有用户数量
      *
      * @return {@link ResponseResult}
      */
     @GetMapping(path = "/selectAllUserCount")
+    @ApiOperation("查询所有用户数量")
     public ResponseResult selectAllUserCount(){
 
         try {
@@ -63,7 +66,9 @@ public class UserController {
     //1 8 = 0 8
     //2 8 = 8 8
     //3 8 = 16 8
+    @OperationLog("查询所有用户并分页")
     @GetMapping(path = "/selectAllUserByLimit")
+    @ApiOperation("查询所有用户并分页")
     public ResponseResult selectAllUserByLimit(int page,int size){
         page=(page-1)*size;
         try {
@@ -82,7 +87,9 @@ public class UserController {
      * @param userFormDto 用户表单dto
      * @return {@link ResponseResult}
      */
+    @OperationLog("添加用户")
     @PostMapping("/addUser")
+    @ApiOperation("添加用户")
     public ResponseResult addUser(@RequestBody @Valid UserFormDTO userFormDto){
 
         try {
@@ -100,12 +107,14 @@ public class UserController {
     }
 
     /**
-     * 更新用户
+     * 修改用户
      *
      * @param userFormDto 用户表单dto
      * @return {@link ResponseResult}
      */
+    @OperationLog("修改用户")
     @PostMapping(path = "/updateUser")
+    @ApiOperation("修改用户")
     public ResponseResult updateUser(@RequestBody @Valid UserFormDTO userFormDto){
         try {
             //如果密码不为空，则进行加密再存储到数据库中
@@ -129,7 +138,9 @@ public class UserController {
      * @param id id
      * @return {@link ResponseResult}
      */
+    @OperationLog("删除用户")
     @DeleteMapping(path = "/deleteUser")
+    @ApiOperation("删除用户")
     public ResponseResult deleteUser(@RequestParam("id") long id){
         try {
             userService.deleteUser(id);
@@ -151,7 +162,9 @@ public class UserController {
      * @param assignRoleDto 分配角色dto
      * @return {@link ResponseResult}
      */
+    @OperationLog("分配角色")
     @PostMapping(path = "/assignRole")
+    @ApiOperation("分配角色")
     public ResponseResult assignRole(@RequestBody @Valid AssignRoleDTO assignRoleDto){
 
         try {
@@ -201,7 +214,9 @@ public class UserController {
      * @param size     大小
      * @return {@link ResponseResult}
      */
+    @OperationLog("根据用户名搜索用户并分页")
     @GetMapping(path = "/searchUserByUserNameAndLimit")
+    @ApiOperation("根据用户名搜索用户并分页")
     public ResponseResult searchUserByUserNameAndLimit(@RequestParam("userName") String userName,
                                                        @RequestParam("page") int page,
                                                        @RequestParam("size") int size){
@@ -224,6 +239,7 @@ public class UserController {
      * @return {@link ResponseResult}
      */
     @GetMapping(path = "/searchUserCountByUserName")
+    @ApiOperation("按用户名搜索用户数量")
     public ResponseResult searchUserCountByUserName(@RequestParam("userName") String userName){
 
         try {

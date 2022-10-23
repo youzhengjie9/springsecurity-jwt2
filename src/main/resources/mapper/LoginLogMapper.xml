@@ -6,9 +6,9 @@
     <select id="selectAllLoginLogByLimit" resultType="com.boot.entity.LoginLog">
         SELECT id, username, ip, address, browser, os, login_time
         FROM sys_login_log
-        WHERE id >= (SELECT id FROM sys_login_log ORDER BY id LIMIT #{page},1)
-          AND del_flag = 0
-        LIMIT #{size}
+        WHERE del_flag = 0
+        ORDER BY login_time DESC
+        LIMIT #{page},#{size}
     </select>
 
 </mapper>

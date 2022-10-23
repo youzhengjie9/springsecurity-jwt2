@@ -1,9 +1,11 @@
 package com.boot.controller;
 
+import com.boot.annotation.OperationLog;
 import com.boot.data.ResponseResult;
 import com.boot.service.RefreshTokenService;
 import com.boot.vo.TokenVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -27,7 +29,9 @@ public class RefreshTokenController {
      * @param refreshToken 请求头中名为（refreshToken）的内容
      * @return ResponseResult<TokenVO>
      */
+    @OperationLog("刷新token")
     @PostMapping("/refreshToken")
+    @ApiOperation("刷新token")
     public ResponseResult<TokenVO> refreshToken(@RequestHeader(value = "refreshToken") String refreshToken){
 
         return refreshTokenService.refresh(refreshToken);
