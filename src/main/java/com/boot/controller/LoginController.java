@@ -1,5 +1,6 @@
 package com.boot.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.boot.annotation.OperationLog;
 import com.boot.data.ResponseResult;
 import com.boot.dto.UserLoginDTO;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 登录控制器
@@ -75,13 +77,17 @@ public class LoginController {
                     .getAuthentication()
                     .getPrincipal();
             TokenVO tokenVO = userMapStruct.loginUserToTokenVO(loginUser);
-
+            Long userid = loginUser.getUser().getId();
             //此处追加一个获取用户动态菜单,生成该用户的动态菜单（由于可能会频繁操作mysql，所以后期可以用缓存技术来减少数据库压力）
-            String dynamicMenu = menuTreeService.buildTreeByUserId(loginUser.getUser().getId());
+            String dynamicMenu = menuTreeService.buildTreeByUserId(userid);
             //由于VUE动态路由刷新会丢失，所以需要再获取获取该用户的所有路由（只包含类型为菜单，type=1的菜单）
-            String dynamicRouter = menuService.getRouterByUserId(loginUser.getUser().getId());
+            String dynamicRouter = menuService.getRouterByUserId(userid);
             tokenVO.setDynamicMenu(dynamicMenu);
             tokenVO.setDynamicRouter(dynamicRouter);
+
+            //设置用户权限perm
+            List<String> userPerm = menuService.getUserPermissionByUserId(userid);
+            tokenVO.setPerm(JSON.toJSONString(userPerm));
 
             return new ResponseResult(ResponseType.SUCCESS.getCode(), ResponseType.SUCCESS.getMessage(),tokenVO);
         }catch (Exception e){

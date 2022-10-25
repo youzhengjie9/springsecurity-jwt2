@@ -1,5 +1,6 @@
 package com.boot.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.boot.config.JwtProperties;
 import com.boot.data.ResponseResult;
 import com.boot.dto.UserLoginDTO;
@@ -24,6 +25,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -79,12 +81,12 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ResponseResult<TokenVO> login(UserLoginDTO userLoginDto, HttpServletRequest request) throws Throwable {
 
-//        //通过codeKey就可以从Redis中获取正确的验证码
-//        String realCode = (String) redisTemplate.opsForValue().get(userLoginDto.getCodeKey());
-//        //校验验证码是否正确，如果不正确返回604响应码
-//        if(!userLoginDto.getCode().equals(realCode)){
-//            return new ResponseResult<>(ResponseType.CODE_ERROR.getCode(),ResponseType.CODE_ERROR.getMessage());
-//        }
+        //通过codeKey就可以从Redis中获取正确的验证码
+        String realCode = (String) redisTemplate.opsForValue().get(userLoginDto.getCodeKey());
+        //校验验证码是否正确，如果不正确返回604响应码
+        if(!userLoginDto.getCode().equals(realCode)){
+            return new ResponseResult<>(ResponseType.CODE_ERROR.getCode(),ResponseType.CODE_ERROR.getMessage());
+        }
 
         //这个就是我们前端表单传入的UserDto（封装了前端提交的帐号密码），目的是为了后面检查帐号密码是否正确
         //--------------------
@@ -102,21 +104,28 @@ public class LoginServiceImpl implements LoginService {
         //------走到这一步，证明帐号密码都是正确的，可以给前端返回jwt token了
         // 本质上authenticate.getPrincipal()拿到的就是LoginUser对象
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
-        String userid = loginUser.getUser().getId().toString();
+        Long userid = loginUser.getUser().getId();
+
         //根据userid生成accessToken和refreshToken
-        Map<String, String> accessTokenAndRefreshTokenMap = JwtUtil.createAccessTokenAndRefreshToken(userid);
+        Map<String, String> accessTokenAndRefreshTokenMap = JwtUtil.createAccessTokenAndRefreshToken(userid.toString());
 
         //从accessTokenAndRefreshTokenMap取出accessToken和refreshToken
         String accessToken = accessTokenAndRefreshTokenMap.get(jwtProperties.getAccessTokenName());
         String refreshToken = accessTokenAndRefreshTokenMap.get(jwtProperties.getRefreshTokenName());
 
+
         //将LoginUser对象存入Redis，证明已经登录了
         redisTemplate.opsForValue().set(LOGIN_KEY_PREFIX+userid,loginUser,expired, TimeUnit.MILLISECONDS);
 
         //生成该用户的动态菜单
-        String dynamicMenu = menuTreeService.buildTreeByUserId(Long.parseLong(userid));
+        String dynamicMenu = menuTreeService.buildTreeByUserId(userid);
         //获取该用户的所有路由（只包含类型为菜单，type=1的菜单）
-        String dynamicRouter = menuService.getRouterByUserId(Long.parseLong(userid));
+        String dynamicRouter = menuService.getRouterByUserId(userid);
+
+        //查询用户权限perm
+        List<String> userPerm = menuService.getUserPermissionByUserId(userid);
+        String perm = JSON.toJSONString(userPerm);
+
         //将accessToken和refreshToken封装成TokenVO返回给前端
         TokenVO tokenVO = new TokenVO()
                 .setAccessToken(accessToken)
@@ -125,7 +134,8 @@ public class LoginServiceImpl implements LoginService {
                 .setAvatar(loginUser.getUser().getAvatar())
                 .setUserName(loginUser.getUser().getUserName())
                 .setDynamicMenu(dynamicMenu)
-                .setDynamicRouter(dynamicRouter);
+                .setDynamicRouter(dynamicRouter)
+                .setPerm(perm);
 
         //登录成功后添加登录日志，不需要设置id，因为mybatis-plus会自动为我们生成
         String userIp = IpUtils.getIpAddr(request);

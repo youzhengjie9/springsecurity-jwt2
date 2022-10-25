@@ -31,6 +31,8 @@ public class TokenVO implements Serializable {
     private String dynamicMenu;
     //该用户的动态路由
     private String dynamicRouter;
+    //用户权限perm
+    private String perm;
 
 
 }

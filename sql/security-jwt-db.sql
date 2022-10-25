@@ -14,7 +14,7 @@ CREATE TABLE `sys_user` (
                             `user_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT '用户名',
                             `nick_name` varchar(32) NOT NULL DEFAULT 'NULL' COMMENT '昵称',
                             `password` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'NULL' COMMENT '密码',
-                            `status` tinyint(1) DEFAULT '0' COMMENT '账号状态（0正常 1停用）',
+                            `status` tinyint(1) DEFAULT '0' COMMENT '用户状态（0正常 1停用）',
                             `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
                             `phone` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '手机号',
                             `sex` tinyint(1) DEFAULT NULL COMMENT '用户性别（0男，1女，2未知）',
@@ -206,6 +206,7 @@ INSERT INTO sys_menu VALUES (3002,3001,'用户管理','/user/list','/user-list/i
 INSERT INTO sys_menu VALUES (3003,3002,'新增用户',null,null,0,0,'sys:user:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,3,'bz');
 INSERT INTO sys_menu VALUES (3004,3002,'修改用户',null,null,0,0,'sys:user:list:update',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,4,'bz');
 INSERT INTO sys_menu VALUES (3005,3002,'删除用户',null,null,0,0,'sys:user:list:delete',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,5,'bz');
+INSERT INTO sys_menu VALUES (3020,3002,'分配角色',null,null,0,0,'sys:user:list:assign-role',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,5,'bz');
 
 
 /* 角色管理菜单 */
@@ -214,6 +215,7 @@ INSERT INTO sys_menu VALUES (3006,3001,'角色管理','/role/list','/role-list/i
 INSERT INTO sys_menu VALUES (3007,3006,'新增角色',null,null,0,0,'sys:role:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,7,'bz');
 INSERT INTO sys_menu VALUES (3008,3006,'修改角色',null,null,0,0,'sys:role:list:update',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,8,'bz');
 INSERT INTO sys_menu VALUES (3009,3006,'删除角色',null,null,0,0,'sys:role:list:delete',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,9,'bz');
+INSERT INTO sys_menu VALUES (3021,3006,'分配菜单',null,null,0,0,'sys:role:list:assign-menu',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,9,'bz');
 
 
 /* 菜单（权限）管理 */
@@ -246,13 +248,6 @@ INSERT INTO sys_menu VALUES (3018,3001,'SQL监控','/monitor/sql','/monitor-sql/
 /* 服务器监控菜单 */
 INSERT INTO sys_menu VALUES (3019,3001,'服务器监控','/monitor/server','/monitor-server/index',0,0,'sys:monitor:server',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,19,'bz');
 
-/* token管理菜单 */
-INSERT INTO sys_menu VALUES (3020,3001,'token管理','/token/list','/token-list/index',0,0,'sys:token:list',1,'el-icon-suitcase','2022-09-26 23:46:02','2022-09-28 23:46:02',0,20,'bz');
-
-/* token管理的按钮权限 */
-INSERT INTO sys_menu VALUES (3021,3020,'新增token',null,null,0,0,'sys:token:list:add',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,21,'bz');
-INSERT INTO sys_menu VALUES (3022,3020,'修改token',null,null,0,0,'sys:token:list:update',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,22,'bz');
-INSERT INTO sys_menu VALUES (3023,3020,'删除token',null,null,0,0,'sys:token:list:delete',2,null,'2022-09-26 23:46:02','2022-09-28 23:46:02',0,23,'bz');
 
 
 
@@ -323,8 +318,7 @@ INSERT INTO sys_role_menu VALUES (5018,2001,3018);
 INSERT INTO sys_role_menu VALUES (5019,2001,3019);
 INSERT INTO sys_role_menu VALUES (5020,2001,3020);
 INSERT INTO sys_role_menu VALUES (5021,2001,3021);
-INSERT INTO sys_role_menu VALUES (5022,2001,3022);
-INSERT INTO sys_role_menu VALUES (5023,2001,3023);
+
 
 
 -- 多级菜单权限
@@ -342,6 +336,11 @@ INSERT INTO sys_role_menu VALUES (5060,2002,3002);
 INSERT INTO sys_role_menu VALUES (5061,2002,3006);
 INSERT INTO sys_role_menu VALUES (5062,2002,3010);
 INSERT INTO sys_role_menu VALUES (5063,2002,3019);
+INSERT INTO sys_role_menu VALUES (5064,2002,3020);
+
+
+
+INSERT INTO sys_role_menu VALUES (5064,2002,3004);
 
 
 /* 菜单权限扩展部分 */
