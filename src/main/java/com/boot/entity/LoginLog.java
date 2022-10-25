@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.boot.converter.DelFlagConverter;
 import com.boot.converter.LocalDateTimeConverter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -75,7 +76,7 @@ public class LoginLog implements Serializable {
     @TableLogic//逻辑删除
     @TableField("del_flag")
     @ApiModelProperty("删除标志（0代表未删除，1代表已删除）")
-    @ExcelProperty("删除标志")
+    @ExcelProperty(value = "删除标志",converter = DelFlagConverter.class)
     private Integer delFlag;
 
 }

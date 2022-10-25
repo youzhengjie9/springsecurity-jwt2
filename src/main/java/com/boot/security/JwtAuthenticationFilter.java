@@ -1,10 +1,16 @@
 package com.boot.security;
 
+import com.alibaba.fastjson.JSON;
 import com.boot.config.JwtProperties;
+import com.boot.data.ResponseResult;
+import com.boot.enums.ResponseType;
 import com.boot.exception.NotLoginException;
 import com.boot.exception.ParseTokenException;
+import com.boot.exception.TokenExpiredException;
 import com.boot.utils.JwtUtil;
+import com.boot.utils.WebUtil;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -51,19 +57,44 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //2:如果有accessToken的情况下
         else {
 
+
             String userid=null;
             //先解析accessToken，如果accessToken解析失败则直接报错即可。
+            ResponseResult responseResult;
             try {
                 Claims claims = JwtUtil.parseAccessToken(accessToken);
                 userid = claims.getSubject();
+            }catch (ExpiredJwtException expiredJwtException){
+                responseResult = new ResponseResult<>();
+                responseResult.setCode(ResponseType.ACCESS_TOKEN_EXPIRED.getCode());
+                responseResult.setMsg(ResponseType.ACCESS_TOKEN_EXPIRED.getMessage());
+
+                String jsonString = JSON.toJSONString(responseResult);
+                //将报错信息传来AuthenticationEntryPointImpl类，然后由它进行return到前端
+                request.setAttribute("responseResult",jsonString);
+
+                throw new TokenExpiredException();
             }catch (Exception e){
-                log.error("解析token失败，请检查token是否正确");
+                responseResult = new ResponseResult<>();
+                responseResult.setCode(ResponseType.TOKEN_ERROR.getCode());
+                responseResult.setMsg(ResponseType.TOKEN_ERROR.getMessage());
+
+                String jsonString = JSON.toJSONString(responseResult);
+                //将报错信息传来AuthenticationEntryPointImpl类，然后由它进行return到前端
+                request.setAttribute("responseResult",jsonString);
+
                 throw new ParseTokenException();
             }
 
             // 判断这个accessToken是否在redis黑名单中,如果在黑名单中，则直接返回失败
             if(redisTemplate.hasKey(jwtProperties.getAccessTokenBlacklistPrefix()+accessToken)){
-                log.error("用户未登录，请重新登录！");
+                responseResult = new ResponseResult<>();
+                responseResult.setCode(ResponseType.NOT_LOGIN.getCode());
+                responseResult.setMsg(ResponseType.NOT_LOGIN.getMessage());
+
+                String jsonString = JSON.toJSONString(responseResult);
+                //将报错信息传来AuthenticationEntryPointImpl类，然后由它进行return到前端
+                request.setAttribute("responseResult",jsonString);
                 throw new NotLoginException();
             }
 
@@ -72,7 +103,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String key=LOGIN_KEY_PREFIX+userid;
             LoginUser loginUser = (LoginUser) redisTemplate.opsForValue().get(key);
             if(Objects.isNull(loginUser)){
-                log.error("用户未登录，请重新登录！");
+                responseResult = new ResponseResult<>();
+                responseResult.setCode(ResponseType.NOT_LOGIN.getCode());
+                responseResult.setMsg(ResponseType.NOT_LOGIN.getMessage());
+
+                String jsonString = JSON.toJSONString(responseResult);
+                //将报错信息传来AuthenticationEntryPointImpl类，然后由它进行return到前端
+                request.setAttribute("responseResult",jsonString);
                 throw new NotLoginException();
             }
 

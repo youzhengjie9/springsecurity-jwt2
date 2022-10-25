@@ -16,6 +16,7 @@ public enum ResponseType {
      * token状态
      */
     TOKEN_ERROR(300,"解析token失败，请检查token是否正确"),
+    ACCESS_TOKEN_EXPIRED(301,"accessToken已过期"),
     /**
      * 用户状态
      */

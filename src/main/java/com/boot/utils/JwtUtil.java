@@ -1,7 +1,10 @@
 package com.boot.utils;
 
 import com.boot.config.JwtProperties;
+import com.boot.exception.ParseTokenException;
+import com.boot.exception.TokenExpiredException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
@@ -82,15 +85,12 @@ public class JwtUtil {
      */
     public static Claims parseAccessToken(String accessToken) {
 
-        Claims claims = null;
-        try {
-            claims = Jwts.parser().setSigningKey(jwtProperties.getAccessTokenKey())
-                    .parseClaimsJws(accessToken)
-                    .getBody();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return claims;
+
+        return Jwts
+                .parser()
+                .setSigningKey(jwtProperties.getAccessTokenKey())
+                .parseClaimsJws(accessToken)
+                .getBody();
     }
 
     /**
@@ -119,15 +119,12 @@ public class JwtUtil {
      * @return 如果refreshToken过期了则返回null
      */
     public static Claims parseRefreshToken(String refreshToken) {
-        Claims claims = null;
-        try {
-            claims = Jwts.parser().setSigningKey(jwtProperties.getRefreshTokenKey())
-                    .parseClaimsJws(refreshToken)
-                    .getBody();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return claims;
+
+        return Jwts
+                .parser()
+                .setSigningKey(jwtProperties.getRefreshTokenKey())
+                .parseClaimsJws(refreshToken)
+                .getBody();
     }
 
     /**

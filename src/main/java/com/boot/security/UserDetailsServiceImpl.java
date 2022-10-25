@@ -1,7 +1,10 @@
 package com.boot.security;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.boot.data.ResponseResult;
 import com.boot.entity.User;
+import com.boot.enums.ResponseType;
 import com.boot.exception.UserNameOrPassWordException;
 import com.boot.mapper.UserMapper;
 import com.boot.service.MenuService;
@@ -12,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +29,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private HttpServletRequest request;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -32,7 +39,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUserName, username));
 
         if(Objects.isNull(user)){
-            log.error("用户名或者密码不正确，请重新输入");
+            ResponseResult responseResult = new ResponseResult<>();
+            responseResult.setCode(ResponseType.USERNAME_PASSWORD_ERROR.getCode());
+            responseResult.setMsg(ResponseType.USERNAME_PASSWORD_ERROR.getMessage());
+
+            String jsonString = JSON.toJSONString(responseResult);
+            //将报错信息传来AuthenticationEntryPointImpl类，然后由它进行return到前端
+            request.setAttribute("responseResult",jsonString);
             throw new UserNameOrPassWordException();
         }
 

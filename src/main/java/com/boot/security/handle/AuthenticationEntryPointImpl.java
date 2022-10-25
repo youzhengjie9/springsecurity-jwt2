@@ -26,19 +26,8 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
-        ResponseResult result = null;
-        //解析token失败异常
-        if(authException instanceof InsufficientAuthenticationException){
-            result=new ResponseResult(ResponseType.TOKEN_ERROR.getCode(), ResponseType.TOKEN_ERROR.getMessage());
-        }
-        //用户名或者密码不正确
-        else if(authException instanceof InternalAuthenticationServiceException || authException instanceof BadCredentialsException){
-            result=new ResponseResult(ResponseType.USERNAME_PASSWORD_ERROR.getCode(), ResponseType.USERNAME_PASSWORD_ERROR.getMessage());
-        }
-        else {
-            result=new ResponseResult(ResponseType.USERNAME_PASSWORD_ERROR.getCode(), ResponseType.USERNAME_PASSWORD_ERROR.getMessage());
-        }
-        String jsonString = JSON.toJSONString(result);
-        WebUtil.writeJsonString(response,jsonString);
+        String responseResultJson = (String) request.getAttribute("responseResult");
+
+        WebUtil.writeJsonString(response,responseResultJson);
     }
 }

@@ -29,7 +29,8 @@ public class RefreshTokenController {
      * @param refreshToken 请求头中名为（refreshToken）的内容
      * @return ResponseResult<TokenVO>
      */
-    @OperationLog("刷新token")
+
+//    @OperationLog("刷新token") //refreshToken方法上面不能加上 @OperationLog注解，否则刷新功能会失效
     @PostMapping("/refreshToken")
     @ApiOperation("刷新token")
     public ResponseResult<TokenVO> refreshToken(@RequestHeader(value = "refreshToken") String refreshToken){

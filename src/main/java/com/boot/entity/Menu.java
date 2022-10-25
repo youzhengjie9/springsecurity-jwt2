@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.boot.converter.LocalDateTimeConverter;
+import com.boot.converter.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -68,13 +68,13 @@ public class Menu implements Serializable,Comparable<Menu> {
 
     @TableField("status")
     @ApiModelProperty("菜单状态（0正常 1停用）")
-    @ExcelProperty("菜单状态")
-    private int status;
+    @ExcelProperty(value = "菜单状态",converter = StatusConverter.class)
+    private Integer status;
 
     @TableField("visible")
     @ApiModelProperty("菜单显示状态（0显示 1隐藏）（type=0或者1才会生效，type=2不生效）")
-    @ExcelProperty("菜单显示状态")
-    private int visible;
+    @ExcelProperty(value = "菜单显示状态",converter = VisibleConverter.class)
+    private Integer visible;
 
 
     @TableField("perms")
@@ -84,8 +84,8 @@ public class Menu implements Serializable,Comparable<Menu> {
 
     @TableField("type")
     @ApiModelProperty("菜单类型。0：目录（点击后台侧边栏可以展开成下一级菜单的按钮）;1：菜单（点击后台侧边栏直接跳转vue路由组件的按钮）;2：按钮;菜单里面的按钮")
-    @ExcelProperty("菜单类型")
-    private int type;
+    @ExcelProperty(value = "菜单类型",converter = MenuTypeConverter.class)
+    private Integer type;
 
     @TableField("icon")
     @ApiModelProperty("菜单图标（type=0或者1才会生效，type=2不生效）")
@@ -105,7 +105,7 @@ public class Menu implements Serializable,Comparable<Menu> {
     @TableLogic//逻辑删除
     @TableField("del_flag")
     @ApiModelProperty("删除标志（0代表未删除，1代表已删除）")
-    @ExcelIgnore
+    @ExcelProperty(value = "删除标志",converter = DelFlagConverter.class)
     private Integer delFlag;
 
 
