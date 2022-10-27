@@ -34,6 +34,13 @@
 
     <dependencies>
 
+<!--        hutool-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.9</version>
+        </dependency>
+
 <!--        springboot aop-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -122,25 +129,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
-        </dependency>
-        <!--      mapstruct高性能bean拷贝工具，高性能拷贝vo、dto、entity等等  -->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${mapstruct.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-<!--     解决mapstruct和lombok1.18.16以上版本发生冲突出现No property named "xxx" exists in source parameter(s)的异常   -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok-mapstruct-binding</artifactId>
-            <version>0.2.0</version>
         </dependency>
 
         <!--        lombok-->

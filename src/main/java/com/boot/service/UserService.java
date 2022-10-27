@@ -57,8 +57,15 @@ public interface UserService extends IService<User> {
      * @param id id
      * @return int
      */
-    int deleteUser(long id);
+    boolean deleteUser(long id);
 
+    /**
+     * 删除用户所有角色
+     *
+     * @param userid 用户标识
+     * @return int
+     */
+    int deleteUserAllRoles(long userid);
 
     /**
      * 将角色分配给用户
@@ -67,6 +74,14 @@ public interface UserService extends IService<User> {
      * @return boolean
      */
     boolean assignRoleToUser(List<UserRole> userRoleList);
+
+    /**
+     * 给用户添加角色
+     *
+     * @param userRoleList 用户角色列表
+     * @return int
+     */
+    int addRoleToUser(List<UserRole> userRoleList);
 
     /**
      * mysql通过userName关键字搜索（后期为了性能要放到elasticsearch中，mysql速度不高）

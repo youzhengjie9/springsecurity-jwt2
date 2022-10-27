@@ -96,9 +96,8 @@ public class OperationLogAspect {
             //访问接口的耗时
             String timeMs=(endMs-startMs)+"ms";
 
-            for (int i = 0; i < 300; i++) {
-                //插入OperationLog数据到数据库
-                com.boot.entity.OperationLog operationLog = com.boot.entity.OperationLog.builder()
+            //插入OperationLog数据到数据库
+            com.boot.entity.OperationLog operationLog = com.boot.entity.OperationLog.builder()
                         .id(SnowId.nextId())
                         .username(userName)
                         .type(annotationValue)
@@ -110,9 +109,7 @@ public class OperationLogAspect {
                         .os(osName)
                         .operTime(LocalDateTime.now())
                         .build();
-                operationLogService.save(operationLog);
-            }
-
+            operationLogService.save(operationLog);
 
 
             return proceed;

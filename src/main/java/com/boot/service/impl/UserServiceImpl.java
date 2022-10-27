@@ -1,5 +1,6 @@
 package com.boot.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.boot.config.JwtProperties;
@@ -7,7 +8,6 @@ import com.boot.dto.UserFormDTO;
 import com.boot.entity.User;
 import com.boot.entity.UserRole;
 import com.boot.mapper.UserMapper;
-import com.boot.mapstruct.UserMapStruct;
 import com.boot.security.LoginUser;
 import com.boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +50,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private UserMapStruct userMapStruct;
     /**
      * 初始化配置
      */
@@ -92,7 +90,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public int addUser(UserFormDTO userFormDto) {
-        User user = userMapStruct.userFormDtoToUser(userFormDto);
+
+        //使用hutool的BeanUtil拷贝bean属性，其底层还是基于Spring的BeanUtils类，区别是这个BeanUtil第二个参数只需要传.class即可.
+        // TODO: 2022/10/27
+        User user = BeanUtil.copyProperties(userFormDto, User.class);
+        System.out.println(user);
+
         user.setStatus(userFormDto.getStatus() ?0:1);
 
         if("男".equals(userFormDto.getSex())){
@@ -112,7 +115,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public int updateUser(UserFormDTO userFormDto) {
 
-        User user = userMapStruct.userFormDtoToUser(userFormDto);
+        //使用hutool的BeanUtil拷贝bean属性，其底层还是基于Spring的BeanUtils类，区别是这个BeanUtil第二个参数只需要传.class即可.
+        // TODO: 2022/10/27
+        User user = BeanUtil.copyProperties(userFormDto, User.class);
+        System.out.println(user);
+
         user.setStatus(userFormDto.getStatus() ?0:1);
 
         if("男".equals(userFormDto.getSex())){
@@ -128,10 +135,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public int deleteUser(long id) {
-        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(User::getId,id);
-        return userMapper.delete(lambdaQueryWrapper);
+    public boolean deleteUser(long id) {
+
+        try {
+            //删除用户
+            LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(User::getId,id);
+            userMapper.delete(lambdaQueryWrapper);
+            //删除用户所拥有的所有角色
+            userMapper.deleteUserAllRoles(id);
+            return true;
+        }catch (Exception e){
+            throw new RuntimeException("删除用户失败");
+        }
+    }
+
+    @Override
+    public int deleteUserAllRoles(long userid) {
+        return userMapper.deleteUserAllRoles(userid);
     }
 
 
@@ -153,6 +174,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             e.printStackTrace();
             throw new RuntimeException("assignRoleToUser异常,事务已回滚。");
         }
+    }
+
+    @Override
+    public int addRoleToUser(List<UserRole> userRoleList) {
+        return userMapper.addRoleToUser(userRoleList);
     }
 
     @Override

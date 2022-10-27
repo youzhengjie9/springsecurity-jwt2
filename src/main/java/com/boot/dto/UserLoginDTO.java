@@ -34,7 +34,7 @@ public class UserLoginDTO implements Serializable {
     /**
      * 密码
      */
-    @Length(min = 5,max = 20,message = "昵称长度要在5-20位之间")
+    @Length(min = 5,max = 20,message = "密码长度要在5-20位之间")
     @ApiModelProperty(name = "password",value = "密码",example = "123456")
     private String password;
 

@@ -6,9 +6,9 @@ import com.boot.dto.RoleFormDTO;
 import com.boot.entity.Role;
 import com.boot.entity.RoleMenu;
 import com.boot.mapper.RoleMapper;
-import com.boot.mapstruct.RoleMapStruct;
 import com.boot.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
+import net.dreamlu.mica.core.utils.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +29,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Autowired
     private RoleMapper roleMapper;
-
-    @Autowired
-    private RoleMapStruct roleMapStruct;
 
     @Override
     public List<Role> selectAllRoleByLimit(int page, int size) {
@@ -56,7 +53,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public int addRole(RoleFormDTO roleFormDto) {
 
-        Role role = roleMapStruct.roleFormDtoToRole(roleFormDto);
+        // TODO: 2022/10/27
+        Role role = BeanUtil.copyProperties(roleFormDto, Role.class);
+        System.out.println(role);
+
         if(roleFormDto.getStatus()){
             role.setStatus(0);
         }else {
@@ -72,7 +72,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public int updateRole(RoleFormDTO roleFormDto) {
-        Role role = roleMapStruct.roleFormDtoToRole(roleFormDto);
+
+        // TODO: 2022/10/27
+        Role role = BeanUtil.copyProperties(roleFormDto, Role.class);
+        System.out.println(role);
         if(roleFormDto.getStatus()){
             role.setStatus(0);
         }else {

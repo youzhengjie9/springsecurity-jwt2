@@ -1,11 +1,11 @@
 package com.boot.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSON;
 import com.boot.annotation.OperationLog;
 import com.boot.data.ResponseResult;
 import com.boot.dto.UserLoginDTO;
 import com.boot.enums.ResponseType;
-import com.boot.mapstruct.UserMapStruct;
 import com.boot.security.LoginUser;
 import com.boot.service.LoginService;
 import com.boot.service.MenuService;
@@ -36,9 +36,6 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
-
-    @Autowired
-    private UserMapStruct userMapStruct;
 
     @Autowired
     private MenuTreeService menuTreeService;
@@ -76,7 +73,11 @@ public class LoginController {
                     .getContext()
                     .getAuthentication()
                     .getPrincipal();
-            TokenVO tokenVO = userMapStruct.loginUserToTokenVO(loginUser);
+
+            // TODO: 2022/10/27
+            TokenVO tokenVO = BeanUtil.copyProperties(loginUser.getUser(), TokenVO.class);
+            System.out.println(tokenVO);
+
             Long userid = loginUser.getUser().getId();
             //此处追加一个获取用户动态菜单,生成该用户的动态菜单（由于可能会频繁操作mysql，所以后期可以用缓存技术来减少数据库压力）
             String dynamicMenu = menuTreeService.buildTreeByUserId(userid);

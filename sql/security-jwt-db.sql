@@ -22,8 +22,7 @@ CREATE TABLE `sys_user` (
                             `create_time` date DEFAULT NULL COMMENT '创建时间',
                             `update_time` datetime DEFAULT NULL COMMENT '最后一次修改时间',
                             `del_flag` tinyint(1) DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
-                            PRIMARY KEY (`id`),
-                            UNIQUE KEY `user_name` (`user_name`) USING BTREE
+                            PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
 
 
