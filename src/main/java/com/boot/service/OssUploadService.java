@@ -4,8 +4,11 @@ import com.boot.data.ResponseResult;
 import com.boot.enums.ResponseType;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
- * oss上传service接口，目前只实现七牛云这种oss上传
+ * oss上传service接口
  * @author youzhengjie
  * @date 2022-10-06 23:13:28
  */
@@ -20,15 +23,22 @@ public interface OssUploadService {
 
     /**
      * oss文件删除
-     * @param fileFullName 文件全名，也就是下面这个代码生成的名字（记住不要加上域名），例如：
-     *         String newFileName = new StringBuilder()
-     *                 .append(fileDir)
-     *                 .append(uuidFileName)
-     *                 .append(fileSuffix).toString();
+     * @param fileFullName 文件全名，
      *
      * @return 删除结果
      */
     ResponseResult fileDelete(String fileFullName);
+
+    /**
+     * 文件下载
+     *
+     * @param fileName 文件名称
+     * @param response 响应
+     */
+    default void fileDownload(String fileName, HttpServletResponse response){
+
+        throw new UnsupportedOperationException("该实现类暂不支持文件下载操作,请切换到其他实现类！");
+    }
 
 
 }

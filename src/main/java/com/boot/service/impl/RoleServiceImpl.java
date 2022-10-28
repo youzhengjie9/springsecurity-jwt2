@@ -9,6 +9,7 @@ import com.boot.mapper.RoleMapper;
 import com.boot.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import net.dreamlu.mica.core.utils.BeanUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,8 +55,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public int addRole(RoleFormDTO roleFormDto) {
 
         // TODO: 2022/10/27
-        Role role = BeanUtil.copyProperties(roleFormDto, Role.class);
-        System.out.println(role);
+        Role role = new Role();
+        BeanUtils.copyProperties(roleFormDto,role);
 
         if(roleFormDto.getStatus()){
             role.setStatus(0);
@@ -74,8 +75,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public int updateRole(RoleFormDTO roleFormDto) {
 
         // TODO: 2022/10/27
-        Role role = BeanUtil.copyProperties(roleFormDto, Role.class);
-        System.out.println(role);
+        Role role = new Role();
+        BeanUtils.copyProperties(roleFormDto,role);
+
         if(roleFormDto.getStatus()){
             role.setStatus(0);
         }else {
@@ -90,10 +92,19 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public int deleteRole(long id) {
-        LambdaQueryWrapper<Role> roleLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        roleLambdaQueryWrapper.eq(Role::getId,id);
-        return roleMapper.delete(roleLambdaQueryWrapper);
+    public boolean deleteRole(long id) {
+
+        try {
+            //删除角色
+            LambdaQueryWrapper<Role> roleLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            roleLambdaQueryWrapper.eq(Role::getId,id);
+            roleMapper.delete(roleLambdaQueryWrapper);
+            //删除角色对应的所有菜单
+            roleMapper.deleteRoleAllMenu(id);
+            return true;
+        }catch (Exception e){
+            throw new RuntimeException("删除角色失败");
+        }
     }
 
     @Override

@@ -10,16 +10,14 @@ import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 /**
@@ -71,8 +69,7 @@ public class QiniuOssUploadServiceImpl implements OssUploadService {
         UploadManager uploadManager = new UploadManager(cfg);
 
         //以日期作为目录，每一天的图片都会放到不同的目录下，方便管理
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd/");
-        String fileDir = simpleDateFormat.format(new Date());
+        String fileDir = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd/"));
 
         //UUID文件名
         String uuidFileName = UUID.randomUUID().toString().replaceAll("-", "");
@@ -108,7 +105,7 @@ public class QiniuOssUploadServiceImpl implements OssUploadService {
 
     /**
      * 七牛云oss文件删除
-     * @param fileFullName 文件全名，也就是下面这个代码生成的名字（记住不要加上域名）：
+     * @param fileFullName 文件全名，也就是下面这个代码生成的名字（记住不要加上域名）：格式例如：2022/10/28/4f74aa358a4548d4860c110ebec3831f.jpg
      *         String newFileName = new StringBuilder()
      *                 .append(fileDir)
      *                 .append(uuidFileName)

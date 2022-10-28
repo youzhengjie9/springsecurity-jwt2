@@ -9,11 +9,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 上传控制器
@@ -28,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
 
     @Autowired
-    @Qualifier("qiniuOssUploadServiceImpl") //指定spring注入的实现类为七牛云oss实现类
+    @Qualifier("minioUploadServiceImpl") //指定spring注入的实现类
     private OssUploadService ossUploadService;
 
 
@@ -44,20 +43,38 @@ public class UploadController {
     public ResponseResult uploadAvatar(MultipartFile avatarFile){
 
         ResponseResult result = ossUploadService.imageUpload(avatarFile);
-        log.info("上传头像："+result.getData());
+
         return result;
     }
 
     /**
      * 文件删除
-     * @return
+     *
+     * @param fileFullName 文件名
+     * @return {@link ResponseResult}
      */
     @OperationLog("文件删除")
     @DeleteMapping(path = "/fileDelete")
     @ApiOperation("文件删除")
-    public ResponseResult fileDelete(String fileFullName){
+    public ResponseResult fileDelete(@RequestParam("fileFullName") String fileFullName){
 
         return ossUploadService.fileDelete(fileFullName);
     }
+
+
+    /**
+     * 文件下载
+     *
+     * @param fileName 文件名称
+     * @param response 响应
+     */
+    @GetMapping(path = "/fileDownload")
+    @ApiOperation("文件下载")
+    public void fileDownload(@RequestParam("fileName") String fileName, HttpServletResponse response){
+
+        ossUploadService.fileDownload(fileName,response);
+
+    }
+
 
 }

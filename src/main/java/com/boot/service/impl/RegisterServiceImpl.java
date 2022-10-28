@@ -10,6 +10,7 @@ import com.boot.enums.ResponseType;
 import com.boot.service.RegisterService;
 import com.boot.service.UserService;
 import com.boot.utils.SnowId;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -98,7 +99,8 @@ public class RegisterServiceImpl implements RegisterService {
             }
 
             //走到这步，说明已经把数据校验完成了，就可以注册用户了
-            User user = BeanUtil.copyProperties(userRegisterDTO, User.class);
+            User user = new User();
+            BeanUtils.copyProperties(userRegisterDTO,user);
 
             user.setId(SnowId.nextId())
                     .setNickName(DEFAULT_NICK_NAME_PREFIX+user.getUserName())

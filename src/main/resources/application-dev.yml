@@ -134,3 +134,10 @@ qiniu:
   bucket: java-qiniu
   # 七牛云图片服务器域名（有效期30天，过期可以重新创建新的存储空间）
   ossUrl: http://rjc4vwz0g.hn-bkt.clouddn.com/
+
+# 高性能的分布式存储-minio配置（记得要先创建名为security-jwt2-bucket的桶，并且修改为public的权限，否则无法访问资源）
+minio:
+  endpoint: http://192.168.184.123:9000
+  access-key: root
+  secret-key: 12345678
+  bucket-name: security-jwt2-bucket

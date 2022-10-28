@@ -10,6 +10,7 @@ import com.boot.entity.UserRole;
 import com.boot.mapper.UserMapper;
 import com.boot.security.LoginUser;
 import com.boot.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -91,10 +92,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public int addUser(UserFormDTO userFormDto) {
 
-        //使用hutool的BeanUtil拷贝bean属性，其底层还是基于Spring的BeanUtils类，区别是这个BeanUtil第二个参数只需要传.class即可.
-        // TODO: 2022/10/27
-        User user = BeanUtil.copyProperties(userFormDto, User.class);
-        System.out.println(user);
+        User user = new User();
+        BeanUtils.copyProperties(userFormDto,user);
 
         user.setStatus(userFormDto.getStatus() ?0:1);
 
@@ -115,10 +114,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public int updateUser(UserFormDTO userFormDto) {
 
-        //使用hutool的BeanUtil拷贝bean属性，其底层还是基于Spring的BeanUtils类，区别是这个BeanUtil第二个参数只需要传.class即可.
-        // TODO: 2022/10/27
-        User user = BeanUtil.copyProperties(userFormDto, User.class);
-        System.out.println(user);
+        User user = new User();
+        BeanUtils.copyProperties(userFormDto,user);
 
         user.setStatus(userFormDto.getStatus() ?0:1);
 
