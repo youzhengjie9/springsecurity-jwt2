@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot.mapper.OperationLogMapper">
+
+    <!--    1：增强版分页并倒序查询，下面一定要有WHERE id <=（倒序子查询）+后面的ORDER BY id DESC，不然会分页不一致-->
+    <!--    2：如果想要增强版分页并顺序查询，就要改成WHERE id >=（顺序子查询）+后面的ORDER BY id ASC-->
+    <select id="selectAllOperationLogByLimit" resultType="com.boot.entity.OperationLog">
+
+        SELECT id, username, type, uri, time, ip, address, browser, os, oper_time,del_flag
+        FROM sys_oper_log
+        WHERE id <![CDATA[<=]]> (SELECT id FROM sys_oper_log ORDER BY id DESC LIMIT #{page},1)
+        AND del_flag = 0
+        ORDER BY id DESC
+        LIMIT #{size}
+
+    </select>
+</mapper>
