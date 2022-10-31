@@ -50,4 +50,21 @@ public interface OperationLogService extends IService<OperationLog> {
      */
     boolean updateOperationLogToEs(OperationLog operationLog);
 
+    /**
+     * 根据username分页查询操作日志
+     *
+     * @param username 用户名
+     * @param page     页面
+     * @param size     大小
+     * @return {@link List}<{@link OperationLog}>
+     */
+    List<OperationLog> searchOperationLogByUserNameAndLimit(String username, int page, int size);
+
+    /**
+     * 根据username查询符合条件的操作日志数量
+     *
+     * @param username 用户名
+     * @return int
+     */
+    long searchOperationLogCountByUserName(String username);
 }

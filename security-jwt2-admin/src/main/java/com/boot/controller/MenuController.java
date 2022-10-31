@@ -9,6 +9,7 @@ import com.boot.service.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,6 +29,7 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
+    @PreAuthorize("hasAuthority('sys:menu:list')")
     @OperationLog("根据角色id去查询已选择的角色菜单")
     @GetMapping(path = "/selectRoleCheckedMenuByRoleId")
     @ApiOperation("根据角色id去查询已选择的角色菜单")
@@ -52,6 +54,7 @@ public class MenuController {
      * @param menuDto 菜单dto
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:menu:list:add')")
     @OperationLog("添加菜单")
     @PostMapping("/addMenu")
     @ApiOperation("添加菜单")
@@ -73,6 +76,7 @@ public class MenuController {
      * @param menuDto 菜单dto
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:menu:list:update')")
     @OperationLog("修改菜单")
     @PostMapping("/updateMenu")
     @ApiOperation("修改菜单")
@@ -94,6 +98,7 @@ public class MenuController {
      * @param menuid menuid
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:menu:list:delete')")
     @OperationLog("删除菜单")
     @DeleteMapping(path = "/deleteMenu")
     @ApiOperation("删除菜单")
@@ -114,6 +119,7 @@ public class MenuController {
      * @param menuid menuid
      * @return {@link String}
      */
+    @PreAuthorize("hasAuthority('sys:menu:list')")
     @OperationLog("通过菜单id查询菜单名称")
     @GetMapping(path = "/selectMenuNameByMenuId")
     @ApiOperation("通过菜单id查询菜单名称")

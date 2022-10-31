@@ -43,6 +43,13 @@
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
             <version>${elastic-search.version}</version>
+            <exclusions>
+<!--                解决由于oshi依赖也有jna，会导致和elasticsearch依赖的jna冲突问题，所以直接排除es的jna依赖即可 -->
+                <exclusion>
+                    <groupId>org.elasticsearch</groupId>
+                    <artifactId>jna</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--    restHighLevelClient.注意es依赖版本需要和服务器（本机）的es版本一致-->
         <dependency>

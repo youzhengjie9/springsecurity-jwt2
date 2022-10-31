@@ -29,4 +29,15 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
         return loginLogMapper.selectAllLoginLogByLimit(page, size);
     }
 
+    @Override
+    public List<LoginLog> searchLoginLogByUserNameAndLimit(String username, int page, int size) {
+
+        return loginLogMapper.searchLoginLogByUserNameAndLimit(username, page, size);
+    }
+
+    @Override
+    public Integer searchLoginLogCountByUserName(String username) {
+        return loginLogMapper.searchLoginLogCountByUserName(username);
+    }
+
 }

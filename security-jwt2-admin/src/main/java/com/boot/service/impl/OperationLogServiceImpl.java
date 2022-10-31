@@ -181,5 +181,69 @@ public class OperationLogServiceImpl extends ServiceImpl<OperationLogMapper, Ope
 
     }
 
+    @Override
+    public List<OperationLog> searchOperationLogByUserNameAndLimit(String username, int page, int size) {
+
+        try {
+
+            SearchRequest searchRequest = new SearchRequest(OPER_LOG_INDEX);
+
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+            //查询条件
+            searchSourceBuilder.query(QueryBuilders.termQuery("delFlag",0))
+                    .query(QueryBuilders.matchQuery("username",username));
+
+
+            //根据_id进行排序
+            searchSourceBuilder.sort("_id", SortOrder.DESC);
+
+            //分页
+            searchSourceBuilder.from(page);
+            searchSourceBuilder.size(size);
+
+            searchRequest.source(searchSourceBuilder);
+
+
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+
+            SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+            List<OperationLog> operationLogList=new LinkedList<>();
+            for (SearchHit searchHit : searchHits) {
+
+                OperationLog operationLog = new OperationLog();
+                Map<String, Object> sourceAsMap = searchHit.getSourceAsMap();
+                //将map拷贝到对象中
+                BeanUtil.copyProperties(sourceAsMap,operationLog);
+                //因为上面是不会拷贝id的，所以需要手动set一下
+                operationLog.setId(Long.parseLong(searchHit.getId()));
+
+                operationLogList.add(operationLog);
+            }
+            return operationLogList;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+
+    }
+
+    @Override
+    public long searchOperationLogCountByUserName(String username) {
+
+        try {
+            CountRequest countRequest = new CountRequest(OPER_LOG_INDEX);
+            countRequest.query(QueryBuilders.termQuery("delFlag",0))
+                    .query(QueryBuilders.matchQuery("username",username));
+            CountResponse countResponse = restHighLevelClient.count(countRequest, RequestOptions.DEFAULT);
+            return countResponse.getCount();
+        }catch (Exception e){
+            return 0;
+        }
+
+
+    }
+
 
 }

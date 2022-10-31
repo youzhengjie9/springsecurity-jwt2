@@ -13,5 +13,21 @@
         ORDER BY id DESC
         LIMIT #{size}
     </select>
+    <select id="searchLoginLogByUserNameAndLimit" resultType="com.boot.entity.LoginLog">
+        SELECT id, username, ip, address, browser, os, login_time
+        FROM sys_login_log
+        WHERE id <![CDATA[<=]]> (SELECT id FROM sys_login_log ORDER BY id DESC LIMIT #{page},1)
+        AND del_flag = 0
+        AND username like CONCAT('%',#{username},'%')
+        ORDER BY id DESC
+        LIMIT #{size}
+    </select>
+    <select id="searchLoginLogCountByUserName" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM sys_login_log
+        WHERE username like CONCAT('%',#{username},'%')
+        AND del_flag = 0
+    </select>
+
 
 </mapper>

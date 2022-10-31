@@ -20,5 +20,10 @@ public interface LoginLogMapper extends BaseMapper<LoginLog> {
 
     List<LoginLog> selectAllLoginLogByLimit(@Param("page") int page,@Param("size") int size);
 
+    List<LoginLog> searchLoginLogByUserNameAndLimit(@Param("username") String username,
+                                                    @Param("page") int page,
+                                                    @Param("size") int size);
+
+    Integer searchLoginLogCountByUserName(@Param("username") String username);
 
 }

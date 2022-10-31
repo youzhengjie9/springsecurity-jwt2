@@ -12,6 +12,7 @@ import com.boot.utils.SnowId;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,6 +36,7 @@ public class RoleController {
     //1 8 = 0 8
     //2 8 = 8 8
     //3 8 = 16 8
+    @PreAuthorize("hasAuthority('sys:role:list')")
     @OperationLog("查询所有角色并分页")
     @GetMapping(path = "/selectAllRoleByLimit")
     @ApiOperation("查询所有角色并分页")
@@ -50,6 +52,7 @@ public class RoleController {
         }
     }
 
+    @PreAuthorize("hasAuthority('sys:role:list')")
     @OperationLog("查询所有角色数量")
     @GetMapping(path = "/selectAllRoleCount")
     @ApiOperation("查询所有角色数量")
@@ -66,6 +69,7 @@ public class RoleController {
 
     }
 
+    @PreAuthorize("hasAuthority('sys:role:list')")
     @OperationLog("查询所有角色")
     @GetMapping(path = "/selectAllRole")
     @ApiOperation("查询所有角色")
@@ -80,6 +84,7 @@ public class RoleController {
         }
     }
 
+    @PreAuthorize("hasAuthority('sys:role:list')")
     @OperationLog("根据用户id查询用户已经选择的角色")
     @GetMapping(path = "/selectUserCheckedRoleByUserId")
     @ApiOperation("根据用户id查询用户已经选择的角色")
@@ -96,6 +101,7 @@ public class RoleController {
         }
     }
 
+    @PreAuthorize("hasAuthority('sys:role:list:add')")
     @OperationLog("添加角色")
     @PostMapping("/addRole")
     @ApiOperation("添加角色")
@@ -110,6 +116,7 @@ public class RoleController {
         }
     }
 
+    @PreAuthorize("hasAuthority('sys:role:list:update')")
     @OperationLog("修改角色")
     @PostMapping(path = "/updateRole")
     @ApiOperation("修改角色")
@@ -131,6 +138,7 @@ public class RoleController {
      * @param id id
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:role:list:delete')")
     @OperationLog("删除角色")
     @DeleteMapping(path = "/deleteRole")
     @ApiOperation("删除角色")
@@ -153,6 +161,7 @@ public class RoleController {
      * @param assignMenuDto 分配菜单dto
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:role:list:assign-menu')")
     @OperationLog("分配菜单")
     @PostMapping(path = "/assignMenu")
     @ApiOperation("分配菜单")
@@ -198,6 +207,7 @@ public class RoleController {
      * @param size     大小
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:role:list')")
     @OperationLog("根据角色名搜索角色并分页")
     @GetMapping(path = "/searchRoleByRoleNameAndLimit")
     @ApiOperation("根据角色名搜索角色并分页")
@@ -222,6 +232,7 @@ public class RoleController {
      * @param roleName 角色名
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:role:list')")
     @OperationLog("按role的name搜索role数量")
     @GetMapping(path = "/searchRoleCountByRoleName")
     @ApiOperation("按role的name搜索role数量")

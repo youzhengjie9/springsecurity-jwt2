@@ -15,4 +15,9 @@ public interface LoginLogService extends IService<LoginLog> {
 
     List<LoginLog> selectAllLoginLogByLimit(int page,int size);
 
+    List<LoginLog> searchLoginLogByUserNameAndLimit(String username,
+                                                    int page,
+                                                    int size);
+
+    Integer searchLoginLogCountByUserName(String username);
 }

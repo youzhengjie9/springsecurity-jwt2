@@ -12,6 +12,7 @@ import com.boot.utils.SnowId;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,7 @@ public class UserController {
      *
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:user:list')")
     @GetMapping(path = "/selectAllUserCount")
     @ApiOperation("查询所有用户数量")
     public ResponseResult selectAllUserCount(){
@@ -66,6 +68,7 @@ public class UserController {
     //1 8 = 0 8
     //2 8 = 8 8
     //3 8 = 16 8
+    @PreAuthorize("hasAuthority('sys:user:list')")
     @OperationLog("查询所有用户并分页")
     @GetMapping(path = "/selectAllUserByLimit")
     @ApiOperation("查询所有用户并分页")
@@ -87,6 +90,7 @@ public class UserController {
      * @param userFormDto 用户表单dto
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:user:list:add')")
     @OperationLog("添加用户")
     @PostMapping("/addUser")
     @ApiOperation("添加用户")
@@ -112,6 +116,7 @@ public class UserController {
      * @param userFormDto 用户表单dto
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:user:list:update')")
     @OperationLog("修改用户")
     @PostMapping(path = "/updateUser")
     @ApiOperation("修改用户")
@@ -138,6 +143,7 @@ public class UserController {
      * @param id id
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:user:list:delete')")
     @OperationLog("删除用户")
     @DeleteMapping(path = "/deleteUser")
     @ApiOperation("删除用户")
@@ -162,6 +168,7 @@ public class UserController {
      * @param assignRoleDto 分配角色dto
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:user:list:assign-role')")
     @OperationLog("分配角色")
     @PostMapping(path = "/assignRole")
     @ApiOperation("分配角色")
@@ -214,6 +221,7 @@ public class UserController {
      * @param size     大小
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:user:list')")
     @OperationLog("根据用户名搜索用户并分页")
     @GetMapping(path = "/searchUserByUserNameAndLimit")
     @ApiOperation("根据用户名搜索用户并分页")
@@ -238,6 +246,7 @@ public class UserController {
      * @param userName 用户名
      * @return {@link ResponseResult}
      */
+    @PreAuthorize("hasAuthority('sys:user:list')")
     @GetMapping(path = "/searchUserCountByUserName")
     @ApiOperation("按用户名搜索用户数量")
     public ResponseResult searchUserCountByUserName(@RequestParam("userName") String userName){
