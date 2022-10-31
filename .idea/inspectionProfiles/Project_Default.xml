@@ -37,7 +37,7 @@
       <option name="IGNORE_JAVADOC_PERIOD" value="true" />
       <option name="IGNORE_DUPLICATED_THROWS" value="false" />
       <option name="IGNORE_POINT_TO_ITSELF" value="false" />
-      <option name="myAdditionalJavadocTags" value="date" />
+      <option name="myAdditionalJavadocTags" value="date,CanalTable(&quot;sys_oper_log&quot;)：指定canal监听的表名为sys_oper_log" />
     </inspection_tool>
   </profile>
 </component>

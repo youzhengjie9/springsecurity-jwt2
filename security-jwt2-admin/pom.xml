@@ -24,6 +24,13 @@
 
     <dependencies>
 
+<!--        springboot整合canal1.1.5（因为canal-spring-boot-starter的1.2.1-RELEASE版本匹配的是canal的1.1.5版本） -->
+        <dependency>
+            <groupId>top.javatool</groupId>
+            <artifactId>canal-spring-boot-starter</artifactId>
+            <version>1.2.1-RELEASE</version>
+        </dependency>
+
         <!-- xxl-job核心依赖 -->
         <dependency>
             <groupId>com.xuxueli</groupId>

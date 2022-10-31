@@ -159,3 +159,12 @@ xxl:
     port: 9999
     logPath: /data/applogs/xxl-job/jobhandler
     logRetentionDays: 30
+
+#配置alibaba-canal
+canal:
+  destination: example # canal数据同步的目的地。也就是我们安装canal时配置的example
+  server: 192.168.184.123:11111 # canal的地址（canal所在服务器ip+端口号（默认是11111））
+# 解决canal-spring-boot-starter一直输出日志
+logging:
+  level:
+    top.javatool.canal.client: warn

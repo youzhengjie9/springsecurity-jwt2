@@ -25,4 +25,29 @@ public interface OperationLogService extends IService<OperationLog> {
 
     long selectAllOperationLogCount();
 
+    /**
+     * 添加操作日志到elasticsearch
+     *
+     * @param operationLog 操作日志
+     * @return boolean
+     */
+    boolean addOperationLogToEs(OperationLog operationLog);
+
+    /**
+     * 根据id删除elasticsearch中的操作日志
+     *
+     * @param id id
+     * @return boolean
+     */
+    boolean deleteOperationLogToEs(Long id);
+
+
+    /**
+     * 更新elasticsearch中的操作日志
+     *
+     * @param operationLog 操作日志
+     * @return boolean
+     */
+    boolean updateOperationLogToEs(OperationLog operationLog);
+
 }

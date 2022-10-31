@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -83,13 +84,16 @@ public class OperationLog implements Serializable {
     @ExcelProperty("执行操作的用户所使用的操作系统")
     private String os;
 
+
     @TableField("oper_time")
+    @Column(name = "oper_time")
     @ApiModelProperty("操作时间")
     @ExcelProperty(value = "操作时间",converter = LocalDateTimeConverter.class)
     private LocalDateTime operTime;
 
     @TableLogic//逻辑删除
     @TableField("del_flag")
+    @Column(name = "del_flag")
     @ApiModelProperty("删除标志（0代表未删除，1代表已删除）")
     @ExcelProperty(value = "删除标志",converter = DelFlagConverter.class)
     private Integer delFlag;
