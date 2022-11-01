@@ -5,22 +5,10 @@
 
 
 ### Docker部署后端项目
-- 1：将security-jwt2整个项目进行maven打包，并且将security-jwt2-admin模块中的jar包和Dockerfile文件上传到服务器。
-```shell
-[root@centos7-sql backend]# pwd
-/root/backend
-[root@centos7-sql backend]# ls
-Dockerfile  spring-security-jwt2.jar
-[root@centos7-sql backend]# cat Dockerfile
-# 基础镜像为openjdk:8
-FROM openjdk:8
-# 作者信息
-MAINTAINER youzhengjie <1550324080@qq.com>
-# 将jar包添加到镜像中
-ADD spring-security-jwt2.jar backend.jar
-# 执行java-jar命令
-ENTRYPOINT ["java","-jar","backend.jar"]
-```
+- 1：将security-jwt2整个项目进行maven打包，并且将security-jwt2-admin模块中的jar包和Dockerfile文件上传到服务器。（项目jar包和Dockerfile文件必须在同一个目录下）
+
+
+
 - 2：使用docker构建项目镜像：
 ```shell
 docker build -t backend:v1.0.0 .
