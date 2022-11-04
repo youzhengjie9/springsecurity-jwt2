@@ -1,5 +1,8 @@
 
 ### 项目介绍
+
+security-jwt2是一个通用的基于RBAC的权限管理系统的前后端分离项目，实现了很多通用的功能，是一个可以拿来即用的一个项目。
+
 - security-jwt2-admin是后端模块
 - security-jwt2-ui是前端模块
 
