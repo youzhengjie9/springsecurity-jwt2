@@ -131,7 +131,7 @@ const actions = {
             })
         })
     },
-    //退出成果
+    //退出成功
     logoutSuccess(context){
         //此时，后端已经成功将用户退出，前端只需要把token和用户信息清空即可（localstorage内容也要清空）
         //清空VUEX内容

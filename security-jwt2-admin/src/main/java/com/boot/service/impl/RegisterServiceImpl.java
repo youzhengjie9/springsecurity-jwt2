@@ -1,6 +1,5 @@
 package com.boot.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.PhoneUtil;
 import com.boot.data.ResponseResult;
 import com.boot.dto.UserRegisterDTO;
@@ -17,12 +16,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -167,14 +164,12 @@ public class RegisterServiceImpl implements RegisterService {
      *
      */
     private String generateCode(){
-
-        Random random = new Random();
         StringBuffer stringBuffer = new StringBuffer();
-
         for (int i = 0; i < 6; i++) {
-            stringBuffer.append(random.nextInt(10));
+            //在高并发下ThreadLocalRandom的性能远远大于Random的性能
+            int number = ThreadLocalRandom.current().nextInt(10);
+            stringBuffer.append(number);
         }
-
         return stringBuffer.toString();
     }
 
